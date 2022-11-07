@@ -7,28 +7,28 @@ import java.net.ConnectException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-//Denna kod har Niclas skrivit. Dock implementeras den inte just nu i detta projekt då endast grafiken visas i denna version.
 
-public class connection {
+public class Connection {
 
-    boolean server;
-    boolean connected;
-    Socket user;
-    ServerSocket serverSocket;
-    InputStreamReader inputReader;
-    BufferedReader buffReader;
-    PrintWriter printWriter;
+    //properties
+    protected boolean server;
+    protected boolean connected;
+    protected Socket user;
+    private ServerSocket serverSocket;
+    private InputStreamReader in;
+    private BufferedReader br;
+    private PrintWriter out;
 
 
-
-    connection(){
+    // konstruktor
+    Connection(){
         server = false;
         connected = false;
     }
 
 
-
-
+    // öppnar ny serverSocket och väntar på att ta emot on anslutning
+    // skapar reader och printer för kommunikation genom socketen.
     public void newServer() throws IOException {
         if(!connected) {
             try {
@@ -36,9 +36,9 @@ public class connection {
                 System.out.println("Server Running");
                 user = serverSocket.accept();
                 System.out.println("Client Connected");
-                inputReader = new InputStreamReader(user.getInputStream());
-                buffReader = new BufferedReader(inputReader);
-                printWriter = new PrintWriter(user.getOutputStream());
+                in = new InputStreamReader(user.getInputStream());
+                br = new BufferedReader(in);
+                out = new PrintWriter(user.getOutputStream());
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -47,27 +47,30 @@ public class connection {
 
         }
     }
+    // upprättar en anslutning till ny användare utan att skapa ny serverSocket.
 
     public void newServerConnection()throws IOException{
         user = serverSocket.accept();
-        inputReader = new InputStreamReader(user.getInputStream());
-        buffReader = new BufferedReader(inputReader);
-        printWriter = new PrintWriter(user.getOutputStream());
+        in = new InputStreamReader(user.getInputStream());
+        br = new BufferedReader(in);
+        out = new PrintWriter(user.getOutputStream());
         System.out.println("Client Connected" + user.getLocalAddress() +"\n" + user.getInetAddress());
     }
 
 
-
+    // ansluter till en host.
+    //  koppplar reader och printer för kommunikation genom socket.
     public void connectToServer()throws IOException{
 
         if(!server) {
             try {
                 user = new Socket("localhost", 4499);
-                inputReader = new InputStreamReader(user.getInputStream());
-                buffReader = new BufferedReader(inputReader);
-                printWriter = new PrintWriter(user.getOutputStream());
+                in = new InputStreamReader(user.getInputStream());
+                br = new BufferedReader(in);
+                out = new PrintWriter(user.getOutputStream());
                 connected = true;
                 System.out.println("Connected to server");
+
 
             } catch (ConnectException e) {
                 e.printStackTrace();
@@ -76,20 +79,21 @@ public class connection {
 
         }
     }
-
+    // metod för att skicka meddelande till anslutningen
     public void sendMessage(String message){
         if(user.isConnected()) {
-            printWriter.println(message);
-            printWriter.flush();
+            out.println(message);
+            out.flush();
         }
     }
 
 
+    // metod för att ta emot meddelande från anslutnigen
     public String reciveMessage()throws IOException{
         String message = "";
 
         try {
-            message = buffReader.readLine();
+            message = br.readLine();
         } catch (ConnectException e) {
             e.printStackTrace();
             message = "Connection Error";
@@ -106,12 +110,13 @@ public class connection {
         return message;
     }
 
+    // metod för att stänga anslutningen
     public void closeConnection() throws IOException{
         try {
             user.close();
-            buffReader.close();
-            inputReader.close();
-            printWriter.close();
+            br.close();
+            in.close();
+            out.close();
         }catch (IOException e){
             e.printStackTrace();
         }
