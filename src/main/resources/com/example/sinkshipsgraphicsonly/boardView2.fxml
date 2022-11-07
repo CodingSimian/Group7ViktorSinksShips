@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.TextFlow?>
+
+<BorderPane prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.sinkshipsgraphicsonly.battleShipGraphicsController">
+<left>
+    <VBox alignment="CENTER" prefHeight="475.0" prefWidth="300.0" BorderPane.alignment="CENTER">
+        <children>
+            <HBox alignment="BOTTOM_LEFT" prefHeight="26.0" prefWidth="300.0" spacing="20.0">
+                <children>
+                    <Label alignment="BOTTOM_LEFT" text="0" translateX="7.0">
+                        <font>
+                            <Font size="20.0" />
+                        </font>
+                        <HBox.margin>
+                            <Insets />
+                        </HBox.margin>
+                    </Label>
+                    <Label text="1" translateX="7.0">
+                        <font>
+                            <Font size="20.0" />
+                        </font>
+                        <HBox.margin>
+                            <Insets />
+                        </HBox.margin>
+                    </Label>
+                    <Label text="2" translateX="7.0">
+                        <font>
+                            <Font size="20.0" />
+                        </font>
+                        <HBox.margin>
+                            <Insets />
+                        </HBox.margin>
+                    </Label>
+                    <Label text="3" translateX="7.0">
+                        <font>
+                            <Font size="20.0" />
+                        </font>
+                        <HBox.margin>
+                            <Insets />
+                        </HBox.margin>
+                    </Label>
+                    <Label text="4" translateX="7.0">
+                        <font>
+                            <Font size="20.0" />
+                        </font>
+                        <HBox.margin>
+                            <Insets />
+                        </HBox.margin>
+                    </Label>
+                    <Label text="5" translateX="7.0">
+                        <font>
+                            <Font size="20.0" />
+                        </font>
+                        <HBox.margin>
+                            <Insets />
+                        </HBox.margin>
+                    </Label>
+                    <Label text="6" translateX="6.0">
+                        <font>
+                            <Font size="20.0" />
+                        </font>
+                    </Label>
+                    <Label text="7" translateX="4.0">
+                        <font>
+                            <Font size="20.0" />
+                        </font>
+                    </Label>
+                    <Label text="8" translateX="1.0">
+                        <font>
+                            <Font size="20.0" />
+                        </font>
+                        <HBox.margin>
+                            <Insets />
+                        </HBox.margin>
+                    </Label>
+                    <Label text="9" translateX="1.0">
+                        <font>
+                            <Font size="20.0" />
+                        </font>
+                        <HBox.margin>
+                            <Insets />
+                        </HBox.margin>
+                    </Label>
+                </children>
+                <VBox.margin>
+                    <Insets bottom="-40.0" top="50.0" />
+                </VBox.margin>
+            </HBox>
+            <GridPane fx:id="leftGrid" alignment="CENTER" gridLinesVisible="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#thisCoordinate" prefHeight="400.0" prefWidth="300.0">
+                <columnConstraints>
+                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+
+                </columnConstraints>
+                <rowConstraints>
+                    <RowConstraints maxHeight="44.0" minHeight="16.0" prefHeight="21.0" vgrow="SOMETIMES" />
+
+                    <RowConstraints maxHeight="40.0" minHeight="10.0" prefHeight="35.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                </rowConstraints>
+                <VBox.margin>
+                    <Insets top="40.0" />
+                </VBox.margin>
+            </GridPane>
+        </children>
+         <padding>
+            <Insets left="10.0" />
+         </padding>
+    </VBox>
+</left>
+<center>
+    <HBox alignment="CENTER" prefHeight="496.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+        <children>
+            <Label alignment="CENTER" lineSpacing="10.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="30.0" text="A&#10;B&#10;C&#10;D&#10;E&#10;F&#10;G&#10;H&#10;I&#10;J" textAlignment="JUSTIFY">
+                <HBox.margin>
+                    <Insets top="70.0" />
+                </HBox.margin>
+                <font>
+                    <Font size="20.0" />
+                </font>
+            </Label>
+            <VBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="130.0">
+                <children>
+                    <Button alignment="CENTER" mnemonicParsing="false" onAction="#pausButtonPressed" text="Pausa">
+                        <VBox.margin>
+                            <Insets bottom="20.0" top="20.0" />
+                        </VBox.margin>
+                    </Button>
+                </children>
+            </VBox>
+            <Label alignment="CENTER" lineSpacing="10.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="30.0" text="A&#10;B&#10;C&#10;D&#10;E&#10;F&#10;G&#10;H&#10;I&#10;J" textAlignment="JUSTIFY">
+                <font>
+                    <Font size="20.0" />
+                </font>
+                <HBox.margin>
+                    <Insets top="70.0" />
+                </HBox.margin>
+            </Label>
+        </children>
+    </HBox>
+</center>
+<right>
+    <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+        <children>
+            <HBox alignment="BOTTOM_LEFT" prefHeight="26.0" prefWidth="300.0" spacing="20.0">
+                <children>
+                    <Label alignment="BOTTOM_LEFT" text="0" translateX="7.0">
+                        <font>
+                            <Font size="20.0" />
+                        </font>
+                        <HBox.margin>
+                            <Insets />
+                        </HBox.margin>
+                    </Label>
+                    <Label text="1" translateX="7.0">
+                        <font>
+                            <Font size="20.0" />
+                        </font>
+                        <HBox.margin>
+                            <Insets />
+                        </HBox.margin>
+                    </Label>
+                    <Label text="2" translateX="7.0">
+                        <font>
+                            <Font size="20.0" />
+                        </font>
+                        <HBox.margin>
+                            <Insets />
+                        </HBox.margin>
+                    </Label>
+                    <Label text="3" translateX="7.0">
+                        <font>
+                            <Font size="20.0" />
+                        </font>
+                        <HBox.margin>
+                            <Insets />
+                        </HBox.margin>
+                    </Label>
+                    <Label text="4" translateX="7.0">
+                        <font>
+                            <Font size="20.0" />
+                        </font>
+                        <HBox.margin>
+                            <Insets />
+                        </HBox.margin>
+                    </Label>
+                    <Label text="5" translateX="7.0">
+                        <font>
+                            <Font size="20.0" />
+                        </font>
+                        <HBox.margin>
+                            <Insets />
+                        </HBox.margin>
+                    </Label>
+                    <Label text="6" translateX="6.0">
+                        <font>
+                            <Font size="20.0" />
+                        </font>
+                    </Label>
+                    <Label text="7" translateX="4.0">
+                        <font>
+                            <Font size="20.0" />
+                        </font>
+                    </Label>
+                    <Label text="8" translateX="1.0">
+                        <font>
+                            <Font size="20.0" />
+                        </font>
+                        <HBox.margin>
+                            <Insets />
+                        </HBox.margin>
+                    </Label>
+                    <Label text="9" translateX="1.0">
+                        <font>
+                            <Font size="20.0" />
+                        </font>
+                        <HBox.margin>
+                            <Insets />
+                        </HBox.margin>
+                    </Label>
+                </children>
+                <VBox.margin>
+                    <Insets bottom="-40.0" top="50.0" />
+                </VBox.margin>
+            </HBox>
+            <GridPane fx:id="rightGrid" gridLinesVisible="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="300.0">
+                <columnConstraints>
+                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+
+                </columnConstraints>
+                <rowConstraints>
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                </rowConstraints>
+                <VBox.margin>
+                    <Insets top="40.0" />
+                </VBox.margin>
+            </GridPane>
+        </children>
+         <padding>
+            <Insets right="10.0" />
+         </padding>
+    </VBox>
+</right>
+<bottom>
+    <TextFlow prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+</bottom>
+<top>
+    <ImageView fitHeight="165.0" fitWidth="795.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
+</top>
+</BorderPane>
