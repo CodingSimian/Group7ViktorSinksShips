@@ -4,7 +4,7 @@ public abstract class Ship {
 
     // properties för abstrakta klassen så att alla klasser av typen ship har dessa properties
   protected String type;
-  protected int lenght;
+  protected int length;
   protected int hits;
   protected boolean sunk;
 
@@ -18,7 +18,7 @@ public abstract class Ship {
     // ifall den blivit träffad för många gånger så blir den sänkt.
   public void hit(){
       this.hits ++;
-      if( hits>= lenght){
+      if( hits>= length){
           this.sunk = true;
 
       }
@@ -34,7 +34,7 @@ public abstract class Ship {
     }
 
     public int getLength(){
-      return lenght;
+      return length;
     }
 
 
@@ -44,27 +44,27 @@ public abstract class Ship {
      // så dessa klasser har bara en konstruktor som gör dom till tex en carrier eller ett Battleship och sätter rätt längd och typ.
      class Carrier extends Ship{
       Carrier(){
-          this.lenght = 5;
+          this.length = 5;
           this.type = "Carrier";
       }
    }
    class BattleShip extends Ship{
     BattleShip(){
-        this.lenght = 4;
+        this.length = 4;
         this.type = "BattleShip";
     }
    }
 
    class Cruiser extends Ship{
     Cruiser(){
-        this.lenght = 3;
+        this.length = 3;
         this.type = "Cruiser";
     }
    }
 
    class Submarine extends Ship{
     Submarine(){
-        this.lenght = 2;
+        this.length = 2;
         this.type = "Submarine";
     }
 

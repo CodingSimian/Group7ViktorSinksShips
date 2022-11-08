@@ -2,31 +2,42 @@ package com.example.sinkshipsgraphicsonly;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
+import org.controlsfx.control.tableview2.filter.filtereditor.SouthFilter;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class battleShipGraphicsController {
+public class battleShipGraphicsController  {
     public GridPane leftGrid;
-    connection someConnection=new connection();
+    Connection someConnection=new Connection();
 
+
+
+    @FXML
     public void clientButtonPressed(ActionEvent actionEvent) throws IOException {
-
-
         Parent root = FXMLLoader.load(getClass().getResource("boardView2.fxml"));
         Stage stage= (Stage) ((Node)actionEvent.getSource()).getScene().getWindow();
         Scene scene= new Scene(root);
         stage.setScene(scene);
         stage.show();
     }
+
 
     public void serverButtonPressed(ActionEvent actionEvent) throws IOException {
         //someConnection.newServer();
@@ -80,10 +91,22 @@ public class battleShipGraphicsController {
         StackPane mySPane = new StackPane();
         mySPane.setBackground(new Background(new BackgroundFill(Color.BLUE, CornerRadii.EMPTY, Insets.EMPTY)));
         System.out.println("X koordinaten blir: " + leftGrid.getColumnIndex(mousenode) +" medan Y blir: " + mouseEvent.getY());
-        leftGrid.add(mySPane,0,0);
 
+        leftGrid.add(new Button(),0,0);
 
+        GameBoard leftGameBoard = new GameBoard();
+        leftGameBoard.buildGameBoard(); //använd buildgameboard först, för att kunna applicera de andra metoder som ligger
+        //i GameBoard-klassen
+
+        leftGameBoard.buildFleet(1,2,3,4);
+        leftGameBoard.placeFleetAtRandom();
+
+        for (int row = 0; row < leftGameBoard.SquareGrid.length; row++) {
+            for (int col = 0; col < leftGameBoard.SquareGrid[row].length; col++) {
+                if (leftGameBoard.SquareGrid[col][row].isHasShip() == true) {
+                    leftGrid.add(new ImageView("Boat1.jpg"),row,col);
+                }
+            }
+        }
     }
-
-
 }

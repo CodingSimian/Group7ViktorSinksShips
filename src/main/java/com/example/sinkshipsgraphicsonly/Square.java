@@ -10,6 +10,8 @@ public class Square {
     private boolean occupied;
     private boolean hit;
 
+    private boolean hasShip;
+
 
     private ArrayList<Square> neighbours = new ArrayList<>();
 
@@ -18,6 +20,7 @@ public class Square {
         this.name = name;
         occupied = false;
         hit = false;
+
 
     }
 
@@ -31,7 +34,7 @@ public class Square {
     public void addShip(Ship ship){
         this.ship = ship;
         this.occupied = true;
-
+        this.hasShip = true;
 
     }
     public Ship getShip(){
@@ -82,5 +85,7 @@ public class Square {
         return this.hit;
     }
 
-
+    public boolean isHasShip(){
+        return this.hasShip;
+    }
 }

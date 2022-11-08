@@ -7,7 +7,7 @@ public class GameBoard {
     //properties
 
     // array som användas för att skapa all squares med rätt namn
-    String[] xAxis = {"A", "B", "C", "D", "E", "F", "G", "H","I", "J"};
+    String[] yAxis = {"A", "B", "C", "D", "E", "F", "G", "H","I", "J"}; //Bytte namn från xAxis till yAxis, Viktor
 
     // Innehåller alla skep som skapas.
     ArrayList<Ship> fleet = new ArrayList<>();
@@ -27,12 +27,12 @@ public class GameBoard {
     // populerar spelplanen med Squares
     public void buildGameBoard(){
 
-        for(int i = 0; i< xAxis.length; i++){
-            SquareGrid[i][0] = new Square(0+xAxis[i]);
-            System.out.println(getSquare(i,0).getName()); // ta bort senare
+        for(int i = 0; i< yAxis.length; i++){
+            SquareGrid[i][0] = new Square(0+ yAxis[i]);
+            //System.out.println(getSquare(i,0).getName()); // ta bort senare
             for(int j = 1; j<10; j++){
-                SquareGrid[i][j] = new Square((j)+xAxis[i]);
-                System.out.println(SquareGrid[i][j].getName()+ "i = " + i + " j= " + j); // ta bort senare
+                SquareGrid[i][j] = new Square((j)+ yAxis[i]);
+                //System.out.println(SquareGrid[i][j].getName()+ "i = " + i + " j= " + j); // ta bort senare
             }
 
         }
@@ -266,7 +266,7 @@ public class GameBoard {
     // test metod , ta bort senare
     public void printFleet(){
        for(Ship ship: fleet){
-           System.out.println(ship.getType() + " " + ship.lenght);
+           System.out.println(ship.getType() + " " + ship.length);
        }
     }
 
@@ -285,11 +285,11 @@ public class GameBoard {
     }
 
     public String getCoordinate(int coordinate){
-        return xAxis[coordinate];
+        return yAxis[coordinate];
     }
     public int convertCoordinate(String coordinate){
-        for(int i = 0; i< xAxis.length; i++){
-            if(xAxis[i].equalsIgnoreCase(coordinate)){
+        for(int i = 0; i< yAxis.length; i++){
+            if(yAxis[i].equalsIgnoreCase(coordinate)){
                 return i;
 
             }
