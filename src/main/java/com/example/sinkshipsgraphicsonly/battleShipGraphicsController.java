@@ -103,7 +103,10 @@ public class battleShipGraphicsController  {
 
         for (int row = 0; row < leftGameBoard.SquareGrid.length; row++) {
             for (int col = 0; col < leftGameBoard.SquareGrid[row].length; col++) {
-                if (leftGameBoard.SquareGrid[col][row].isHasShip() == true) {
+                if (leftGameBoard.SquareGrid[col][row].isHasShip()) { //Måste få denna kod att fungera utan
+                    //musklick, och det måste även uppdatera listan om båtar blir skjutna.
+
+
                     leftGrid.add(new ImageView("Boat1.jpg"),row,col);
                 }
             }
