@@ -17,11 +17,8 @@
                   <Insets bottom="10.0" />
                </VBox.margin>
             </Button>
-            <Button mnemonicParsing="false" onAction="#alertBoxActivated" text="Avsluta match">
-               <VBox.margin>
-                  <Insets bottom="10.0" />
-               </VBox.margin>
-            </Button>
+
+
             <Label alignment="CENTER" prefHeight="17.0" prefWidth="235.0" text="Justera tidsfördröjning för skott i sekunder:" />
             <Slider blockIncrement="0.2" majorTickUnit="1.0" max="5.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="38.0" prefWidth="200.0" showTickLabels="true" showTickMarks="true" />
          </children>

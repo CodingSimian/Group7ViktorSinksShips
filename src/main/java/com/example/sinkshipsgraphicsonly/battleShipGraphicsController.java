@@ -15,6 +15,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import org.controlsfx.control.tableview2.filter.filtereditor.SouthFilter;
@@ -27,6 +28,7 @@ public class battleShipGraphicsController  { //Klass för att få fram spelplane
     @FXML
     private GridPane leftGrid;
     Connection someConnection=new Connection();
+
 
 
 
@@ -51,14 +53,6 @@ public class battleShipGraphicsController  { //Klass för att få fram spelplane
     Platform.exit();
     }
 
-    public void avslutaMatchButtonPressed(ActionEvent actionEvent) throws IOException{
-        Parent root = FXMLLoader.load(getClass().getResource("startMenu.fxml"));
-        Stage stage= (Stage) ((Node)actionEvent.getSource()).getScene().getWindow();
-        Scene scene= new Scene(root);
-        stage.setScene(scene); //Denna kod är originellt från bro-codes tutorial på youtube
-        stage.show();
-    }
-
 
     public void continueButtonPressed(ActionEvent actionEvent) throws IOException{
         Parent root = FXMLLoader.load(getClass().getResource("boardView2.fxml"));
@@ -70,13 +64,6 @@ public class battleShipGraphicsController  { //Klass för att få fram spelplane
         stage.show();
     }
 
-    public void alertBoxActivated(ActionEvent actionEvent) throws IOException{
-        Parent root = FXMLLoader.load(getClass().getResource("alertBox.fxml"));
-        Stage stage= (Stage) ((Node)actionEvent.getSource()).getScene().getWindow();
-        Scene scene= new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-    }
 
     @FXML
     public void thisCoordinate(javafx.scene.input.MouseEvent mouseEvent) {
@@ -87,4 +74,6 @@ public class battleShipGraphicsController  { //Klass för att få fram spelplane
         System.out.println("X koordinaten blir: " + leftGrid.getColumnIndex(mousenode) + " medan Y blir: " + mouseEvent.getY());
         leftGrid.add(mySPane, 0, 0);
     }
+
+
 }

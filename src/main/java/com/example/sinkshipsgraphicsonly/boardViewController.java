@@ -4,12 +4,16 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -22,6 +26,12 @@ public class boardViewController implements Initializable { //javaklassen som ko
     @FXML
     private GridPane leftGrid;
 
+    @FXML
+    private Button nejButton;
+
+
+    @FXML
+    private BorderPane alertBox;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -40,7 +50,7 @@ public class boardViewController implements Initializable { //javaklassen som ko
        //Skapa en instans av Game och skriv det här och använda oss av metoderna som vi har gjort i Game.
 
 
-        leftGameBoard.buildFleet(1,2,3,4);
+        leftGameBoard.buildFleet(1, 2, 3, 4);
         leftGameBoard.placeFleetAtRandom(); //Dessa två linjer har skapat alla skepp, och placerat dom. Då är själva
         //logiken för klient-spelaren utlagd. Det är först efter de 2 for loopar under denna kommentar som bilder
         //på själva rutnätet läggs ut.
@@ -50,18 +60,55 @@ public class boardViewController implements Initializable { //javaklassen som ko
                 if (leftGameBoard.SquareGrid[col][row].isHasShip()) { //Måste få denna kod att fungera utan
                     //musklick, och det måste även uppdatera listan om båtar blir skjutna
 
-                    leftGrid.add(new ImageView("Boat1.jpg"),row,col);
+                    leftGrid.add(new ImageView("Boat1.jpg"), row, col);
                 }
             }
         }
 
     }
 
-    public void pausButtonPressed(ActionEvent actionEvent) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("pausMenu.fxml"));
+    public void alertBoxActivated2(ActionEvent actionEvent) throws IOException {
+        Stage window = new Stage();
+        window.initModality(Modality.APPLICATION_MODAL);
+        window.setTitle("Vill du verkligen avsluta?");
+        Button closeButton = new Button("Close this window");
+        closeButton.setOnAction(e -> window.close());
+
+        VBox layout = new VBox(10);
+        layout.getChildren().addAll(closeButton);
+        layout.setAlignment(Pos.CENTER);
+
+        Scene scene = new Scene(layout); //de tre metoder som dyker upp efter denna har jag ej fått att fungera
+        //tills vidare är alertBoxActivated2 metoden som gäller när det kommer till att fråga användaren om hen
+        //verkligen vill stänga ned spelet
+        window.setScene(scene);
+        window.showAndWait();
+    }
+
+
+    public void alertBoxActivated(ActionEvent actionEvent) throws IOException {
+        Stage stage = new Stage();
+
+        //Stage window = new Stage();
+        stage.setTitle("Vill du avsluta?");
+        stage.initModality(Modality.APPLICATION_MODAL); //Gör så att man nt kan klicka utanför rutan
+
+
+        Scene scene = new Scene(alertBox);
+        stage.setScene(scene);
+        stage.showAndWait();
+    }
+
+    public void nejButtonpressed(ActionEvent actionEvent) throws IOException{
+        Stage stage = (Stage) nejButton.getScene().getWindow();
+        stage.close(); //Gör så att popup stängs
+    }
+
+    public void avslutaMatchButtonPressed(ActionEvent actionEvent) throws IOException{
+        Parent root = FXMLLoader.load(getClass().getResource("startMenu.fxml"));
         Stage stage= (Stage) ((Node)actionEvent.getSource()).getScene().getWindow();
         Scene scene= new Scene(root);
-        stage.setScene(scene);
+        stage.setScene(scene); //Denna kod är originellt från bro-codes tutorial på youtube
         stage.show();
     }
 }

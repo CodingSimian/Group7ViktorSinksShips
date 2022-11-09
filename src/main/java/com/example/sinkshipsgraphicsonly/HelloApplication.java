@@ -15,7 +15,7 @@ public class HelloApplication extends Application { //Här körs xml-filen
     public void start(Stage stage) throws IOException {
 
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("startMenu.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 800, 800);
+        Scene scene = new Scene(fxmlLoader.load(), 1000, 800);
         stage.setTitle("BattleShips");
         stage.setScene(scene);
         stage.show();
