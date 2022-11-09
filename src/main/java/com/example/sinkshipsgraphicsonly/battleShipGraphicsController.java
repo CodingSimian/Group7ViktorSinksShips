@@ -23,7 +23,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class battleShipGraphicsController  {
+public class battleShipGraphicsController  { //Klass för att få fram spelplanen
     @FXML
     private GridPane leftGrid;
     Connection someConnection=new Connection();

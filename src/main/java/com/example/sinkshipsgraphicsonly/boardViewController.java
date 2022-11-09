@@ -17,22 +17,28 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import com.example.sinkshipsgraphicsonly.HelloApplication.*;
 
-public class boardViewController implements Initializable {
+public class boardViewController implements Initializable { //javaklassen som kontrollerar xmlfilerna så att saker och ting händer.
+    // Klass för att få ut själva båtarna, initialize ansvarar för att båtarna läggs ut.
     @FXML
     private GridPane leftGrid;
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        //initialize är en speciell metod, som kallas så fort ett fxml dokument har laddats in.
-        //Eftersom denna controller-klass har denna initialize metod, och är fäst till boardview2.fxml så kommer initialize
-        //Från boardViewController kallas på när boardview2.fxml laddats in.
-
+        //initialize är en speciell metod, som anropas så fort ett fxml dokument har laddats in.
+        //intialize metoden anropas när boardview2.fxml laddas in, eftersom controllerklassen som den tillhör har denna metod i sig och
+        //är fäst på boardview2.fxml
+        //intialize är isch som main i vanliga java (eftersom detta är fx), så fort ett fxml dokumment laddas in så anropas intialize
         //Alltså efter man har klickat på spela-som-klient-knappen.
 
         GameBoard leftGameBoard = new GameBoard();
         leftGameBoard.buildGameBoard(); //använd buildgameboard först, för att kunna applicera de andra metoder som ligger
-        //i GameBoard-klassen
+        //i GameBoard-klassen //Vi lägger inte till något grafisk utan använder oss av backend-kod på rad 37 och 38, sen vill
+        //vi att det ska ske grafiskt det som händer grafiskt ska kunna visualiseras grafiskt. Det är därför forloopens i rad 43 osv används
+        //för att placera ut skeppen på själva spelplanen.
+        //Victor rekommendererar att vi lägger in kod här som startar själva spelet eftersom initialize startar av sig själv.
+       //Skapa en instans av Game och skriv det här och använda oss av metoderna som vi har gjort i Game.
+
 
         leftGameBoard.buildFleet(1,2,3,4);
         leftGameBoard.placeFleetAtRandom(); //Dessa två linjer har skapat alla skepp, och placerat dom. Då är själva

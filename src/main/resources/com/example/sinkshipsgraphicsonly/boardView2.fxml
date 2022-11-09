@@ -14,7 +14,7 @@
 <?import javafx.scene.text.TextFlow?>
 
 <BorderPane prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.sinkshipsgraphicsonly.boardViewController">
-<left>
+<left>                                                                                                                  <!-- istället för // pga xml, den här fxml dokumentet (fx.controller) är boardView klassen. Utan den raden så kan vi inte köra xml-filen, då blir det problem med hela programmet.-->
     <VBox alignment="CENTER" prefHeight="475.0" prefWidth="300.0" BorderPane.alignment="CENTER">
         <children>
             <HBox alignment="BOTTOM_LEFT" prefHeight="26.0" prefWidth="300.0" spacing="20.0">

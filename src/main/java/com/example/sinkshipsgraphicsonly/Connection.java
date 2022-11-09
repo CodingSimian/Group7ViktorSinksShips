@@ -8,7 +8,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 
-public class Connection {
+public class Connection { //Klass för att ansluta sig mellan två olika enheter.
 
     //properties
     protected boolean server;
