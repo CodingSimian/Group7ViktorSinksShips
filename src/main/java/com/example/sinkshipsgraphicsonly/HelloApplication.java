@@ -13,6 +13,7 @@ public class HelloApplication extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
+
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("startMenu.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 800, 800);
         stage.setTitle("BattleShips");
@@ -25,4 +26,5 @@ public class HelloApplication extends Application {
 
         launch();
     }
+
 }

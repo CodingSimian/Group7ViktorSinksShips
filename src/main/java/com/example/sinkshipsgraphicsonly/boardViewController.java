@@ -15,6 +15,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import com.example.sinkshipsgraphicsonly.HelloApplication.*;
 
 public class boardViewController implements Initializable {
     @FXML
@@ -23,12 +24,20 @@ public class boardViewController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        //initialize är en speciell metod, som kallas så fort ett fxml dokument har laddats in.
+        //Eftersom denna controller-klass har denna initialize metod, och är fäst till boardview2.fxml så kommer initialize
+        //Från boardViewController kallas på när boardview2.fxml laddats in.
+
+        //Alltså efter man har klickat på spela-som-klient-knappen.
+
         GameBoard leftGameBoard = new GameBoard();
         leftGameBoard.buildGameBoard(); //använd buildgameboard först, för att kunna applicera de andra metoder som ligger
         //i GameBoard-klassen
 
         leftGameBoard.buildFleet(1,2,3,4);
-        leftGameBoard.placeFleetAtRandom();
+        leftGameBoard.placeFleetAtRandom(); //Dessa två linjer har skapat alla skepp, och placerat dom. Då är själva
+        //logiken för klient-spelaren utlagd. Det är först efter de 2 for loopar under denna kommentar som bilder
+        //på själva rutnätet läggs ut.
 
         for (int row = 0; row < leftGameBoard.SquareGrid.length; row++) {
             for (int col = 0; col < leftGameBoard.SquareGrid[row].length; col++) {
@@ -39,6 +48,7 @@ public class boardViewController implements Initializable {
                 }
             }
         }
+
     }
 
     public void pausButtonPressed(ActionEvent actionEvent) throws IOException {
