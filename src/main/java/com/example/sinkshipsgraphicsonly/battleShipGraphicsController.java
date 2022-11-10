@@ -71,5 +71,7 @@ public class battleShipGraphicsController  { //Klass för att få fram spelplane
     Platform.exit();
     }
 
-
+public void someSLiderValueSet(double myTickValue){
+        startMenuSlider.setValue(myTickValue);
+}
 }

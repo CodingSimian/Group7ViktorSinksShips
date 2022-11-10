@@ -31,6 +31,8 @@ public class boardViewController implements Initializable { //javaklassen som ko
     @FXML
     private Slider boardSlider;
 
+    private Parent root;
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -83,7 +85,16 @@ public class boardViewController implements Initializable { //javaklassen som ko
         Button jaButton = new Button("JA");
         jaButton.setOnAction(e -> {
             try {
-                Parent root = FXMLLoader.load(getClass().getResource("startMenu.fxml"));
+                double someBoardTickValue = boardSlider.getValue();
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("startMenu.fxml"));
+                root= loader.load();
+
+                battleShipGraphicsController battleGraphicController = loader.getController(); //Den här koden sparar
+                //OCKSÅ värdet från den föregående slidern och applicerar det på den nya scenen.
+                //Copy pastea med andra variabel-namn helt enkelt
+                battleGraphicController.someSLiderValueSet(someBoardTickValue);
+
+
                 Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
                 Scene scene = new Scene(root);
                 stage.setScene(scene); //Denna kod laddar in startMenu.fxml filen, try & catch används för att
