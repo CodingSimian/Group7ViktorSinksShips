@@ -155,7 +155,7 @@
                      </VBox.margin>
                   </Button>
                   <Label alignment="CENTER" prefHeight="17.0" prefWidth="235.0" text="Justera tidsfördröjning för skott i sekunder:" />
-                  <Slider blockIncrement="0.2" majorTickUnit="1.0" max="5.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="38.0" prefWidth="200.0" showTickLabels="true" showTickMarks="true" />
+                  <Slider fx:id="boardSlider" blockIncrement="0.2" majorTickUnit="1.0" max="5.0" maxHeight="-Infinity" maxWidth="-Infinity" onMouseReleased="#onSliderChanged" prefHeight="38.0" prefWidth="200.0" showTickLabels="true" showTickMarks="true" />
                </children>
             </VBox>
             <Label alignment="CENTER" lineSpacing="10.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="30.0" text="A&#10;B&#10;C&#10;D&#10;E&#10;F&#10;G&#10;H&#10;I&#10;J" textAlignment="JUSTIFY">

@@ -9,6 +9,8 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -19,7 +21,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import com.example.sinkshipsgraphicsonly.HelloApplication.*;
+import java.math.*;
 
 public class boardViewController implements Initializable { //javaklassen som kontrollerar xmlfilerna så att saker och ting händer.
     // Klass för att få ut själva båtarna, initialize ansvarar för att båtarna läggs ut.
@@ -27,11 +29,8 @@ public class boardViewController implements Initializable { //javaklassen som ko
     private GridPane leftGrid;
 
     @FXML
-    private Button nejButton;
+    private Slider boardSlider;
 
-
-    @FXML
-    private BorderPane alertBox;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -65,17 +64,43 @@ public class boardViewController implements Initializable { //javaklassen som ko
             }
         }
 
+
     }
 
     public void alertBoxActivated2(ActionEvent actionEvent) throws IOException {
         Stage window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle("Vill du verkligen avsluta?");
-        Button closeButton = new Button("Close this window");
-        closeButton.setOnAction(e -> window.close());
+        window.setMinHeight(200);
+        window.setMinWidth(320);
+
+
+        Label popupLabel = new Label();
+        popupLabel.setText("Är du säker?");
+        Button nejButton = new Button("NEJ");
+        nejButton.setOnAction(e -> window.close()); //Stänger ned popup-rutan
+
+        Button jaButton = new Button("JA");
+        jaButton.setOnAction(e -> {
+            try {
+                Parent root = FXMLLoader.load(getClass().getResource("startMenu.fxml"));
+                Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+                Scene scene = new Scene(root);
+                stage.setScene(scene); //Denna kod laddar in startMenu.fxml filen, try & catch används för att
+                //effektivt använda "throws IOException" med lambda uttrycket.
+                window.close();
+                stage.show();
+            }
+            catch(IOException ex){
+
+            }
+            }
+
+        );
+
 
         VBox layout = new VBox(10);
-        layout.getChildren().addAll(closeButton);
+        layout.getChildren().addAll(popupLabel,nejButton, jaButton);
         layout.setAlignment(Pos.CENTER);
 
         Scene scene = new Scene(layout); //de tre metoder som dyker upp efter denna har jag ej fått att fungera
@@ -85,30 +110,16 @@ public class boardViewController implements Initializable { //javaklassen som ko
         window.showAndWait();
     }
 
+    @FXML
+    public void onSliderChanged() {
+        double sliderValue = boardSlider.getValue();
+        System.out.println(sliderValue + " "); //Denna metod bör ändras, är mest här så att vi förstår hur vi får
+        //tillgång till sliderns värden + ändringar på dess värde.
 
-    public void alertBoxActivated(ActionEvent actionEvent) throws IOException {
-        Stage stage = new Stage();
-
-        //Stage window = new Stage();
-        stage.setTitle("Vill du avsluta?");
-        stage.initModality(Modality.APPLICATION_MODAL); //Gör så att man nt kan klicka utanför rutan
-
-
-        Scene scene = new Scene(alertBox);
-        stage.setScene(scene);
-        stage.showAndWait();
+        //Kanske lägger till så att slidern i startmenyn sparar sitt värde ngnstans och skickar över det till slidern
+        //I boardview
     }
-
-    public void nejButtonpressed(ActionEvent actionEvent) throws IOException{
-        Stage stage = (Stage) nejButton.getScene().getWindow();
-        stage.close(); //Gör så att popup stängs
-    }
-
-    public void avslutaMatchButtonPressed(ActionEvent actionEvent) throws IOException{
-        Parent root = FXMLLoader.load(getClass().getResource("startMenu.fxml"));
-        Stage stage= (Stage) ((Node)actionEvent.getSource()).getScene().getWindow();
-        Scene scene= new Scene(root);
-        stage.setScene(scene); //Denna kod är originellt från bro-codes tutorial på youtube
-        stage.show();
-    }
+public void sliderValueSet(double theTickValue){
+        boardSlider.setValue(theTickValue);
+}
 }

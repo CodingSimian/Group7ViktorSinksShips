@@ -11,6 +11,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -29,12 +30,29 @@ public class battleShipGraphicsController  { //Klass för att få fram spelplane
     private GridPane leftGrid;
     Connection someConnection=new Connection();
 
+    @FXML
+    private Slider startMenuSlider;
 
+    private Parent root;
 
 
     @FXML
     public void clientButtonPressed(ActionEvent actionEvent) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("boardView2.fxml"));
+
+        double tickValue = startMenuSlider.getValue();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("boardView2.fxml")); //rad 42-47 möjliggör
+        //så att värderna mellan slidesen mellan scenerna startMenu och boardview2.fxml sparas när man startar ett game.
+
+        //Jag tänker att detta endast gäller om man är klient, så att även om man ändrar på slidern, men trycker att man
+        //spelar som server så ligger slidern enligt klienten.
+        root = loader.load();
+
+        boardViewController boardController = loader.getController();
+        boardController.sliderValueSet(tickValue);
+
+        //Denna kontroller bör ha connection
+        //klassen, så att man skapar upp en connection mellan två datorer, och först efter den anslutningen har lyckats
+        //så laddar clientButtonPressed in boardview2.fxml
         Stage stage= (Stage) ((Node)actionEvent.getSource()).getScene().getWindow();
         Scene scene= new Scene(root);
         stage.setScene(scene);
@@ -74,6 +92,5 @@ public class battleShipGraphicsController  { //Klass för att få fram spelplane
         System.out.println("X koordinaten blir: " + leftGrid.getColumnIndex(mousenode) + " medan Y blir: " + mouseEvent.getY());
         leftGrid.add(mySPane, 0, 0);
     }
-
 
 }
