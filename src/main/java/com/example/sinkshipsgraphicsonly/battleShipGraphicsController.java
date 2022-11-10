@@ -62,9 +62,11 @@ public class battleShipGraphicsController  { //Klass för att få fram spelplane
 
     public void serverButtonPressed(ActionEvent actionEvent) throws IOException {
         //someConnection.newServer();
-        System.out.println("Server knappen har blivit tryckt");
-        //Denna metod ger funktionalitet till spela-som-server-knappen. Denna mapp innehåller endast den grafiska implementationen
-        //För spelet, pågrund av detta kommenteras ur den metod som egentligen ska ligga här i slutversionen.
+        Parent root = FXMLLoader.load(getClass().getResource("boardView2.fxml"));
+        Stage stage =(Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 
     public void exitButtonPressed(ActionEvent actionEvent) throws IOException{

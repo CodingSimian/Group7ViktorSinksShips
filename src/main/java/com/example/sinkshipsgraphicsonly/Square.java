@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Square {
 
     //properties
-    private Ship ship ;
+    private Ship ship;
     private String name;
     private boolean occupied;
     private boolean hit;

@@ -22,8 +22,6 @@ public class HelloApplication extends Application { //Här körs xml-filen
     }
 
     public static void main(String[] args) {
-        //connection myConnection = new connection();
-
         launch();
     }
 

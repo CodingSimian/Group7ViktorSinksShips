@@ -12,7 +12,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
@@ -21,17 +20,39 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.math.*;
 
 public class boardViewController implements Initializable { //javaklassen som kontrollerar xmlfilerna så att saker och ting händer.
     // Klass för att få ut själva båtarna, initialize ansvarar för att båtarna läggs ut.
+
+    //properties
     @FXML
     private GridPane leftGrid;
+
+    @FXML
+    private GridPane rightGrid;
 
     @FXML
     private Slider boardSlider;
 
     private Parent root;
+
+//metoder
+
+    public void hitOnCoordinate(String message, int X, int Y){ //Denna kod är mera som ett grafiskt test, menad att användas när Osman
+        //Och Daniel har skrivit mera backend kod som man kan länka denna mot.
+        switch(message){
+            case "s1":
+                rightGrid.add(new ImageView("Hit.jpg"),X,Y);
+                break;
+
+            case "s2":
+                rightGrid.add(new ImageView("Miss.jpg"),X,Y);
+
+                break;
+        }
+
+    };
+
 
 
     @Override
@@ -66,7 +87,7 @@ public class boardViewController implements Initializable { //javaklassen som ko
             }
         }
 
-
+        hitOnCoordinate("s2",0,3);
     }
 
     public void alertBoxActivated2(ActionEvent actionEvent) throws IOException {
@@ -121,16 +142,10 @@ public class boardViewController implements Initializable { //javaklassen som ko
         window.showAndWait();
     }
 
-    @FXML
-    public void onSliderChanged() {
-        double sliderValue = boardSlider.getValue();
-        System.out.println(sliderValue + " "); //Denna metod bör ändras, är mest här så att vi förstår hur vi får
-        //tillgång till sliderns värden + ändringar på dess värde.
-
-        //Kanske lägger till så att slidern i startmenyn sparar sitt värde ngnstans och skickar över det till slidern
-        //I boardview
-    }
 public void sliderValueSet(double theTickValue){
         boardSlider.setValue(theTickValue);
 }
+
+
+
 }
