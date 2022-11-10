@@ -29,7 +29,7 @@
                   <Insets right="20.0" />
                </HBox.margin>
             </Label>
-            <Slider blockIncrement="0.2" majorTickUnit="1.0" max="5.0" minWidth="-Infinity" prefHeight="38.0" prefWidth="127.0" showTickLabels="true" showTickMarks="true" translateX="-50.0" translateY="20.0" />
+            <Slider fx:id="startMenuSlider" blockIncrement="0.2" majorTickUnit="1.0" max="5.0" minWidth="-Infinity" prefHeight="38.0" prefWidth="127.0" showTickLabels="true" showTickMarks="true" translateX="-50.0" translateY="20.0" />
             <Button minWidth="-Infinity" mnemonicParsing="false" onAction="#clientButtonPressed" prefWidth="110.0" text="Spela som klient" translateX="-200.0">
                <HBox.margin>
                   <Insets bottom="70.0" />

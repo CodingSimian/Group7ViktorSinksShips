@@ -31,6 +31,7 @@ public class boardViewController implements Initializable { //javaklassen som ko
     @FXML
     private Slider boardSlider;
 
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         //initialize är en speciell metod, som anropas så fort ett fxml dokument har laddats in.
@@ -62,6 +63,7 @@ public class boardViewController implements Initializable { //javaklassen som ko
                 }
             }
         }
+
 
     }
 
@@ -117,5 +119,7 @@ public class boardViewController implements Initializable { //javaklassen som ko
         //Kanske lägger till så att slidern i startmenyn sparar sitt värde ngnstans och skickar över det till slidern
         //I boardview
     }
-
+public void sliderValueSet(double theTickValue){
+        boardSlider.setValue(theTickValue);
+}
 }
