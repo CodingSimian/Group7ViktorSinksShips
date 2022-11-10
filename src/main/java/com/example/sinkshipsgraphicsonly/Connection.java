@@ -62,8 +62,12 @@ public class Connection { //Klass för att ansluta sig mellan två olika enheter
     //  koppplar reader och printer för kommunikation genom socket.
     public void connectToServer()throws IOException{
 
-        if(!server) {
-            try {
+        if(!server) {//Används när det finns en risk när det kastas exceptions, så fångas det, d.vs om något går fel så vill
+            //vill vi kasta det istället. Om det inte fångas så fånga felet.
+            //Om det som står så i try inte funkar, så kör catch med, så fångas den typen av exeception. Vi vill inte att det ska krascha
+            //utan att vi vill fånga det istället.
+            try { //Om man får ett error i try som man skickar, så kan man catcha det och sedan skrivs koden ut i det catchblocket.
+                //Ungefär som en if sats, skillnaden är att här testas/körs bägge (om try inte funkar).
                 user = new Socket("localhost", 4499);
                 in = new InputStreamReader(user.getInputStream());
                 br = new BufferedReader(in);
@@ -72,7 +76,7 @@ public class Connection { //Klass för att ansluta sig mellan två olika enheter
                 System.out.println("Connected to server");
 
 
-            } catch (ConnectException e) {
+            } catch (ConnectException e) {//get.class för att få klassen.
                 e.printStackTrace();
                 System.out.println("connection refused");
             }

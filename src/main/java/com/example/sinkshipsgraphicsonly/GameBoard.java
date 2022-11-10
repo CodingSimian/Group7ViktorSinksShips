@@ -11,7 +11,7 @@ public class GameBoard {
     // array som användas för att skapa all squares med rätt namn
     char[] yAxis = {'A', 'B', 'C', 'D', 'E', 'F', 'G','H','I','J'}; //Bytte namn från xAxis till yAxis, Viktor
 
-    // Innehåller alla skep som skapas.
+    // Innehåller alla skepp som skapas.
     ArrayList<Ship> fleet = new ArrayList<>();
 
     // 2D array som innehåller alla Squares

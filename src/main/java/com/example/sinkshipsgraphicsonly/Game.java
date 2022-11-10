@@ -16,6 +16,8 @@ public class Game
         player1 = new GameBoard(); //Skapar en instans av GameBoard. 
         player2 = new GameBoard(); //Skaper en instans av GameBoard.
         //Gameboard blir inte byggt av bara construktion utan behöver ha metoderna med.
+
+
     }
     
     //Metoder1
@@ -23,6 +25,23 @@ public class Game
         player1.fire("6A");//Skjuter t.ex på rad 1 column 1 och skickar tillbaka feedback vad som hände med skotten.
         player1.convertCoordinate('A'); //konverar stringvärden och konverterar till en siffra, så att man kan skicka dem vidare till fire sen.
     }
+    public String intelligenceAI(){
+        boolean ShipsIsHit = true;
+        if(ShipsIsHit)
+      {
+        //  System.out.println("Your battleship has been hit " +
+         // Vilket skepp  + buildGameBoard) +;//Har för mig att läraren sa att vi behöver bygga en ny gameBoard efter varje skott?
+      } else{
+          //  System.out.println("No hit = You have missed!!! "
+          //  +   + buildGameBoard +);} //Har för mig att läraren sa att vi behöver bygga en ny gameBoard efter varje skott?
+
+
+        }
+    }
+
+
+
+
     //Scanner scanner = new Scanner();
     //Scanner.next(); //Skickar in strängen i den,
 
