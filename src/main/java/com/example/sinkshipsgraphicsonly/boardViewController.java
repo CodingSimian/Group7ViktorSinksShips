@@ -72,8 +72,8 @@ public class boardViewController implements Initializable { //javaklassen som ko
         Stage window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle("Vill du verkligen avsluta?");
-        window.setMinHeight(300);
-        window.setMinWidth(200);
+        window.setMinHeight(200);
+        window.setMinWidth(320);
 
 
         Label popupLabel = new Label();
@@ -112,29 +112,5 @@ public class boardViewController implements Initializable { //javaklassen som ko
     }
 
 
-    public void alertBoxActivated(ActionEvent actionEvent) throws IOException {
-        Stage stage = new Stage();
 
-        //Stage window = new Stage();
-        stage.setTitle("Vill du avsluta?");
-        stage.initModality(Modality.APPLICATION_MODAL); //Gör så att man nt kan klicka utanför rutan
-
-
-        Scene scene = new Scene(alertBox);
-        stage.setScene(scene);
-        stage.showAndWait();
-    }
-
-    public void nejButtonpressed(ActionEvent actionEvent) throws IOException{
-        Stage stage = (Stage) nejButton.getScene().getWindow();
-        stage.close(); //Gör så att popup stängs
-    }
-
-    public void avslutaMatchButtonPressed(ActionEvent actionEvent) throws IOException{
-        Parent root = FXMLLoader.load(getClass().getResource("startMenu.fxml"));
-        Stage stage= (Stage) ((Node)actionEvent.getSource()).getScene().getWindow();
-        Scene scene= new Scene(root);
-        stage.setScene(scene); //Denna kod är originellt från bro-codes tutorial på youtube
-        stage.show();
-    }
 }

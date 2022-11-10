@@ -34,7 +34,9 @@ public class battleShipGraphicsController  { //Klass för att få fram spelplane
 
     @FXML
     public void clientButtonPressed(ActionEvent actionEvent) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("boardView2.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("boardView2.fxml")); //Denna kontroller bör ha connection
+        //klassen, så att man skapar upp en connection mellan två datorer, och först efter den anslutningen har lyckats
+        //så laddar clientButtonPressed in boardview2.fxml
         Stage stage= (Stage) ((Node)actionEvent.getSource()).getScene().getWindow();
         Scene scene= new Scene(root);
         stage.setScene(scene);
