@@ -9,6 +9,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -71,11 +72,36 @@ public class boardViewController implements Initializable { //javaklassen som ko
         Stage window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle("Vill du verkligen avsluta?");
-        Button closeButton = new Button("Close this window");
-        closeButton.setOnAction(e -> window.close());
+        window.setMinHeight(300);
+        window.setMinWidth(200);
+
+
+        Label popupLabel = new Label();
+        popupLabel.setText("Är du säker?");
+        Button nejButton = new Button("NEJ");
+        nejButton.setOnAction(e -> window.close()); //Stänger ned popup-rutan
+
+        Button jaButton = new Button("JA");
+        jaButton.setOnAction(e -> {
+            try {
+                Parent root = FXMLLoader.load(getClass().getResource("startMenu.fxml"));
+                Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+                Scene scene = new Scene(root);
+                stage.setScene(scene); //Denna kod laddar in startMenu.fxml filen, try & catch används för att
+                //effektivt använda "throws IOException" med lambda uttrycket.
+                window.close();
+                stage.show();
+            }
+            catch(IOException ex){
+
+            }
+            }
+
+        );
+
 
         VBox layout = new VBox(10);
-        layout.getChildren().addAll(closeButton);
+        layout.getChildren().addAll(popupLabel,nejButton, jaButton);
         layout.setAlignment(Pos.CENTER);
 
         Scene scene = new Scene(layout); //de tre metoder som dyker upp efter denna har jag ej fått att fungera
