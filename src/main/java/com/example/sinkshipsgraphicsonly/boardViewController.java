@@ -10,6 +10,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -20,7 +21,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import com.example.sinkshipsgraphicsonly.HelloApplication.*;
+import java.math.*;
 
 public class boardViewController implements Initializable { //javaklassen som kontrollerar xmlfilerna så att saker och ting händer.
     // Klass för att få ut själva båtarna, initialize ansvarar för att båtarna läggs ut.
@@ -28,11 +29,7 @@ public class boardViewController implements Initializable { //javaklassen som ko
     private GridPane leftGrid;
 
     @FXML
-    private Button nejButton;
-
-
-    @FXML
-    private BorderPane alertBox;
+    private Slider boardSlider;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -111,6 +108,14 @@ public class boardViewController implements Initializable { //javaklassen som ko
         window.showAndWait();
     }
 
+    @FXML
+    public void onSliderChanged() {
+        double sliderValue = boardSlider.getValue();
+        System.out.println(sliderValue + " "); //Denna metod bör ändras, är mest här så att vi förstår hur vi får
+        //tillgång till sliderns värden + ändringar på dess värde.
 
+        //Kanske lägger till så att slidern i startmenyn sparar sitt värde ngnstans och skickar över det till slidern
+        //I boardview
+    }
 
 }
