@@ -72,25 +72,4 @@ public class battleShipGraphicsController  { //Klass för att få fram spelplane
     }
 
 
-    public void continueButtonPressed(ActionEvent actionEvent) throws IOException{
-        Parent root = FXMLLoader.load(getClass().getResource("boardView2.fxml"));
-        Stage stage= (Stage) ((Node)actionEvent.getSource()).getScene().getWindow();
-        Scene scene= new Scene(root);
-        stage.setScene(scene); //Eftersom jag utgår från att båtars position. skott etc kommer externt från backend
-        //kod, så behövs inte någon speciiell kod för att gå tillbaka till spelplanen. Man helt enkelt bara laddar in
-        //all backend kod som redan håller koll på mängden båtar/skott. Precis som i början
-        stage.show();
-    }
-
-
-    @FXML
-    public void thisCoordinate(javafx.scene.input.MouseEvent mouseEvent) {
-        Node mousenode = (Node) mouseEvent.getSource();
-
-        StackPane mySPane = new StackPane();
-        mySPane.setBackground(new Background(new BackgroundFill(Color.BLUE, CornerRadii.EMPTY, Insets.EMPTY)));
-        System.out.println("X koordinaten blir: " + leftGrid.getColumnIndex(mousenode) + " medan Y blir: " + mouseEvent.getY());
-        leftGrid.add(mySPane, 0, 0);
-    }
-
 }
