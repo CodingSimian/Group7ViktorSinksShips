@@ -1,19 +1,26 @@
 package com.example.sinkshipsgraphicsonly;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 
 public class GameBoard {
     //properties
 
     // array som användas för att skapa all squares med rätt namn
-    String[] yAxis = {"A", "B", "C", "D", "E", "F", "G", "H","I", "J"}; //Bytte namn från xAxis till yAxis, Viktor
+    char[] yAxis = {'A', 'B', 'C', 'D', 'E', 'F', 'G','H','I','J'}; //Bytte namn från xAxis till yAxis, Viktor
 
     // Innehåller alla skep som skapas.
     ArrayList<Ship> fleet = new ArrayList<>();
 
     // 2D array som innehåller alla Squares
     Square[][] SquareGrid = new Square[10][10];
+
+    // String List som innehåller kordinater som ej är beskjutna.
+    List<String> validCoordinates = new ArrayList<>();
+
+    String lastCoordinate;
 
     Random random = new Random();
     int antalSänkta;
@@ -28,14 +35,17 @@ public class GameBoard {
     public void buildGameBoard(){
 
         for(int i = 0; i< yAxis.length; i++){
-            SquareGrid[i][0] = new Square(0+ yAxis[i]);
+            SquareGrid[i][0] = new Square("0"+ yAxis[i]);
+            validCoordinates.add(getSquare(i,0).getName());
             //System.out.println(getSquare(i,0).getName()); // ta bort senare
             for(int j = 1; j<10; j++){
-                SquareGrid[i][j] = new Square((j)+ yAxis[i]);
+                SquareGrid[i][j] = new Square(""+ j + yAxis[i]);
+                validCoordinates.add(getSquare(i,j).getName());
                 //System.out.println(SquareGrid[i][j].getName()+ "i = " + i + " j= " + j); // ta bort senare
             }
 
         }
+
     }
 
     public void squareGridComunnication(){ // ta bort senare
@@ -123,21 +133,25 @@ public class GameBoard {
         neighbourSouthEast(row,colum);
         neighbourSouthWest(row,colum);
     }
-    // metod för som tar emot en int för rad och int för colum , skjuter därefter på motsvarande Square på planen.
-    public String fire(int row, int colum){
+    // metod för som tar emot en string i formatet siffra för colum och bokstav för row tex, "6A" , skjuter därefter på motsvarande Square på planen.
+    public String fire(String coordinate){
         String feedback;
         boolean gameover = false;
+        if(coordinate.length() == 2) {
+            int row = convertCoordinate(coordinate.charAt(1));
+            int colum = Character.getNumericValue(coordinate.charAt(0));
 
-          feedback = getSquare(row,colum).hit();
-          if(feedback.equalsIgnoreCase("S")){
-              antalSänkta ++;
-              fleet.remove(getSquare(row,colum).getShip());
-              if(fleet.isEmpty()){
-                  feedback = "GAMEOVER";
-              }
+            feedback = getSquare(row, colum).hit();
+            if (feedback.equalsIgnoreCase("S")) {
+                antalSänkta++;
+                fleet.remove(getSquare(row, colum).getShip());
+                if (fleet.isEmpty()) {
+                    feedback = "GAMEOVER";
+                }
 
 
-          }
+            }
+        }else feedback = "Felaktigt koordinat";
 
       return feedback;
     }
@@ -284,24 +298,41 @@ public class GameBoard {
         }
     }
 
-    public String getCoordinate(int coordinate){
+    public char getCoordinate(int coordinate){
         return yAxis[coordinate];
     }
-    public int convertCoordinate(String coordinate){
+    // tar emot och char som representerar en koordinat och retunera motsvarande int värde i spelplanen
+    public int convertCoordinate(char coordinate){
         for(int i = 0; i< yAxis.length; i++){
-            if(yAxis[i].equalsIgnoreCase(coordinate)){
+            if(yAxis[i] == coordinate){
                 return i;
 
             }
         }
         return 0;
     }
-    public boolean validCoordinate(int colum, int row){
-        if(getSquare(colum,row).isHit()){
-            return false;
-        }else return true;
+
+    // Metod som använder sig av listan validCoordinates för att retunera en random utvald koordinat som en String
+    // Den använder sig av shuffla för att få en random koordinat samt tar bort den retunerade koordinaten från listan.
+    public String getRandomCoordinate (){  // ta bort senare
+        Collections.shuffle(validCoordinates);
+        if(!validCoordinates.isEmpty()) {
+            lastCoordinate = validCoordinates.get(0);
+            return validCoordinates.remove(0);
+        }else return "Empty";
 
     }
+
+   /* public String getLogicalCoordinate(){ // gör klart , utför kontroller för möjliga kordinater baserat på senaste koordinat
+        if(lastCoordinate.length() == 2) {  // använd neighbourgh metoderna efter du gjort om dom så dom använder polymorphism.
+            int colum = lastCoordinate.charAt(0);
+            int row = convertCoordinate(lastCoordinate.charAt(1));
+
+        }
+
+    }
+
+    */
 
 
 

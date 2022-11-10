@@ -20,8 +20,8 @@ public class Game
     
     //Metoder1
     public void test(){
-        player1.fire(1,1);//Skjuter t.ex på rad 1 column 1 och skickar tillbaka feedback vad som hände med skotten.
-        player1.convertCoordinate("a"); //konverar stringvärden och konverterar till en siffra, så att man kan skicka dem vidare till fire sen.
+        player1.fire("6A");//Skjuter t.ex på rad 1 column 1 och skickar tillbaka feedback vad som hände med skotten.
+        player1.convertCoordinate('A'); //konverar stringvärden och konverterar till en siffra, så att man kan skicka dem vidare till fire sen.
     }
     //Scanner scanner = new Scanner();
     //Scanner.next(); //Skickar in strängen i den,
