@@ -15,12 +15,18 @@ public class GameBoard {
     ArrayList<Ship> fleet = new ArrayList<>();
 
     // 2D array som innehåller alla Squares
-    Square[][] SquareGrid = new Square[10][10];
+    public Square[][] SquareGrid = new Square[10][10];
 
     // String List som innehåller kordinater som ej är beskjutna.
     List<String> validCoordinates = new ArrayList<>();
 
-    String lastCoordinate;
+    private String lastRandomCoordinate;        // innehåller sista koordinaten retunerad av randomCoordinat;
+    private String lastLogicalCoordinate;      // innehåller sista koordinaten retunerade av logicalCoordinate
+    String lastCoordinateHit;
+    boolean north, west, east, south;  // boolean som logicalCoordinate använder för att bestämma nästa koordinat
+    boolean logicActive;
+    String [] logicalCoordinates = new String[4];
+
 
     Random random = new Random();
     int antalSänkta;
@@ -78,21 +84,44 @@ public class GameBoard {
                  getSquare(row,colum+1).setOccupied();
              }
     }
+    public String neighbourEast(String coordinate){
+        int colum = coordinate.charAt(0);
+        int row = convertCoordinate(coordinate.charAt(1));
+        if(colum < SquareGrid.length-2) {
+            return getSquare(row,colum+1).getName();
+        }else return "Null";
+    }
     public void neighbourWest( int row, int colum){
         if(colum > 0) {
             getSquare(row,colum-1).setOccupied();
         }
     }
+    public String neighbourWest( String coordinate){
+        int colum = coordinate.charAt(0);
+        int row = convertCoordinate(coordinate.charAt(1));
+        if(colum > 0) {
+            return getSquare(row,colum-1).getName();
+        }else return "Null";
+    }
+
+
+
     public void neighbourNorth( int row, int colum){
         if(row > 0) {
-            //square.addNeighbour(getSquare(row - 1, colum));
             getSquare(row -1, colum).setOccupied();
         }
     }
-    public void neighbourNorthEast( int row, int colum){
+    public String neighbourNorth(String coordinate){
+        int colum = coordinate.charAt(0);
+        int row = convertCoordinate(coordinate.charAt(1));
+        if(row > 0) {
+            return getSquare(row -1, colum).getName();
+        }else return "Null";
+    }
+    public void neighbourNorthEast(int row , int colum){
+
         if(row > 0 && colum < SquareGrid.length-1) {
-            //square.addNeighbour(getSquare(row - 1, colum + 1));
-            getSquare(row-1,colum +1).setOccupied();
+             getSquare(row-1,colum +1).setOccupied();
         }
     }
     public void neighbourNorthWest( int row, int colum){
@@ -107,6 +136,14 @@ public class GameBoard {
             getSquare(row+ 1,colum).setOccupied();
         }
     }
+    public String neighbourSouth( String coordinate){
+        int colum = coordinate.charAt(0);
+        int row = convertCoordinate(coordinate.charAt(1));
+        if(row < SquareGrid.length-1) {
+           return getSquare(row+ 1,colum).getName();
+        }else return "null";
+    }
+
     public void neighbourSouthEast( int row , int colum){
         if(row < SquareGrid.length-1 && colum < SquareGrid.length-1) {
             //square.addNeighbour(getSquare(row + 1, colum + 1));
@@ -189,7 +226,7 @@ public class GameBoard {
          return valid;
     }
 
-    public boolean placeShipHorizontally(int row, int colum, Ship ship){
+    private boolean placeShipHorizontally(int row, int colum, Ship ship){
         boolean valid = true;
         if( colum+ship.getLength() < SquareGrid.length) {
             for (int i = 0; i < ship.getLength(); i++) {
@@ -230,7 +267,7 @@ public class GameBoard {
     }
 
     // Metod som tar emot en int för att kunna välja vilka typ av skepp den skall bygga,
-    public Ship buildShip(int type){
+    private Ship buildShip(int type){
          Ship ship;
         switch(type){
             case 0:
@@ -251,7 +288,7 @@ public class GameBoard {
     }
     // metod som lägger till skepp i fleet ArrayList
     // den tar emot en int för att avgöra vilken typ av skepp och en int för att avgöra antal.
-    public void addShip(int type, int numberOfShips){
+    private void addShip(int type, int numberOfShips){
         for(int i = 0; i<numberOfShips; i++) {
             fleet.add(buildShip(type));
         }
@@ -313,26 +350,62 @@ public class GameBoard {
     }
 
     // Metod som använder sig av listan validCoordinates för att retunera en random utvald koordinat som en String
-    // Den använder sig av shuffla för att få en random koordinat samt tar bort den retunerade koordinaten från listan.
+    // Den använder sig av Collections.Shuffle för att få en random koordinat samt tar bort den retunerade koordinaten från listan.
     public String getRandomCoordinate (){  // ta bort senare
         Collections.shuffle(validCoordinates);
         if(!validCoordinates.isEmpty()) {
-            lastCoordinate = validCoordinates.get(0);
+            lastRandomCoordinate = validCoordinates.get(0);
             return validCoordinates.remove(0);
         }else return "Empty";
 
     }
 
-   /* public String getLogicalCoordinate(){ // gör klart , utför kontroller för möjliga kordinater baserat på senaste koordinat
-        if(lastCoordinate.length() == 2) {  // använd neighbourgh metoderna efter du gjort om dom så dom använder polymorphism.
-            int colum = lastCoordinate.charAt(0);
-            int row = convertCoordinate(lastCoordinate.charAt(1));
+    public String getLogicalCoordinate(){ // gör klart , utför kontroller för möjliga kordinater baserat på senaste koordinat
 
+        if(lastRandomCoordinate.length() == 2 && !logicActive) { // använd neighbourgh metoderna efter du gjort om dom så dom använder polymorphism.
+            createLogicalCoordinateList();
         }
+
+        return "hej";
+
 
     }
 
-    */
+    public void createLogicalCoordinateList(){
+        String tempCoordinate;
+
+            tempCoordinate = neighbourNorth(lastRandomCoordinate);
+            if(!tempCoordinate.equalsIgnoreCase("NULL")){
+                logicalCoordinates[0] = tempCoordinate;
+            }
+            tempCoordinate = neighbourWest(lastRandomCoordinate);
+            if(!tempCoordinate.equalsIgnoreCase("NULL")) {
+                logicalCoordinates[1] = tempCoordinate;
+            }
+            tempCoordinate = neighbourEast(lastRandomCoordinate);
+            if(!tempCoordinate.equalsIgnoreCase("NULL")){
+                logicalCoordinates[2] = tempCoordinate;
+            }
+            tempCoordinate = neighbourSouth(lastRandomCoordinate);
+            if(!tempCoordinate.equalsIgnoreCase("NULL")) {
+                logicalCoordinates[3] = tempCoordinate;
+            }
+
+
+
+    }
+
+    public String getLastRandomCoordinate(){
+        return lastRandomCoordinate;
+    }
+
+    public String getLastLogicalCoordinate(){
+        return lastLogicalCoordinate;
+    }
+
+
+
+
 
 
 
