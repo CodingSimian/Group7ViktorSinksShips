@@ -61,7 +61,7 @@ public class Game1 {
 
         public String breakDownMessage(String message){
             scan = new Scanner(message);
-            int row ;
+            int row;
             int colum;
             String newMessage;
             if(message.equalsIgnoreCase("GAMEOVER")){
@@ -77,13 +77,23 @@ public class Game1 {
 
             switch(newMessage){
                 case "M":
-                    // row, colum kalla på kontroller för att uppdatera player Gameboard;
+                    controller.hitOnCoordinate(false,"M",Character.getNumericValue(player.getLastRandomCoordinate().charAt(0)), player.convertCoordinate(player.getLastRandomCoordinate().charAt(1)));
+                    newMessage += player.getRandomCoordinate();
                     break;
                 case "H":
                     // row, colum kalla på kontroller för att uppdatera player Gameboard;
+                    if(player.logicActive) {
+                        controller.hitOnCoordinate(false, "H", Character.getNumericValue(player.getLastLogicalCoordinate().charAt(0)), player.convertCoordinate(player.getLastLogicalCoordinate().charAt(1)));
+                    }
+                    else
+                        controller.hitOnCoordinate(false, "H", Character.getNumericValue(player.getLastRandomCoordinate().charAt(0)), player.convertCoordinate(player.getLastLogicalCoordinate().charAt(1)));
+                    newMessage += player.getLogicalCoordinate();
+
                     break;
                 case "S":
                     //  row, colum kalla på kontroller för att uppdatera player Gameboard;
+                    controller.hitOnCoordinate(false, "S",Character.getNumericValue(player.getLastLogicalCoordinate().charAt(0)), player.convertCoordinate(player.getLastLogicalCoordinate().charAt(1)));
+                    newMessage += player.getRandomCoordinate();
                     break;
 
             }
@@ -93,17 +103,19 @@ public class Game1 {
            switch (feedback){
 
                case "M": // kalla på getRandomCoordinate();
-                   controller.hitOnCoordinate("M",Character.getNumericValue(enemy.getLastRandomCoordinate().charAt(0)), enemy.convertCoordinate(enemy.getLastRandomCoordinate().charAt(1)));
+                   controller.hitOnCoordinate(true,"M",Character.getNumericValue(enemy.getLastRandomCoordinate().charAt(0)), enemy.convertCoordinate(enemy.getLastRandomCoordinate().charAt(1)));
                    newMessage += enemy.getRandomCoordinate();
                    break;
                case "H": // kalla på getLogicalCooordinate();
                    if(enemy.logicActive) {
-                       controller.hitOnCoordinate("H", Character.getNumericValue(enemy.getLastLogicalCoordinate().charAt(0)), enemy.convertCoordinate(enemy.getLastLogicalCoordinate().charAt(1)));
-                   }else controller.hitOnCoordinate("H", Character.getNumericValue(enemy.getLastRandomCoordinate().charAt(0)), enemy.convertCoordinate(enemy.getLastLogicalCoordinate().charAt(1)));
+                       controller.hitOnCoordinate(true, "H", Character.getNumericValue(enemy.getLastLogicalCoordinate().charAt(0)), enemy.convertCoordinate(enemy.getLastLogicalCoordinate().charAt(1)));
+                   }
+                   else
+                       controller.hitOnCoordinate(true, "H", Character.getNumericValue(enemy.getLastRandomCoordinate().charAt(0)), enemy.convertCoordinate(enemy.getLastLogicalCoordinate().charAt(1)));
                    newMessage += enemy.getLogicalCoordinate();
                    break;
                case "S": // reset logicalCoordinate(); kalla därefter på getRandomCoordinate();
-                   controller.hitOnCoordinate("S",Character.getNumericValue(enemy.getLastLogicalCoordinate().charAt(0)), enemy.convertCoordinate(enemy.getLastLogicalCoordinate().charAt(1)));
+                   controller.hitOnCoordinate(true, "S",Character.getNumericValue(enemy.getLastLogicalCoordinate().charAt(0)), enemy.convertCoordinate(enemy.getLastLogicalCoordinate().charAt(1)));
                    newMessage += enemy.getRandomCoordinate();
                    break;
            }
