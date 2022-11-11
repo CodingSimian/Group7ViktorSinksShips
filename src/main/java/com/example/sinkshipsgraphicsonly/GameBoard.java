@@ -85,7 +85,7 @@ public class GameBoard {
              }
     }
     public String neighbourEast(String coordinate){
-        int colum = coordinate.charAt(0);
+        int colum = Character.getNumericValue(coordinate.charAt(0));
         int row = convertCoordinate(coordinate.charAt(1));
         if(colum < SquareGrid.length-2) {
             return getSquare(row,colum+1).getName();
@@ -97,7 +97,7 @@ public class GameBoard {
         }
     }
     public String neighbourWest( String coordinate){
-        int colum = coordinate.charAt(0);
+        int colum = Character.getNumericValue(coordinate.charAt(0));
         int row = convertCoordinate(coordinate.charAt(1));
         if(colum > 0) {
             return getSquare(row,colum-1).getName();
@@ -112,7 +112,7 @@ public class GameBoard {
         }
     }
     public String neighbourNorth(String coordinate){
-        int colum = coordinate.charAt(0);
+        int colum = Character.getNumericValue(coordinate.charAt(0));
         int row = convertCoordinate(coordinate.charAt(1));
         if(row > 0) {
             return getSquare(row -1, colum).getName();
@@ -137,7 +137,7 @@ public class GameBoard {
         }
     }
     public String neighbourSouth( String coordinate){
-        int colum = coordinate.charAt(0);
+        int colum = Character.getNumericValue(coordinate.charAt(0)) ;
         int row = convertCoordinate(coordinate.charAt(1));
         if(row < SquareGrid.length-1) {
            return getSquare(row+ 1,colum).getName();
@@ -360,39 +360,124 @@ public class GameBoard {
 
     }
 
-    public String getLogicalCoordinate(){ // gör klart , utför kontroller för möjliga kordinater baserat på senaste koordinat
-
+    public String startLogicalCoordinate(){ // gör klart , utför kontroller för möjliga kordinater baserat på senaste koordinat
+        String coordinate = "";
         if(lastRandomCoordinate.length() == 2 && !logicActive) { // använd neighbourgh metoderna efter du gjort om dom så dom använder polymorphism.
             createLogicalCoordinateList();
+
+            for (int i = 0; i < logicalCoordinates.length; i++) {
+                if (!logicalCoordinates[i].equalsIgnoreCase("NULL")) {
+                    coordinate = logicalCoordinates[i];
+                    lastLogicalCoordinate = coordinate;
+                    validCoordinates.remove(coordinate);
+
+                    switch (i) {
+                        case 0:
+                            north = true;
+                            break;
+                        case 1:
+                            west = true;
+                            break;
+                        case 2:
+                            east = true;
+                            break;
+                        case 3:
+                            south = true;
+                            break;
+                    }
+                    break;
+                }
+            }
+            return coordinate;
         }
 
-        return "hej";
+
+
+
+
+        return coordinate;
 
 
     }
 
     public void createLogicalCoordinateList(){
-        String tempCoordinate;
+                logicalCoordinates[0] = neighbourNorth(lastRandomCoordinate);
+                logicalCoordinates[1] = neighbourWest(lastRandomCoordinate);
+                logicalCoordinates[2] = neighbourEast(lastRandomCoordinate);
+                logicalCoordinates[3] = neighbourSouth(lastRandomCoordinate);
+    }
 
-            tempCoordinate = neighbourNorth(lastRandomCoordinate);
-            if(!tempCoordinate.equalsIgnoreCase("NULL")){
-                logicalCoordinates[0] = tempCoordinate;
-            }
-            tempCoordinate = neighbourWest(lastRandomCoordinate);
-            if(!tempCoordinate.equalsIgnoreCase("NULL")) {
-                logicalCoordinates[1] = tempCoordinate;
-            }
-            tempCoordinate = neighbourEast(lastRandomCoordinate);
-            if(!tempCoordinate.equalsIgnoreCase("NULL")){
-                logicalCoordinates[2] = tempCoordinate;
-            }
-            tempCoordinate = neighbourSouth(lastRandomCoordinate);
-            if(!tempCoordinate.equalsIgnoreCase("NULL")) {
-                logicalCoordinates[3] = tempCoordinate;
-            }
+    public String nextLogicalCoordinate(String feedback){
+        String coordinate = "";
+        if(feedback.equalsIgnoreCase("H")){
+            if(north){
+                coordinate = neighbourNorth(lastLogicalCoordinate);
+                if(coordinate.equalsIgnoreCase("NULL")){
+                    coordinate = newLogicDirection(1);
+                    north = false;
+                }
 
 
+            }else if(west){
+                coordinate = neighbourWest(lastLogicalCoordinate);
+                if(coordinate.equalsIgnoreCase("NULL")) {
+                    coordinate = newLogicDirection(2);
+                    west = false;
+                }
+            }else if(east){
+                coordinate = neighbourEast(lastLogicalCoordinate);
+                if(coordinate.equalsIgnoreCase("NULL")){
+                    coordinate = newLogicDirection(3);
+                    east = false;
+                }
+            }else if(south){
+                coordinate = neighbourSouth(lastLogicalCoordinate);
+            }
+        }else{
+            if(north){
+                coordinate = newLogicDirection(1);
+            }else if(west){
+                coordinate = newLogicDirection(2);
+            }else if(east){
+                coordinate = newLogicDirection(3);
+            }
+        }
 
+        return coordinate;
+
+    }
+    private String newLogicDirection(int a){
+        String coordinate = "";
+
+        for(int i = a;i<logicalCoordinates.length; i++ ){
+            if (!logicalCoordinates[i].equalsIgnoreCase("NULL")) {
+                coordinate = logicalCoordinates[i];
+                lastLogicalCoordinate = coordinate;
+                validCoordinates.remove(coordinate);
+                switch (i) {
+                    case 0:
+                        north = true;
+                        break;
+                    case 1:
+                        west = true;
+                        break;
+                    case 2:
+                        east = true;
+                        break;
+                    case 3:
+                        south = true;
+                        break;
+                }
+                break;
+            }
+
+        }
+            return coordinate;
+    }
+
+    public void resetLogicalCoordinate(){
+        logicActive = false;
+        north = false; west = false; east = false; south = false;
     }
 
     public String getLastRandomCoordinate(){
