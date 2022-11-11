@@ -28,7 +28,8 @@ import java.util.ResourceBundle;
 public class battleShipGraphicsController  { //Klass för att få fram spelplanen
     @FXML
     private GridPane leftGrid;
-    Connection someConnection=new Connection();
+
+    Connection theGameConnection = new Connection(); //statisk property
 
     @FXML
     private Slider startMenuSlider;
@@ -36,9 +37,15 @@ public class battleShipGraphicsController  { //Klass för att få fram spelplane
     private Parent root;
 
 
+    /*@Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+    theGameConnection = new Connection();
+
+    }*/
+
     @FXML
     public void clientButtonPressed(ActionEvent actionEvent) throws IOException {
-        //Insert instance of Connection here
+        theGameConnection.connectToServer();
 
         double tickValue = startMenuSlider.getValue();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("boardView2.fxml")); //rad 42-47 möjliggör
@@ -62,7 +69,7 @@ public class battleShipGraphicsController  { //Klass för att få fram spelplane
 
 
     public void serverButtonPressed(ActionEvent actionEvent) throws IOException {
-        //someConnection.newServer();
+        theGameConnection.newServer();
 
 
         Parent root = FXMLLoader.load(getClass().getResource("boardView2.fxml"));
@@ -78,5 +85,9 @@ public class battleShipGraphicsController  { //Klass för att få fram spelplane
 
 public void someSLiderValueSet(double myTickValue){
         startMenuSlider.setValue(myTickValue);
+}
+
+public Connection getConnection(){
+        return this.theGameConnection;
 }
 }

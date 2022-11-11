@@ -36,6 +36,8 @@ public class boardViewController implements Initializable { //javaklassen som ko
 
     private Parent root;
 
+    Game1 theGame;
+
 //metoder
 
     public void hitOnCoordinate(Boolean isRightGrid, String message, int X, int Y) { //Denna kod är mera som ett grafiskt test, menad att användas när Osman
@@ -43,6 +45,7 @@ public class boardViewController implements Initializable { //javaklassen som ko
         if (isRightGrid) {
             switch (message) {
                 case "H":
+                case "S":
                     rightGrid.add(new ImageView("Hit.jpg"), X, Y);
                     break;
 
@@ -54,6 +57,7 @@ public class boardViewController implements Initializable { //javaklassen som ko
         } else {
             switch (message) {
                 case "H":
+                case "S":
                     leftGrid.add(new ImageView("Hit.jpg"), X, Y);
                     break;
 
@@ -101,7 +105,8 @@ public class boardViewController implements Initializable { //javaklassen som ko
                 }
             }
 
-            hitOnCoordinate(true,"H", 0, 3);
+
+
         }
 
         public void alertBoxActivated2 (ActionEvent actionEvent) throws IOException {

@@ -24,6 +24,10 @@ public class HelloApplication extends Application { //Här körs xml-filen
     public static void main(String[] args) {
         launch();
 
+
+        /*String a = "9";
+        int b = Character.getNumericValue(a.charAt(0));
+        System.out.println(b);*/
     }
 
 }
