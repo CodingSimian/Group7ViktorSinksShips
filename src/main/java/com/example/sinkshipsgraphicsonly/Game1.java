@@ -77,16 +77,13 @@ public class Game1 {
 
             switch(newMessage){
                 case "M":
-                    controller.hitOnCoordinate(false,"M",Character.getNumericValue(player.getLastRandomCoordinate().charAt(0)), player.convertCoordinate(player.getLastRandomCoordinate().charAt(1)));
+                    controller.hitOnCoordinate(false,"M",colum,row);
                     newMessage += player.getRandomCoordinate();
                     break;
                 case "H":
                     // row, colum kalla på kontroller för att uppdatera player Gameboard;
-                    if(player.logicActive) {
-                        controller.hitOnCoordinate(false, "H", Character.getNumericValue(player.getLastLogicalCoordinate().charAt(0)), player.convertCoordinate(player.getLastLogicalCoordinate().charAt(1)));
-                    }
-                    else
-                        controller.hitOnCoordinate(false, "H", Character.getNumericValue(player.getLastRandomCoordinate().charAt(0)), player.convertCoordinate(player.getLastLogicalCoordinate().charAt(1)));
+
+                        controller.hitOnCoordinate(false, "H", colum, row);
                     newMessage += player.getLogicalCoordinate();
 
                     break;
