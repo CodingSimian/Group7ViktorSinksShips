@@ -65,7 +65,8 @@ public class boardViewController implements Initializable { //javaklassen som ko
 
 
         }
-        ;
+    };
+
 
 
         @Override
@@ -100,7 +101,7 @@ public class boardViewController implements Initializable { //javaklassen som ko
                 }
             }
 
-            hitOnCoordinate("H", 0, 3);
+            hitOnCoordinate(true,"H", 0, 3);
         }
 
         public void alertBoxActivated2 (ActionEvent actionEvent) throws IOException {
@@ -160,4 +161,4 @@ public class boardViewController implements Initializable { //javaklassen som ko
 
 
     }
-}
+
