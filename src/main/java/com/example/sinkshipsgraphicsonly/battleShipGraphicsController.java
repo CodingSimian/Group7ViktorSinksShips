@@ -38,6 +38,7 @@ public class battleShipGraphicsController  { //Klass för att få fram spelplane
 
     @FXML
     public void clientButtonPressed(ActionEvent actionEvent) throws IOException {
+        //Insert instance of Connection here
 
         double tickValue = startMenuSlider.getValue();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("boardView2.fxml")); //rad 42-47 möjliggör
@@ -62,6 +63,8 @@ public class battleShipGraphicsController  { //Klass för att få fram spelplane
 
     public void serverButtonPressed(ActionEvent actionEvent) throws IOException {
         //someConnection.newServer();
+
+
         Parent root = FXMLLoader.load(getClass().getResource("boardView2.fxml"));
         Stage stage =(Stage)((Node)actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);

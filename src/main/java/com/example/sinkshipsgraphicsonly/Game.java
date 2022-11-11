@@ -25,7 +25,7 @@ public class Game
         player1.fire("6A");//Skjuter t.ex på rad 1 column 1 och skickar tillbaka feedback vad som hände med skotten.
         player1.convertCoordinate('A'); //konverar stringvärden och konverterar till en siffra, så att man kan skicka dem vidare till fire sen.
     }
-    public String intelligenceAI(){
+    /*public String intelligenceAI(){
         boolean ShipsIsHit = true;
         if(ShipsIsHit)
       {
@@ -37,7 +37,7 @@ public class Game
 
 
         }
-    }
+    };*/
 
 
 

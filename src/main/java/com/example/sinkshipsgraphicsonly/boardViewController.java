@@ -38,17 +38,34 @@ public class boardViewController implements Initializable { //javaklassen som ko
 
 //metoder
 
-    public void hitOnCoordinate(String message, int X, int Y){ //Denna kod är mera som ett grafiskt test, menad att användas när Osman
-        //Och Daniel har skrivit mera backend kod som man kan länka denna mot.
-        switch(message){
-            case "s1":
-                rightGrid.add(new ImageView("Hit.jpg"),X,Y);
-                break;
+    public void hitOnCoordinate(Boolean TheRightGrid, String message, int X, int Y){
+        //Denna metod tar in 4 parametrar, en boolean där om den är true menar att det handlar om högra rutnätet.
+        //En string som berättar om ett skott träffar eller missar
+        //två ints, som representar koordinaterna i rutnätet, (bör hämtas från squareGrid propertien)
 
-            case "s2":
-                rightGrid.add(new ImageView("Miss.jpg"),X,Y);
+        if(TheRightGrid) {
+            switch (message) {
+                case "s1":
+                    rightGrid.add(new ImageView("Hit.jpg"), X, Y);
+                    break;
 
-                break;
+                case "s2":
+                    rightGrid.add(new ImageView("Miss.jpg"), X, Y);
+
+                    break;
+            }
+        }
+        else{
+            switch (message) {
+                case "s1":
+                    leftGrid.add(new ImageView("Hit.jpg"), X, Y);
+                    break;
+
+                case "s2":
+                    leftGrid.add(new ImageView("Miss.jpg"), X, Y);
+
+                    break;
+            }
         }
 
     };
@@ -68,7 +85,7 @@ public class boardViewController implements Initializable { //javaklassen som ko
         //i GameBoard-klassen //Vi lägger inte till något grafisk utan använder oss av backend-kod på rad 37 och 38, sen vill
         //vi att det ska ske grafiskt det som händer grafiskt ska kunna visualiseras grafiskt. Det är därför forloopens i rad 43 osv används
         //för att placera ut skeppen på själva spelplanen.
-        //Victor rekommendererar att vi lägger in kod här som startar själva spelet eftersom initialize startar av sig själv.
+        //Viktor rekommendererar att vi lägger in kod här som startar själva spelet eftersom initialize startar av sig själv.
        //Skapa en instans av Game och skriv det här och använda oss av metoderna som vi har gjort i Game.
 
 
@@ -87,7 +104,7 @@ public class boardViewController implements Initializable { //javaklassen som ko
             }
         }
 
-        hitOnCoordinate("s2",0,3);
+        hitOnCoordinate(false,"s2",0,3);
     }
 
     public void alertBoxActivated2(ActionEvent actionEvent) throws IOException {
