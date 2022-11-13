@@ -25,16 +25,17 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class battleShipGraphicsController  { //Klass för att få fram spelplanen
+public class battleShipGraphicsController { //Klass för att få fram spelplanen
     @FXML
     private GridPane leftGrid;
 
-    Connection theGameConnection = new Connection(); //statisk property
+    //statisk property
 
     @FXML
     private Slider startMenuSlider;
 
     private Parent root;
+    protected boolean server;
 
 
     /*@Override
@@ -44,8 +45,8 @@ public class battleShipGraphicsController  { //Klass för att få fram spelplane
     }*/
 
     @FXML
-    public void clientButtonPressed(ActionEvent actionEvent) throws IOException {
-        theGameConnection.connectToServer();
+    public void clientButtonPressed(ActionEvent actionEvent) throws IOException, InterruptedException {
+
 
         double tickValue = startMenuSlider.getValue();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("boardView2.fxml")); //rad 42-47 möjliggör
@@ -55,39 +56,51 @@ public class battleShipGraphicsController  { //Klass för att få fram spelplane
         //spelar som server så ligger slidern enligt klienten.
         root = loader.load();
 
+
         boardViewController boardController = loader.getController();
+        boardController.setServer(false);
         boardController.sliderValueSet(tickValue);
+
 
         //Denna kontroller bör ha connection
         //klassen, så att man skapar upp en connection mellan två datorer, och först efter den anslutningen har lyckats
         //så laddar clientButtonPressed in boardview2.fxml
-        Stage stage= (Stage) ((Node)actionEvent.getSource()).getScene().getWindow();
-        Scene scene= new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-    }
-
-
-    public void serverButtonPressed(ActionEvent actionEvent) throws IOException {
-        theGameConnection.newServer();
-
-
-        Parent root = FXMLLoader.load(getClass().getResource("boardView2.fxml"));
-        Stage stage =(Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
     }
 
-    public void exitButtonPressed(ActionEvent actionEvent) throws IOException{
-    Platform.exit();
+
+    public void serverButtonPressed(ActionEvent actionEvent) throws IOException, InterruptedException {
+
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("boardView2.fxml"));
+        root = loader.load();
+
+
+        //Parent root = FXMLLoader.load(getClass().getResource("boardView2.fxml"));
+
+        boardViewController boardController = loader.getController();
+        boardController.setServer(true);
+
+
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+
     }
 
-public void someSLiderValueSet(double myTickValue){
-        startMenuSlider.setValue(myTickValue);
-}
+    public void exitButtonPressed(ActionEvent actionEvent) throws IOException {
+        Platform.exit();
+    }
 
-public Connection getConnection(){
-        return this.theGameConnection;
-}
+    public void someSLiderValueSet(double myTickValue) {
+        startMenuSlider.setValue(myTickValue);
+    }
+
+    public boolean getServer() {
+        return this.server;
+    }
 }

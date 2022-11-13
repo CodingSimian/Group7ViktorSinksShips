@@ -10,6 +10,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class HelloApplication extends Application { //Här körs xml-filen
+    public boolean server;
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -25,9 +26,7 @@ public class HelloApplication extends Application { //Här körs xml-filen
         launch();
 
 
-        /*String a = "9";
-        int b = Character.getNumericValue(a.charAt(0));
-        System.out.println(b);*/
+
     }
 
 }

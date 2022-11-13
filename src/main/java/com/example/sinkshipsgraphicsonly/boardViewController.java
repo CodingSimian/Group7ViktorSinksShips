@@ -12,8 +12,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -36,6 +39,11 @@ public class boardViewController implements Initializable { //javaklassen som ko
 
     private Parent root;
 
+
+
+    public    boolean server ;
+
+
     Game1 theGame;
 
 //metoder
@@ -47,6 +55,7 @@ public class boardViewController implements Initializable { //javaklassen som ko
                 case "H":
                 case "S":
                     rightGrid.add(new ImageView("Hit.jpg"), X, Y);
+
                     break;
 
                 case "M":
@@ -81,8 +90,9 @@ public class boardViewController implements Initializable { //javaklassen som ko
             //intialize är isch som main i vanliga java (eftersom detta är fx), så fort ett fxml dokumment laddas in så anropas intialize
             //Alltså efter man har klickat på spela-som-klient-knappen.
 
-            GameBoard leftGameBoard = new GameBoard();
-            leftGameBoard.buildGameBoard(); //använd buildgameboard först, för att kunna applicera de andra metoder som ligger
+
+            //GameBoard leftGameBoard = new GameBoard();
+            //leftGameBoard.buildGameBoard(); //använd buildgameboard först, för att kunna applicera de andra metoder som ligger
             //i GameBoard-klassen //Vi lägger inte till något grafisk utan använder oss av backend-kod på rad 37 och 38, sen vill
             //vi att det ska ske grafiskt det som händer grafiskt ska kunna visualiseras grafiskt. Det är därför forloopens i rad 43 osv används
             //för att placera ut skeppen på själva spelplanen.
@@ -90,20 +100,24 @@ public class boardViewController implements Initializable { //javaklassen som ko
             //Skapa en instans av Game och skriv det här och använda oss av metoderna som vi har gjort i Game.
 
 
-            leftGameBoard.buildFleet(1, 2, 3, 4);
-            leftGameBoard.placeFleetAtRandom(); //Dessa två linjer har skapat alla skepp, och placerat dom. Då är själva
+            //leftGameBoard.buildFleet(1, 2, 3, 4);
+            //leftGameBoard.placeFleetAtRandom(); //Dessa två linjer har skapat alla skepp, och placerat dom. Då är själva
             //logiken för klient-spelaren utlagd. Det är först efter de 2 for loopar under denna kommentar som bilder
             //på själva rutnätet läggs ut.
 
-            for (int row = 0; row < leftGameBoard.SquareGrid.length; row++) {
-                for (int col = 0; col < leftGameBoard.SquareGrid[row].length; col++) {
-                    if (leftGameBoard.SquareGrid[col][row].isHasShip()) { //Måste få denna kod att fungera utan
+
+            theGame = new Game1(this );
+            //leftGameBoard.SquareGrid[row].length
+            for (int row = 0; row <theGame.player.SquareGrid.length ; row++) {
+                for (int col = 0; col < theGame.player.SquareGrid[row].length; col++) {
+                    if (theGame.player.SquareGrid[col][row].isHasShip()) { //Måste få denna kod att fungera utan
                         //musklick, och det måste även uppdatera listan om båtar blir skjutna
 
                         leftGrid.add(new ImageView("Boat1.jpg"), row, col);
                     }
                 }
             }
+
 
 
 
@@ -162,8 +176,27 @@ public class boardViewController implements Initializable { //javaklassen som ko
 
         public void sliderValueSet(double theTickValue){
             boardSlider.setValue(theTickValue);
+
+        }
+        public void setServer(boolean a){
+            this.server = a;
         }
 
+        private boolean getServer(){
+            return this.server;
+        }
 
-    }
+        @FXML
+        public void  startButtonPressed(ActionEvent event) throws IOException, InterruptedException {
+            System.out.println(this.server);
+            theGame.server = this.server;
+            theGame.play();
+        }
+}
+
+
+
+
+
+
 

@@ -360,16 +360,18 @@ public class GameBoard {
 
     }
 
-    public String startLogicalCoordinate(){ // gör klart , utför kontroller för möjliga kordinater baserat på senaste koordinat
+    public String startLogicalCoordinate(){ // Metod som kallas på ifall man får en träff detta är starten i logi kedjan
         String coordinate = "";
-        if(lastRandomCoordinate.length() == 2 && !logicActive) { // använd neighbourgh metoderna efter du gjort om dom så dom använder polymorphism.
+        if(lastRandomCoordinate.length() == 2 && !logicActive) {
             createLogicalCoordinateList();
 
-            for (int i = 0; i < logicalCoordinates.length; i++) {
-                if (!logicalCoordinates[i].equalsIgnoreCase("NULL")) {
+            for (int i = 0; i < logicalCoordinates.length; i++) {                  // Bestämmer i vilken riktig första skotten skall vara
+                if (!logicalCoordinates[i].equalsIgnoreCase("NULL")) {  // beronde på vilka möjliga riktningar som finns.
                     coordinate = logicalCoordinates[i];
+                    logicalCoordinates[i] = "NULL";
                     lastLogicalCoordinate = coordinate;
                     validCoordinates.remove(coordinate);
+                    logicActive = true;
 
                     switch (i) {
                         case 0:
@@ -400,14 +402,14 @@ public class GameBoard {
 
     }
 
-    public void createLogicalCoordinateList(){
+    public void createLogicalCoordinateList(){                                  // skapar listan med möjliga riktningar för logik kedjan.
                 logicalCoordinates[0] = neighbourNorth(lastRandomCoordinate);
                 logicalCoordinates[1] = neighbourWest(lastRandomCoordinate);
                 logicalCoordinates[2] = neighbourEast(lastRandomCoordinate);
                 logicalCoordinates[3] = neighbourSouth(lastRandomCoordinate);
     }
 
-    public String nextLogicalCoordinate(String feedback){
+    public String nextLogicalCoordinate(String feedback){             // kallas på om logik är aktiv och tar fram nästa koordinat baserat på feedbacken från senaste logiska kordinaten.
         String coordinate = "";
         if(feedback.equalsIgnoreCase("H")){
             if(north){
@@ -432,26 +434,33 @@ public class GameBoard {
                 }
             }else if(south){
                 coordinate = neighbourSouth(lastLogicalCoordinate);
+
+
             }
         }else{
             if(north){
                 coordinate = newLogicDirection(1);
+                north = false;
             }else if(west){
                 coordinate = newLogicDirection(2);
+                west = false;
             }else if(east){
+                east = false;
                 coordinate = newLogicDirection(3);
             }
         }
-
+        validCoordinates.remove(coordinate);
+        lastLogicalCoordinate = coordinate;
         return coordinate;
 
     }
-    private String newLogicDirection(int a){
-        String coordinate = "";
+    private String newLogicDirection(int a){                                 // nextLogicalCoordinat kallar på denna metod ifall den får en miss för att byta riktning,.
+        String coordinate = "NULL";
 
         for(int i = a;i<logicalCoordinates.length; i++ ){
             if (!logicalCoordinates[i].equalsIgnoreCase("NULL")) {
                 coordinate = logicalCoordinates[i];
+                logicalCoordinates[i] = "NULL";
                 lastLogicalCoordinate = coordinate;
                 validCoordinates.remove(coordinate);
                 switch (i) {
@@ -472,11 +481,14 @@ public class GameBoard {
             }
 
         }
+        if(coordinate.equalsIgnoreCase("NULL")){
+            coordinate = getRandomCoordinate();
+        }
             return coordinate;
     }
 
-    public void resetLogicalCoordinate(){
-        logicActive = false;
+    public void resetLogicalCoordinate(){                             // Kallas på när moståndaren meddelar att ett skepp sjunkit.
+        logicActive = false;                                          // stänger av och återställer logiken.
         north = false; west = false; east = false; south = false;
     }
 
