@@ -11,7 +11,10 @@ public class Game1 {
     protected GameBoard player;
     protected GameBoard enemy;
 
-    private int delay;
+    private int delay;  // TickValue värdet på själva slidern och göra om det till en long för att
+//Delay är inte kopplad till controllern, men TickValue är det.
+    //Grejen som ska göras är att delayen ska kopplas till TickValue, så när tickValue ändras så ändras dalyen med automatisk.
+    //TickValue finns i Game1 och i borderController
 
     private Scanner scan;
     private boardViewController controller;
