@@ -1,5 +1,7 @@
 package com.example.sinkshipsgraphicsonly;
 
+import javafx.application.Platform;
+
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -29,7 +31,7 @@ public class Game1 {
         System.out.println(player.fleet.size());
         enemy = new GameBoard();
         enemy.buildGameBoard();
-        delay = 4000;
+        delay = 100;
         gameover = false;
         round = 0;
 
@@ -79,6 +81,7 @@ public class Game1 {
             int row;
             int colum;
             String newMessage;
+
             if(message.equalsIgnoreCase("GAMEOVER")){
                 gameover = true;
                 return "GAMEOVER";
@@ -86,16 +89,25 @@ public class Game1 {
             String feedback = scan.next();
             scan.next();
             newMessage = scan.next();
-            colum = newMessage.charAt(0);
+            colum = Character.getNumericValue(newMessage.charAt(0));
             row = player.convertCoordinate(newMessage.charAt(1));
             newMessage = player.fire(newMessage);
-            controller.hitOnCoordinate(false,newMessage,colum,row);
+            String finalNewMessage = newMessage;
+            Platform.runLater(() -> {
+                controller.hitOnCoordinate(false, finalNewMessage, colum, row);
+            });
             if(!feedback.equalsIgnoreCase("I")) {
                 if (enemy.logicActive) {
-                    controller.hitOnCoordinate(true, feedback, Character.getNumericValue(enemy.getLastLogicalCoordinate().charAt(0)), enemy.convertCoordinate(enemy.getLastLogicalCoordinate().charAt(1)));
+                    Platform.runLater( ()-> {
+                        controller.hitOnCoordinate(true, feedback, Character.getNumericValue(enemy.getLastLogicalCoordinate().charAt(0)), enemy.convertCoordinate(enemy.getLastLogicalCoordinate().charAt(1)));
+                    });
                 } else {
-                    controller.hitOnCoordinate(true, feedback, Character.getNumericValue(enemy.getLastRandomCoordinate().charAt(0)), enemy.convertCoordinate(enemy.getLastRandomCoordinate().charAt(1)));
+                    Platform.runLater(() -> {
+                        controller.hitOnCoordinate(true, feedback, Character.getNumericValue(enemy.getLastRandomCoordinate().charAt(0)), enemy.convertCoordinate(enemy.getLastRandomCoordinate().charAt(1)));
+                    });
+
                 }
+
             }
             newMessage += " Shoot " ;
 

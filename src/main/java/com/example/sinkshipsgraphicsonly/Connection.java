@@ -1,8 +1,5 @@
 package com.example.sinkshipsgraphicsonly;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.ConnectException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -18,6 +15,8 @@ public class Connection { //Klass för att ansluta sig mellan två olika enheter
     private InputStreamReader in;
     private BufferedReader br;
     private PrintWriter out;
+
+    private BufferedWriter bw;
 
 
     // konstruktor
@@ -38,7 +37,7 @@ public class Connection { //Klass för att ansluta sig mellan två olika enheter
                 System.out.println("Client Connected");
                 in = new InputStreamReader(user.getInputStream());
                 br = new BufferedReader(in);
-                out = new PrintWriter(user.getOutputStream());
+                bw = new BufferedWriter( new PrintWriter(user.getOutputStream()));
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -53,7 +52,7 @@ public class Connection { //Klass för att ansluta sig mellan två olika enheter
         user = serverSocket.accept();
         in = new InputStreamReader(user.getInputStream());
         br = new BufferedReader(in);
-        out = new PrintWriter(user.getOutputStream());
+        bw = new BufferedWriter( new PrintWriter(user.getOutputStream()));
         System.out.println("Client Connected" + user.getLocalAddress() +"\n" + user.getInetAddress());
     }
 
@@ -71,7 +70,7 @@ public class Connection { //Klass för att ansluta sig mellan två olika enheter
                 user = new Socket("localhost", 4499);
                 in = new InputStreamReader(user.getInputStream());
                 br = new BufferedReader(in);
-                out = new PrintWriter(user.getOutputStream());
+                bw = new BufferedWriter( new PrintWriter(user.getOutputStream()));
                 connected = true;
                 System.out.println("Connected to server");
 
@@ -84,10 +83,11 @@ public class Connection { //Klass för att ansluta sig mellan två olika enheter
         }
     }
     // metod för att skicka meddelande till anslutningen
-    public void sendMessage(String message){
+    public void sendMessage(String message) throws IOException {
         if(user.isConnected()) {
-            out.println(message);
-            out.flush();
+            bw.write(message);
+            bw.newLine();
+            bw.flush();
         }
     }
 
@@ -121,6 +121,7 @@ public class Connection { //Klass för att ansluta sig mellan två olika enheter
             br.close();
             in.close();
             out.close();
+            bw.close();
         }catch (IOException e){
             e.printStackTrace();
         }

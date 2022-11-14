@@ -24,8 +24,8 @@ public class GameBoard {
     private String lastLogicalCoordinate;      // innehåller sista koordinaten retunerade av logicalCoordinate
     String lastCoordinateHit;
     boolean north, west, east, south;  // boolean som logicalCoordinate använder för att bestämma nästa koordinat
-    boolean logicActive;
-    String [] logicalCoordinates = new String[4];
+    boolean logicActive;               // boolean som håller reda på om logiken är aktiverad.
+    String [] logicalCoordinates = new String[4];  // om logik är true innehåller denna array möjliga riktignar att välja på.
 
 
     Random random = new Random();
@@ -232,13 +232,13 @@ public class GameBoard {
             for (int i = 0; i < ship.getLength(); i++) {
                 if (getSquare(row , colum + i).isOccupied()) {
                     valid = false;
-                    //System.out.println("Invalid placement");
+                    System.out.println("Invalid placement");
                     break;
                 }
             }
         }else{
             valid = false;
-            //System.out.println("Ship to long");
+            System.out.println("Ship to long");
 
         }
 
