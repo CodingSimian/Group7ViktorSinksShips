@@ -1,6 +1,7 @@
 package com.example.sinkshipsgraphicsonly;
 
 import javafx.application.Platform;
+import org.controlsfx.control.tableview2.filter.filtereditor.SouthFilter;
 
 import java.io.IOException;
 import java.util.Scanner;
@@ -31,7 +32,7 @@ public class Game1 {
         System.out.println(player.fleet.size());
         enemy = new GameBoard();
         enemy.buildGameBoard();
-        delay = 100;
+        delay = 0;
         gameover = false;
         round = 0;
 
@@ -93,17 +94,28 @@ public class Game1 {
             row = player.convertCoordinate(newMessage.charAt(1));
             newMessage = player.fire(newMessage);
             String finalNewMessage = newMessage;
+
             Platform.runLater(() -> {
                 controller.hitOnCoordinate(false, finalNewMessage, colum, row);
             });
             if(!feedback.equalsIgnoreCase("I")) {
                 if (enemy.logicActive) {
+                    System.out.println(feedback + " " + enemy.getLastLogicalCoordinate());
+                    int x = Character.getNumericValue(enemy.getLastLogicalCoordinate().charAt(0));
+                    int y = enemy.convertCoordinate(enemy.getLastLogicalCoordinate().charAt(1));
+                    String  f = feedback;
                     Platform.runLater( ()-> {
-                        controller.hitOnCoordinate(true, feedback, Character.getNumericValue(enemy.getLastLogicalCoordinate().charAt(0)), enemy.convertCoordinate(enemy.getLastLogicalCoordinate().charAt(1)));
+                        controller.hitOnCoordinate(true, f,x,y );
+
                     });
                 } else {
+                    System.out.println(feedback + " " + enemy.getLastRandomCoordinate());
+                    int x = Character.getNumericValue(enemy.getLastRandomCoordinate().charAt(0));
+                    int y = enemy.convertCoordinate(enemy.getLastRandomCoordinate().charAt(1));
+                    String f = feedback;
                     Platform.runLater(() -> {
-                        controller.hitOnCoordinate(true, feedback, Character.getNumericValue(enemy.getLastRandomCoordinate().charAt(0)), enemy.convertCoordinate(enemy.getLastRandomCoordinate().charAt(1)));
+                        controller.hitOnCoordinate(true, f,x,y);
+
                     });
 
                 }
@@ -124,8 +136,7 @@ public class Game1 {
                    if(enemy.logicActive) {
                        newMessage += enemy.nextLogicalCoordinate(feedback);
                        System.out.println("Nextlogical");
-                   }
-                   else {
+                   } else {
                        newMessage += enemy.startLogicalCoordinate();
                        System.out.println("startLogical");
                    }

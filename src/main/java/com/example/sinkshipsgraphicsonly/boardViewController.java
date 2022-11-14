@@ -20,6 +20,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import org.controlsfx.control.tableview2.filter.filtereditor.SouthFilter;
 
 import java.io.IOException;
 import java.net.URL;
@@ -54,17 +55,21 @@ public class boardViewController implements Initializable { //javaklassen som ko
 
     public void hitOnCoordinate(Boolean isRightGrid, String message, int X, int Y) { //Denna kod är mera som ett grafiskt test, menad att användas när Osman
         //Och Daniel har skrivit mera backend kod som man kan länka denna mot.
+
         if (isRightGrid) {
+
             switch (message) {
                 case "H":
                 case "S":
                         rightGrid.add(new ImageView("Hit.jpg"), X, Y);
+
 
                     break;
 
                 case "M":
 
                         rightGrid.add(new ImageView("Miss.jpg"), X, Y);
+
 
 
                     break;

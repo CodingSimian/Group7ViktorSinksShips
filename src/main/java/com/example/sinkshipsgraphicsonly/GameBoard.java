@@ -360,7 +360,7 @@ public class GameBoard {
 
     }
 
-    public String startLogicalCoordinate(){ // Metod som kallas på ifall man får en träff detta är starten i logi kedjan
+    public String startLogicalCoordinate(){ // Metod som kallas på ifall man får en träff detta är starten i logik kedjan
         String coordinate = "";
         if(lastRandomCoordinate.length() == 2 && !logicActive) {
             createLogicalCoordinateList();
@@ -449,8 +449,9 @@ public class GameBoard {
                 coordinate = newLogicDirection(3);
             }
         }
-        validCoordinates.remove(coordinate);
         lastLogicalCoordinate = coordinate;
+        validCoordinates.remove(coordinate);
+
         return coordinate;
 
     }
@@ -461,8 +462,8 @@ public class GameBoard {
             if (!logicalCoordinates[i].equalsIgnoreCase("NULL")) {
                 coordinate = logicalCoordinates[i];
                 logicalCoordinates[i] = "NULL";
-                lastLogicalCoordinate = coordinate;
-                validCoordinates.remove(coordinate);
+                //lastLogicalCoordinate = coordinate;
+                //validCoordinates.remove(coordinate);
                 switch (i) {
                     case 0:
                         north = true;
