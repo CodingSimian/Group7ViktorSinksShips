@@ -192,7 +192,7 @@ public class GameBoard {
 
 
             }
-            String musicFile = "Battleship2022/src/main/resources/Miss.mp3";
+            String musicFile = "Group7ViktorSinksShips/src/main/resources/Miss.mp3";
             Media sound = new Media(new File(musicFile).toURI().toString());
             MediaPlayer mediaPlayer = new MediaPlayer(sound);
             mediaPlayer.play();
