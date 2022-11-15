@@ -13,8 +13,8 @@ public class Game1 {
 
     private int delay;  // TickValue värdet på själva slidern och göra om det till en long för att
 //Delay är inte kopplad till controllern, men TickValue är det.
-    //Grejen som ska göras är att delayen ska kopplas till TickValue, så när tickValue ändras så ändras dalyen med automatisk.
-    //TickValue finns i Game1 och i borderController
+    //Grejen som ska göras är att delayen ska kopplas till TickValue, så när tickValue ändras så ändras delayen med automatisk.
+    //TickValue finns i battlefieldGraphicsController och i borderViewController
 
     private Scanner scan;
     private boardViewController controller;
@@ -65,6 +65,8 @@ public class Game1 {
             System.out.println(outGoingMessage);
             connection.sendMessage(outGoingMessage);
         }
+
+
         while (!gameover) {
 
             incomingMesssage = connection.reciveMessage();

@@ -33,7 +33,7 @@ public class battleShipGraphicsController { //Klass för att få fram spelplanen
 
     @FXML //linjen under det är ett element i våra xml filer:
     //T.ex som vi kollar på youtube så finns det olika element i videon.
-    private Slider startMenuSlider;
+    private Slider startMenuSlider; //Den variabeln som man tittar på i början.
 
     private Parent root;
     protected boolean server;
@@ -59,9 +59,10 @@ public class battleShipGraphicsController { //Klass för att få fram spelplanen
 
         //en annan javaklass än controller som vi har länkat till vår spelplan:
         //Den kommer vi åt genom att använda fmxl loader, så att jag instanserar den controllern som är kopplad till spelplanen:
-        boardViewController boardController = loader.getController();
-        boardController.setServer(false);
-        boardController.sliderValueSet(tickValue);  //Den variabel som vi skapade använder metoden sliderValueSet,
+        boardViewController boardController = loader.getController();//skapar en instans för controllen som gäller för spelplanen.
+        boardController.setServer(false);//Sätter servern på booliskt värde som false, har inget o göra med slidern.
+        boardController.sliderValueSet(tickValue);//Nu från vår nuvarande controller för startmenyn, så skickar vi över värdet på slidern som vi satte på tickValue, använder metoden från boardController för att sätta slidervärdet i boardViewControllern.
+        //Den variabel som vi skapade använder metoden sliderValueSet,
         //sätter värdet som är kopplad till tickValue, som vi skapade i början.
         //det e så vi gjort för att sliderns värde är detsamma i hela programmet.
         //Pga de här linjerna kod kan vi skicka en siffra mellan xml filerna genom deras controllers.
@@ -113,4 +114,12 @@ public class battleShipGraphicsController { //Klass för att få fram spelplanen
     public boolean getServer() {
         return this.server;
     }
+
+@FXML
+    public void sendValueFromGrapContToGame1()
+    {
+        System.out.println(startMenuSlider.getValue());//Hämtar värdet på slidern varje gång man drar den och släpper musknappen.
+    }
+
+
 }
