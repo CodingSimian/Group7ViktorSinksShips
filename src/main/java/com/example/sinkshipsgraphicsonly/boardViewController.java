@@ -190,6 +190,7 @@ public class boardViewController implements Initializable { //javaklassen som ko
         public void sliderValueSet(double theTickValue){
             boardSlider.setValue(theTickValue);
 
+
         }
         public void setServer(boolean a){
             this.server = a;

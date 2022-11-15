@@ -106,6 +106,7 @@ public class battleShipGraphicsController { //Klass för att få fram spelplanen
         startMenuSlider.setValue(myTickValue);
     }
 
+
     public boolean getServer() {
         return this.server;
     }

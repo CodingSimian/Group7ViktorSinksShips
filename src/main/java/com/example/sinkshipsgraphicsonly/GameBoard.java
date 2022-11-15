@@ -391,7 +391,7 @@ public class GameBoard {
                 }
             }
             return coordinate;
-        }
+        }else coordinate = getRandomCoordinate();
 
 
 
@@ -455,6 +455,9 @@ public class GameBoard {
         return coordinate;
 
     }
+    /*
+       Metod som används av nextLogicalCoordinate metod för att byta rikting på skotten ifall den fått en miss.
+     */
     private String newLogicDirection(int a){                                 // nextLogicalCoordinat kallar på denna metod ifall den får en miss för att byta riktning,.
         String coordinate = "NULL";
 
