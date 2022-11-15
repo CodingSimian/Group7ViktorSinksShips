@@ -61,7 +61,7 @@ public class boardViewController implements Initializable { //javaklassen som ko
             switch (message) {
                 case "H":
                 case "S":
-                        rightGrid.add(new ImageView("Hit.jpg"), X, Y);
+                    rightGrid.add(new ImageView("Hit.jpg"), X, Y);
 
 
                     break;
@@ -78,7 +78,8 @@ public class boardViewController implements Initializable { //javaklassen som ko
             switch (message) {
                 case "H":
                 case "S":
-                        leftGrid.add(new ImageView("Hit.jpg"), X, Y);
+                    leftGrid.add(new ImageView("Hit.jpg"), X, Y);
+
                     break;
 
                 case "M":
@@ -123,8 +124,7 @@ public class boardViewController implements Initializable { //javaklassen som ko
             //leftGameBoard.SquareGrid[row].length
             for (int row = 0; row <gameThread.game.player.SquareGrid.length ; row++) {
                 for (int col = 0; col < gameThread.game.player.SquareGrid[row].length; col++) {
-                    if (gameThread.game.player.SquareGrid[col][row].isHasShip()) { //Måste få denna kod att fungera utan
-                        //musklick, och det måste även uppdatera listan om båtar blir skjutna
+                    if (gameThread.game.player.SquareGrid[col][row].isHasShip()) {
 
                         leftGrid.add(new ImageView("Boat1.jpg"), row, col);
                     }
@@ -164,6 +164,7 @@ public class boardViewController implements Initializable { //javaklassen som ko
 
                             Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
                             Scene scene = new Scene(root);
+                            scene.getStylesheets().add("Styles.css");
                             stage.setScene(scene); //Denna kod laddar in startMenu.fxml filen, try & catch används för att
                             //effektivt använda "throws IOException" med lambda uttrycket.
                             window.close();
@@ -180,9 +181,12 @@ public class boardViewController implements Initializable { //javaklassen som ko
             layout.getChildren().addAll(popupLabel, nejButton, jaButton);
             layout.setAlignment(Pos.CENTER);
 
+            //layout.getStyleClass.add("Styles.css"); <-- denna funkar inte som tänkt
+
             Scene scene = new Scene(layout); //de tre metoder som dyker upp efter denna har jag ej fått att fungera
             //tills vidare är alertBoxActivated2 metoden som gäller när det kommer till att fråga användaren om hen
             //verkligen vill stänga ned spelet
+            scene.getStylesheets().add("Styles.css");
             window.setScene(scene);
             window.showAndWait();
         }

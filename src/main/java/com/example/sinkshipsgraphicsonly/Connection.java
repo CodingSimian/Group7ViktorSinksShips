@@ -31,7 +31,7 @@ public class Connection { //Klass för att ansluta sig mellan två olika enheter
     public void newServer() throws IOException {
         if(!connected) {
             try {
-                serverSocket = new ServerSocket(4499);
+                serverSocket = new ServerSocket(49152);
                 System.out.println("Server Running");
                 user = serverSocket.accept();
                 System.out.println("Client Connected");
@@ -67,7 +67,7 @@ public class Connection { //Klass för att ansluta sig mellan två olika enheter
             //utan att vi vill fånga det istället.
             try { //Om man får ett error i try som man skickar, så kan man catcha det och sedan skrivs koden ut i det catchblocket.
                 //Ungefär som en if sats, skillnaden är att här testas/körs bägge (om try inte funkar).
-                user = new Socket("localhost", 4499);
+                user = new Socket("localhost", 49152);
                 in = new InputStreamReader(user.getInputStream());
                 br = new BufferedReader(in);
                 bw = new BufferedWriter( new PrintWriter(user.getOutputStream()));

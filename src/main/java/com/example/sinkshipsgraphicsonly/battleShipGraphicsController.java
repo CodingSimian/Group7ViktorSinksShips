@@ -73,6 +73,7 @@ public class battleShipGraphicsController { //Klass för att få fram spelplanen
         //så laddar clientButtonPressed in boardview2.fxml
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
+        scene.getStylesheets().add("Styles.css");
         stage.setScene(scene);
         stage.show();
     }
@@ -93,6 +94,8 @@ public class battleShipGraphicsController { //Klass för att få fram spelplanen
 
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
+        scene.getStylesheets().add("Styles.css");
+
         stage.setScene(scene);
         stage.show();
 

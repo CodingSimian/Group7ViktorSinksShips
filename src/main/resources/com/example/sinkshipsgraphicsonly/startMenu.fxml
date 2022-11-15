@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="340.0" prefWidth="440.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.sinkshipsgraphicsonly.battleShipGraphicsController">
+<BorderPane fx:id="startMenuBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="340.0" prefWidth="440.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.sinkshipsgraphicsonly.battleShipGraphicsController">
    <bottom>
       <Button mnemonicParsing="false" onAction="#exitButtonPressed" text="Stäng ner spelet" BorderPane.alignment="CENTER">
          <BorderPane.margin>

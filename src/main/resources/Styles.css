@@ -1,0 +1,24 @@
+#BoardViewBorderPane, #startMenuBorderPane{
+    -fx-background-image: url("Camouflage3.jpg");
+}
+/*Denna css-fil ligger inlagd till varje scen som laddas, dvs att den är INTE direkt kopplad till fxml filerna, utan
+läggs in genomgående hela projektets java kod.
+ */
+
+Label, Slider, Button{
+    -fx-background-color: black;
+    -fx-text-fill: white;
+}
+
+Slider .axis{
+    -fx-tick-label-fill: white;
+}
+
+GridPane{
+    -fx-background-color: #00008B;
+}
+
+.VBoxPopup Label{
+    -fx-background-color: red;
+}
+
