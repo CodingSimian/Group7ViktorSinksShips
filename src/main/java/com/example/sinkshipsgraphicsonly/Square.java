@@ -1,5 +1,8 @@
 package com.example.sinkshipsgraphicsonly;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 
+import java.io.File;
 import java.util.ArrayList;
 
 public class Square {
@@ -66,6 +69,13 @@ public class Square {
     // om det finns ett skepp på rutan skickar den vidare meddelandet , och skickar sedan feedback tillbaka om det är träff/miss/sänkt skepp
 
     public String hit(){
+
+        String musicFile = "Battleship2022/src/main/resources/Hit.mp3";
+        Media sound = new Media(new File(musicFile).toURI().toString());
+        MediaPlayer mediaPlayer = new MediaPlayer(sound);
+        mediaPlayer.play();
+
+
         this.hit = true;
         String feedback;
        if(ship != null) {

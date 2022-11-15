@@ -1,5 +1,9 @@
 package com.example.sinkshipsgraphicsonly;
 
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -188,6 +192,13 @@ public class GameBoard {
 
 
             }
+            String musicFile = "Battleship2022/src/main/resources/Miss.mp3";
+            Media sound = new Media(new File(musicFile).toURI().toString());
+            MediaPlayer mediaPlayer = new MediaPlayer(sound);
+            mediaPlayer.play();
+
+
+
         }else feedback = "Felaktigt koordinat";
 
       return feedback;
