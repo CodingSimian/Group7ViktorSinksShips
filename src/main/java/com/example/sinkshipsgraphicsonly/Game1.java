@@ -6,7 +6,8 @@ import org.controlsfx.control.tableview2.filter.filtereditor.SouthFilter;
 import java.io.IOException;
 import java.util.Scanner;
 
-public class Game1 {
+public class Game1
+{
 
     protected GameBoard player;
     protected GameBoard enemy;
@@ -15,7 +16,10 @@ public class Game1 {
 //Delay är inte kopplad till controllern, men TickValue är det.
     //Grejen som ska göras är att delayen ska kopplas till TickValue, så när tickValue ändras så ändras dalyen med automatisk.
     //TickValue finns i Game1 och i borderController
-
+    //delay = tickvalue, så att delayen är lika med thickvalue och inte referar, obs fallgrupp.
+    //TickValue = är delayen/hastigheten.
+    // i sånt fall så är det bara att koppla ihop delay och thickValue.
+    //i game1 så är delay = controller.ThickValue;
     private Scanner scan;
     private boardViewController controller;
 
