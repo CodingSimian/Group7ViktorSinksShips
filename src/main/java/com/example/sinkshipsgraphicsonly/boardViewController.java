@@ -45,7 +45,7 @@ public class boardViewController implements Initializable { //javaklassen som ko
 
 
 
-    public    boolean server ;
+    public boolean server ;
 
 
 
@@ -187,7 +187,7 @@ public class boardViewController implements Initializable { //javaklassen som ko
             window.showAndWait();
         }
 
-        public void sliderValueSet(double theTickValue){
+        public void sliderValueSet(double theTickValue){ //Metod som används för att sätta värdet på programmet.
             boardSlider.setValue(theTickValue);
 
 
@@ -201,7 +201,7 @@ public class boardViewController implements Initializable { //javaklassen som ko
         }
 
         @FXML
-        public void  startButtonPressed(ActionEvent event) throws IOException, InterruptedException {
+        public void startButtonPressed(ActionEvent event) throws IOException, InterruptedException {
             gameThread.game.server = server;
             gameThread.start();
 
