@@ -118,7 +118,7 @@ public class battleShipGraphicsController { //Klass för att få fram spelplanen
 @FXML
     public void sendValueFromGrapContToGame1()
     {
-        System.out.println(startMenuSlider.getValue());//Hämtar värdet på slidern varje gång man drar den och släpper musknappen.
+        System.out.println(startMenuSlider.getValue());//Hämtar värdet på slidern varje gång man drar den och släpper musknappen.  nuvarande värdet på slidern när man drar den..
     }
 
 
