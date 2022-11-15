@@ -18,7 +18,3 @@ GridPane{
     -fx-background-color: #00008B;
 }
 
-.VBoxPopup Label{
-    -fx-background-color: red;
-}
-
