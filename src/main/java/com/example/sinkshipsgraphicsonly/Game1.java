@@ -13,8 +13,8 @@ public class Game1 {
 
     private int delay;  // TickValue värdet på själva slidern och göra om det till en long för att
 //Delay är inte kopplad till controllern, men TickValue är det.
-    //Grejen som ska göras är att delayen ska kopplas till TickValue, så när tickValue ändras så ändras delayen med automatisk.
-    //TickValue finns i battlefieldGraphicsController och i borderViewController
+    //Grejen som ska göras är att delayen ska kopplas till TickValue, så när tickValue ändras så ändras dalyen med automatisk.
+    //TickValue finns i Game1 och i borderController
 
     private Scanner scan;
     private boardViewController controller;
@@ -65,98 +65,131 @@ public class Game1 {
             System.out.println(outGoingMessage);
             connection.sendMessage(outGoingMessage);
         }
-
-
         while (!gameover) {
 
             incomingMesssage = connection.reciveMessage();
-            System.out.println("Incoming: " + "  " + incomingMesssage);
-            outGoingMessage = breakDownMessage(incomingMesssage);
-            Thread.sleep(delay);
-            round++;
-            System.out.println("Outgoing: round " + round + "  " + outGoingMessage);
-            connection.sendMessage(outGoingMessage);
+            if(incomingMesssage.equalsIgnoreCase("GAMEOVER")){
+                uppDateRightBoard("H");
+                gameover = true;
+            }
+            if(!gameover) {
+                System.out.println("Incoming: " + "  " + incomingMesssage);
+                outGoingMessage = breakDownMessage(incomingMesssage);
+
+                Thread.sleep(delay);
+                round++;
+                System.out.println("Outgoing: round " + round + "  " + outGoingMessage);
+                connection.sendMessage(outGoingMessage);
+            }
 
 
         }
     }
-        // Plockar isär informationen från motståndaren och tar fram ett nytt meddelande beroende på svar från GameBoard.
-        // Samt uppdatera Grafiska spelplanerna.
-        public String breakDownMessage(String message){
-            scan = new Scanner(message);
-            int row;
-            int colum;
-            String newMessage;
-
-            if(message.equalsIgnoreCase("GAMEOVER")){
-                gameover = true;
-                return "GAMEOVER";
-            }
-            String feedback = scan.next();
-            scan.next();
-            newMessage = scan.next();
-            colum = Character.getNumericValue(newMessage.charAt(0));
-            row = player.convertCoordinate(newMessage.charAt(1));
-            newMessage = player.fire(newMessage);
-            String finalNewMessage = newMessage;
-
-            Platform.runLater(() -> {
-                controller.hitOnCoordinate(false, finalNewMessage, colum, row);
-            });
-            if(!feedback.equalsIgnoreCase("I")) {
-                if (enemy.logicActive) {
-                    System.out.println(feedback + " " + enemy.getLastLogicalCoordinate());
-                    int x = Character.getNumericValue(enemy.getLastLogicalCoordinate().charAt(0));
-                    int y = enemy.convertCoordinate(enemy.getLastLogicalCoordinate().charAt(1));
-                    String  f = feedback;
-                    Platform.runLater( ()-> {
-                        controller.hitOnCoordinate(true, f,x,y );
-
-                    });
-                } else {
-                    System.out.println(feedback + " " + enemy.getLastRandomCoordinate());
-                    int x = Character.getNumericValue(enemy.getLastRandomCoordinate().charAt(0));
-                    int y = enemy.convertCoordinate(enemy.getLastRandomCoordinate().charAt(1));
-                    String f = feedback;
-                    Platform.runLater(() -> {
-                        controller.hitOnCoordinate(true, f,x,y);
-
-                    });
-
-                }
-
-            }
+    // Plockar isär informationen från motståndaren och tar fram ett nytt meddelande beroende på svar från GameBoard.
+    // Samt kallar på metoder för att uppdatera grafiska spelplanerna;
+    public String breakDownMessage(String message){
+        scan = new Scanner(message);
+        boolean gameover;
+        String newMessage;
+        String feedbackLeftBoard;
+        String feedback = scan.next();
+        scan.next();
+        newMessage = scan.next();
+        feedbackLeftBoard = player.fire(newMessage);
+        uppDateRightBoard(feedback);
+        if(feedbackLeftBoard.equalsIgnoreCase("Gameover")){
+            uppdateLeftBoard("H",newMessage);
+            newMessage = feedbackLeftBoard;
+        }else{
+            uppdateLeftBoard(feedbackLeftBoard,newMessage);
+            newMessage = feedbackLeftBoard;
             newMessage += " Shoot " ;
-
-           switch (feedback){
-
-               case "M": // kalla på getRandomCoordinate();
-                   if(enemy.logicActive){
-                       newMessage += enemy.nextLogicalCoordinate(feedback);
-                   }else {
-                       newMessage += enemy.getRandomCoordinate();
-                   }
-                   break;
-               case "H": // kalla på getLogicalCooordinate();
-                   if(enemy.logicActive) {
-                       newMessage += enemy.nextLogicalCoordinate(feedback);
-                       System.out.println("Nextlogical");
-                   } else {
-                       newMessage += enemy.startLogicalCoordinate();
-                       System.out.println("startLogical");
-                   }
-                   break;
-               case "S": // reset logicalCoordinate(); kalla därefter på getRandomCoordinate();
-                   newMessage += enemy.getRandomCoordinate();
-                   System.out.println("Reset Logic");
-                   enemy.resetLogicalCoordinate();
-                   break;
-               case "I":
-                   newMessage += enemy.getRandomCoordinate();
-                   break;
-           }
-
-            return newMessage;
+            newMessage += nextCoordinate(feedback);
         }
 
+        return newMessage;
+
+             /* Uppdaterar grafiken på den högra spelplanen , den hämtar informationen från GameBoard enemy
+                Angående vilken kordinat som besköts senast samt använder sig av feedback från det inkomande meddelandet
+                om resultatet på skottet , läger därefter in ett runlater ärende till controllern för att GUI inte ska fastna
+                Den hämtar och oversätter värdet på kordinaterna direkt och skickar in i ärendet på grund av att runLater
+                kan köras när nästa kordinat redan har lagts in och det skapar felaktiga värden när den då hämtar värderna direkt från GameBoard;
+              */
+    }
+    public void uppDateRightBoard(String feedback){
+        if(!feedback.equalsIgnoreCase("I")) {
+            if (enemy.logicActive) {
+                System.out.println(feedback + " " + enemy.getLastLogicalCoordinate());
+                int x = Character.getNumericValue(enemy.getLastLogicalCoordinate().charAt(0));
+                int y = enemy.convertCoordinate(enemy.getLastLogicalCoordinate().charAt(1));
+                String  f = feedback;
+                Platform.runLater( ()-> {
+                    controller.hitOnCoordinate(true, f,x,y );
+
+                });
+            } else {
+                System.out.println(feedback + " " + enemy.getLastRandomCoordinate());
+                int x = Character.getNumericValue(enemy.getLastRandomCoordinate().charAt(0));
+                int y = enemy.convertCoordinate(enemy.getLastRandomCoordinate().charAt(1));
+                String f = feedback;
+                Platform.runLater(() -> {
+                    controller.hitOnCoordinate(true, f,x,y);
+
+                });
+
+            }
+
+        }
+
+    }
+    /*
+    Uppdaterar grafiken på den vänstra spelplanen, den tar emot feedback på skottet samt vilken koordinat
+    översätter kordinaten till  int värden och skapar ett runLater ärende.
+     */
+    public void uppdateLeftBoard(String feedback, String coordinate){
+        int row;
+        int colum;
+        colum = Character.getNumericValue(coordinate.charAt(0));
+        row = player.convertCoordinate(coordinate.charAt(1));
+        System.out.println("LeftBoard: " + feedback + " " + colum + " "  +row);
+        Platform.runLater(() -> {
+            controller.hitOnCoordinate(false, feedback, colum, row);
+        });
+
+    }
+    /*
+       Metod som tar emot feedbacken på senaste skottet och väljer därefter vilken medtod i GameBoard
+       som skall kallas på för att ta fram nästa koordinat
+     */
+    public String nextCoordinate(String feedback){
+        String nextCoordinate = "";
+        switch (feedback){
+
+            case "M": // kalla på getRandomCoordinate();
+                if(enemy.logicActive){
+                    nextCoordinate = enemy.nextLogicalCoordinate(feedback);
+                }else {
+                    nextCoordinate = enemy.getRandomCoordinate();
+                }
+                break;
+            case "H": // kalla på getLogicalCooordinate();
+                if(enemy.logicActive) {
+                    nextCoordinate = enemy.nextLogicalCoordinate(feedback);
+                    System.out.println("Nextlogical");
+                } else {
+                    nextCoordinate  = enemy.startLogicalCoordinate();
+                    System.out.println("startLogical");
+                }
+                break;
+            case "S": // reset logicalCoordinate(); kalla därefter på getRandomCoordinate();
+                nextCoordinate = enemy.getRandomCoordinate();
+                System.out.println("Reset Logic");
+                enemy.resetLogicalCoordinate();
+                break;
+            case "I":
+                nextCoordinate = enemy.getRandomCoordinate();
+                break;
+        }
+        return nextCoordinate;
+    }
 }
