@@ -22,5 +22,9 @@ public class GameThread extends Thread{
 
     }
 
+    public Game1 getGame(){
+        return this.game;
+    }
+
 
 }
