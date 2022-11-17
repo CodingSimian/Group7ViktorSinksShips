@@ -18,6 +18,7 @@ import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.controlsfx.control.tableview2.filter.filtereditor.SouthFilter;
@@ -39,6 +40,15 @@ public class boardViewController implements Initializable { //javaklassen som ko
     @FXML
     private Slider boardSlider;
 
+
+    @FXML
+    private Text outgoingText;
+
+    @FXML
+    private Text incomingText;
+
+
+
     private Parent root;
 
     private GameThread gameThread;
@@ -53,7 +63,7 @@ public class boardViewController implements Initializable { //javaklassen som ko
 
 //metoder
 
-    public void hitOnCoordinate(Boolean isRightGrid, String message, int X, int Y) { //Denna kod är mera som ett grafiskt test, menad att användas när Osman
+    public void hitOnCoordinate(Boolean isRightGrid, String message, int X, int Y,GameBoard gameBoard) { //Denna kod är mera som ett grafiskt test, menad att användas när Osman
         //Och Daniel har skrivit mera backend kod som man kan länka denna mot.
 
         if (isRightGrid) {
@@ -62,29 +72,40 @@ public class boardViewController implements Initializable { //javaklassen som ko
                 case "H":
                 case "S":
                     rightGrid.add(new ImageView("Hit.jpg"), X, Y);
-
+                    outgoingText.setText(outgoingText.getText() + "\n" + message + " " + gameBoard.getSquare(X, Y).getName()); // med scrolling
+//                  outgoingText.setText(message + " " + gameBoard.getSquare(X, Y).getName()); // tar bort scrolling
 
                     break;
 
                 case "M":
 
                         rightGrid.add(new ImageView("Miss.jpg"), X, Y);
-
+                        outgoingText.setText(outgoingText.getText() + "\n" + message + " " + gameBoard.getSquare(X, Y).getName()); // med scrolling
+//                       outgoingText.setText(message + " " + gameBoard.getSquare(X, Y).getName()); // tar bort scrolling
 
 
                     break;
+                    case "GAMEOVER":
+                    outgoingText.setText("Game Over" + " \n" + outgoingText.getText());
             }
         } else {
             switch (message) {
                 case "H":
                 case "S":
                     leftGrid.add(new ImageView("Hit.jpg"), X, Y);
+                    incomingText.setText(incomingText.getText() + "\n" + message + " " + gameBoard.getSquare(X, Y).getName()); // med scrolling
+//                    incomingText.setText(message + " " + gameBoard.getSquare(X, Y).getName()); // tar bort scrolling
 
                     break;
 
                 case "M":
-                        leftGrid.add(new ImageView("Miss.jpg"), X, Y);
+                    incomingText.setText(incomingText.getText() + "\n" + message + " " + gameBoard.getSquare(X, Y).getName()); // med scrolling
+//                    incomingText.setText(message + " " + gameBoard.getSquare(X, Y).getName()); // tar bort scrolling
+
+                    leftGrid.add(new ImageView("Miss.jpg"), X, Y);
                     break;
+                case "GAMEOVER":
+                    incomingText.setText("Game Over" + " \n" + incomingText.getText());
             }
 
 

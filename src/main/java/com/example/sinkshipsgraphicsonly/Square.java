@@ -70,10 +70,10 @@ public class Square {
 
     public String hit(){
 
-        String musicFile = "Group7ViktorSinksShips/src/main/resources/Hit.mp3";
-       // Media sound = new Media(new File(musicFile).toURI().toString());
-        //MediaPlayer mediaPlayer = new MediaPlayer(sound);
-        //mediaPlayer.play();
+        String musicFile = "src/main/resources/Hit.mp3";
+        Media sound = new Media(new File(musicFile).toURI().toString());
+        MediaPlayer mediaPlayer = new MediaPlayer(sound);
+        mediaPlayer.play();
 
 
         this.hit = true;

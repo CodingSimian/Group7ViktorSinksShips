@@ -69,7 +69,7 @@ public class Game1 {
 
             incomingMesssage = connection.reciveMessage();
             if(incomingMesssage.equalsIgnoreCase("GAMEOVER")){
-                uppDateRightBoard("H");
+                uppDateRightBoard("GAMEOVER");
                 gameover = true;
             }
             if(!gameover) {
@@ -98,7 +98,7 @@ public class Game1 {
         feedbackLeftBoard = player.fire(newMessage);
         uppDateRightBoard(feedback);
         if(feedbackLeftBoard.equalsIgnoreCase("Gameover")){
-            uppdateLeftBoard("H",newMessage);
+            uppdateLeftBoard("GAMEOVER",newMessage);
             newMessage = feedbackLeftBoard;
         }else{
             uppdateLeftBoard(feedbackLeftBoard,newMessage);
@@ -124,7 +124,7 @@ public class Game1 {
                 int y = enemy.convertCoordinate(enemy.getLastLogicalCoordinate().charAt(1));
                 String  f = feedback;
                 Platform.runLater( ()-> {
-                    controller.hitOnCoordinate(true, f,x,y );
+                    controller.hitOnCoordinate(true, f,x,y,enemy );
 
                 });
             } else {
@@ -133,7 +133,7 @@ public class Game1 {
                 int y = enemy.convertCoordinate(enemy.getLastRandomCoordinate().charAt(1));
                 String f = feedback;
                 Platform.runLater(() -> {
-                    controller.hitOnCoordinate(true, f,x,y);
+                    controller.hitOnCoordinate(true, f,x,y,enemy);
 
                 });
 
@@ -153,7 +153,7 @@ public class Game1 {
         row = player.convertCoordinate(coordinate.charAt(1));
         System.out.println("LeftBoard: " + feedback + " " + colum + " "  +row);
         Platform.runLater(() -> {
-            controller.hitOnCoordinate(false, feedback, colum, row);
+            controller.hitOnCoordinate(false, feedback, colum, row,player);
         });
 
     }
