@@ -81,6 +81,7 @@ public class battleShipGraphicsController { //Klass för att få fram spelplanen
 
 
     public void serverButtonPressed(ActionEvent actionEvent) throws IOException, InterruptedException {
+        double tickValue = startMenuSlider.getValue();
 
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("boardView2.fxml"));
@@ -91,6 +92,7 @@ public class battleShipGraphicsController { //Klass för att få fram spelplanen
 
         boardViewController boardController = loader.getController();
         boardController.setServer(true);
+        boardController.sliderValueSet(tickValue);
 
 
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
@@ -118,7 +120,7 @@ public class battleShipGraphicsController { //Klass för att få fram spelplanen
 @FXML
     public void sendValueFromGrapContToGame1()
     {
-        System.out.println(startMenuSlider.getValue());//Hämtar värdet på slidern varje gång man drar den och släpper musknappen.  nuvarande värdet på slidern när man drar den..
+
     }
 
 

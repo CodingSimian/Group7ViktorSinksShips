@@ -11,10 +11,7 @@ public class Game1 {
     protected GameBoard player;
     protected GameBoard enemy;
 
-    private int delay;  // TickValue värdet på själva slidern och göra om det till en long för att
-//Delay är inte kopplad till controllern, men TickValue är det.
-    //Grejen som ska göras är att delayen ska kopplas till TickValue, så när tickValue ändras så ändras dalyen med automatisk.
-    //TickValue finns i Game1 och i borderController
+    private int delay;
 
     private Scanner scan;
     private boardViewController controller;
@@ -76,7 +73,10 @@ public class Game1 {
                 System.out.println("Incoming: " + "  " + incomingMesssage);
                 outGoingMessage = breakDownMessage(incomingMesssage);
 
+                delay = controller.delayValue(); //Literally ba en metod som kallar på boardSlider.getValue()
+                //Inlägd här för att tillgodose att hela spelet sker i en while-loop.
                 Thread.sleep(delay);
+
                 round++;
                 System.out.println("Outgoing: round " + round + "  " + outGoingMessage);
                 connection.sendMessage(outGoingMessage);
@@ -191,5 +191,13 @@ public class Game1 {
                 break;
         }
         return nextCoordinate;
+    }
+
+    public void setGameover(boolean gameover) {
+        this.gameover = gameover;
+    }
+
+    public void setDelay(int daDelay){
+    this.delay = daDelay;
     }
 }

@@ -141,7 +141,8 @@ public class boardViewController implements Initializable { //javaklassen som ko
 
 
 
-                gameThread = new GameThread(this);
+            gameThread = new GameThread(this);
+                gameThread.game.setGameover(false);
             //leftGameBoard.SquareGrid[row].length
             for (int row = 0; row <gameThread.game.player.SquareGrid.length ; row++) {
                 for (int col = 0; col < gameThread.game.player.SquareGrid[row].length; col++) {
@@ -152,7 +153,11 @@ public class boardViewController implements Initializable { //javaklassen som ko
                 }
             }
 
-
+            /*try {
+                returnToStart();
+            } catch (IOException e) {
+                throw new RuntimeException(e); //Hihi Viktor testar
+            }*/
 
 
         }
@@ -230,6 +235,34 @@ public class boardViewController implements Initializable { //javaklassen som ko
             gameThread.game.server = server;
             gameThread.start();
 
+        }
+
+        //@FXML
+        public void returnToStart()throws IOException{ //Denna metod skall skicka tillbaka användaren till startmenyn
+            //När ett error framkommer.
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("startMenu.fxml"));
+
+            Parent myRoot = loader.load();
+
+            Stage coolerStage = new Stage(); //Denna rad måste ändras till det nuvarande staget.
+
+            Scene scene = new Scene(myRoot, 1000, 800);
+            scene.getStylesheets().add("Styles.css");
+
+            coolerStage.setScene(scene);
+            coolerStage.show();
+
+            FXMLLoader someSortaLoader = new FXMLLoader(getClass().getResource("boardView2.fxml"));
+            boardViewController someSortaController = someSortaLoader.getController();
+            Stage stage = (Stage) someSortaController.leftGrid.getScene().getWindow();
+            stage.close(); //Rad 234-237 kommer endast att fungera som tänkt, om man använder den medans boardView2.fxml visas.
+            //Om startMenu.fxml visas så stängs ju endast boardview2.fxml's stage, det stage som visar "startMenu.fxml" stängs ju aldrig.
+
+
+        }
+        public int delayValue(){
+            return (int) boardSlider.getValue()*1000; //.getValue() mulitipliceras med 1000 för att tillgodose att det
+            //Rör sig om millisekunder.
         }
 }
 
