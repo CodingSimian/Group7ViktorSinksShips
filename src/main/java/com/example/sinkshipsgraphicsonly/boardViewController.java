@@ -272,6 +272,69 @@ public class boardViewController implements Initializable { //javaklassen som ko
             return (int) boardSlider.getValue()*1000; //.getValue() mulitipliceras med 1000 för att tillgodose att det
             //Rör sig om millisekunder.
         }
+
+        public void showWinner(String theName){
+            Stage window = new Stage();
+
+            //window.initModality(Modality.APPLICATION_MODAL); Denna rad gör det omöjligt att klicka utanför fönstret
+
+            window.setTitle("VINNARE");
+            window.setMinHeight(200);
+            window.setMinWidth(320);
+
+
+
+            Label popupLabel = new Label();
+            popupLabel.setText("Du har nu vunnit, grattis " + theName + "!");
+
+            VBox layout = new VBox(10);
+            layout.getChildren().addAll(popupLabel);
+            layout.setAlignment(Pos.CENTER);
+
+            Scene scene = new Scene(layout);
+            Stage oldStage = (Stage) leftGrid.getScene().getWindow();
+
+            window.setX(oldStage.getX()); //Rad 295-298 gör så att popup fönstret hamnar innanför programmets fönster.
+            window.setY(oldStage.getY());
+
+            scene.getStylesheets().add("Styles.css");
+            window.setScene(scene);
+            //window.showAndWait(); denna rad funkar med application_modal
+            window.show();
+        }
+
+    public void showLoser( String theName){
+        Stage window = new Stage();
+
+        //window.initModality(Modality.APPLICATION_MODAL); Denna rad gör det omöjligt att klicka utanför fönstret
+
+        window.setTitle("FÖRLORARE");
+        window.setMinHeight(200);
+        window.setMinWidth(320);
+
+
+
+        Label popupLabel = new Label();
+        popupLabel.setText("Du har nu förlorat, bättre lycka nästa gång " + theName +"!");
+
+        VBox layout = new VBox(10);
+        layout.getChildren().addAll(popupLabel);
+        layout.setAlignment(Pos.CENTER);
+
+        Scene scene = new Scene(layout);
+
+        scene.getStylesheets().add("Styles.css");
+
+        FXMLLoader someSortaLoader = new FXMLLoader(getClass().getResource("boardView2.fxml"));
+        boardViewController someSortaController = someSortaLoader.getController();
+        Stage oldStage = (Stage) leftGrid.getScene().getWindow();
+
+       window.setX(oldStage.getX());
+       window.setY(oldStage.getY());
+
+       window.setScene(scene);
+       window.show();
+    }
 }
 
 

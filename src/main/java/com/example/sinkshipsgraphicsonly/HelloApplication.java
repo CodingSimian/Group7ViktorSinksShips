@@ -22,7 +22,7 @@ public class HelloApplication extends Application { //Här körs xml-filen
         stage.setScene(scene);
         stage.show();
     }
-//Test för att kunna comita på github
+
     public static void main(String[] args) {
         launch();
 

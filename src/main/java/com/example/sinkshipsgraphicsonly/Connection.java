@@ -20,6 +20,8 @@ public class Connection { //Klass för att ansluta sig mellan två olika enheter
 
     private BufferedWriter bw;
 
+    private String name;
+
 
     // konstruktor
     Connection(){

@@ -1,6 +1,13 @@
 package com.example.sinkshipsgraphicsonly;
 
 import javafx.application.Platform;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import org.controlsfx.control.tableview2.filter.filtereditor.SouthFilter;
 
 import java.io.IOException;
@@ -23,6 +30,7 @@ public class Game1 {
     String incomingMesssage;
     boolean server;
 
+    private String name;
 
     Game1(boardViewController controller )  {
         player = new GameBoard();
@@ -50,12 +58,22 @@ public class Game1 {
         }
     }
     public void play() throws IOException, InterruptedException {
+        /*if(server){
+            name="Server";
+        }else{
+            name="Client";
+        }*/
 
         if(server){
+            name = "Server";
             connection.newServer();
-        }else connection.connectToServer();
 
-        if (connection.isConnected()) {
+        }else {
+            name = "Client";
+            connection.connectToServer();
+        }
+
+        if (connection.isConnected() && !server) { //Skrev om
             outGoingMessage = "i shot ";
             outGoingMessage += enemy.getRandomCoordinate();
             System.out.println(outGoingMessage);
@@ -64,21 +82,37 @@ public class Game1 {
         while (!gameover) {
 
             incomingMesssage = connection.reciveMessage();
-            if(incomingMesssage.equalsIgnoreCase("GAMEOVER")){
+            if(incomingMesssage.equalsIgnoreCase("GAMEOVER")){ //om incommingMessage är gameover,
+                //Så är den instansen av programmet en vinnare. Och om outGoingMessage är gameoaver så är den
+                //instansen förlorare.
+
                 uppDateRightBoard("GAMEOVER");
+
+                Platform.runLater( ()-> {
+                    controller.showWinner(name);
+
+                });
                 gameover = true;
             }
             if(!gameover) {
                 System.out.println("Incoming: " + "  " + incomingMesssage);
                 outGoingMessage = breakDownMessage(incomingMesssage);
 
-                delay = controller.delayValue(); //Literally ba en metod som kallar på boardSlider.getValue()
+                delay = controller.delayValue();
+                //Literally ba en metod som kallar på boardSlider.getValue()
                 //Inlägd här för att tillgodose att hela spelet sker i en while-loop.
                 Thread.sleep(delay);
 
                 round++;
                 System.out.println("Outgoing: round " + round + "  " + outGoingMessage);
                 connection.sendMessage(outGoingMessage);
+
+                if(outGoingMessage.equalsIgnoreCase("GAMEOVER")){
+                    Platform.runLater( ()-> {
+                        controller.showLoser(name);
+
+                    });
+                }
             }
 
 
