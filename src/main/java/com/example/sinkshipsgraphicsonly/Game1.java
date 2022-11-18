@@ -114,11 +114,12 @@ public class Game1 {
                     });
                 }
             }
-            connection.closeConnection();
+
 
 
 
         }
+        connection.closeConnection();
     }
     // Plockar isär informationen från motståndaren och tar fram ett nytt meddelande beroende på svar från GameBoard.
     // Samt kallar på metoder för att uppdatera grafiska spelplanerna;

@@ -153,11 +153,7 @@ public class boardViewController implements Initializable { //javaklassen som ko
                 }
             }
 
-            /*try {
-                returnToStart();
-            } catch (IOException e) {
-                throw new RuntimeException(e); //Hihi Viktor testar
-            }*/
+
 
 
         }
@@ -260,9 +256,9 @@ public class boardViewController implements Initializable { //javaklassen som ko
             coolerStage.setScene(scene);
             coolerStage.show();
 
-            FXMLLoader someSortaLoader = new FXMLLoader(getClass().getResource("boardView2.fxml"));
-            boardViewController someSortaController = someSortaLoader.getController();
-            Stage stage = (Stage) someSortaController.leftGrid.getScene().getWindow();
+            //FXMLLoader someSortaLoader = new FXMLLoader(getClass().getResource("boardView2.fxml"));
+            //boardViewController someSortaController = someSortaLoader.getController();
+            Stage stage = (Stage) leftGrid.getScene().getWindow();
             stage.close(); //Rad 234-237 kommer endast att fungera som tänkt, om man använder den medans boardView2.fxml visas.
             //Om startMenu.fxml visas så stängs ju endast boardview2.fxml's stage, det stage som visar "startMenu.fxml" stängs ju aldrig.
 
@@ -334,6 +330,32 @@ public class boardViewController implements Initializable { //javaklassen som ko
 
        window.setScene(scene);
        window.show();
+    }
+    public void errorPopup()throws IOException,InterruptedException{
+        Stage window = new Stage();
+        window.setTitle("Ingen anslutning");
+        window.setMinHeight(200);
+        window.setMinWidth(320);
+
+        Label popupLabel = new Label();
+
+        popupLabel.setText("Anslutningen bruten återvänder till start skärmen inom 5 sekunder.");
+        VBox layout = new VBox(10);
+        layout.getChildren().addAll(popupLabel);
+        layout.setAlignment(Pos.CENTER);
+        Scene scene = new Scene(layout);
+        scene.getStylesheets().add("Styles.css");
+        FXMLLoader someSortaLoader = new FXMLLoader(getClass().getResource("boardView2.fxml"));
+        boardViewController someSortaController = someSortaLoader.getController();
+        Stage oldStage = (Stage) leftGrid.getScene().getWindow();
+       // window.setX(oldStage.getX());
+       // window.setY(oldStage.getY());
+        window.setScene(scene);
+        window.show();
+        Thread.sleep(5000); //KLicka på avsluta-match för att generera error
+        window.close();
+        returnToStart();
+
     }
 }
 
