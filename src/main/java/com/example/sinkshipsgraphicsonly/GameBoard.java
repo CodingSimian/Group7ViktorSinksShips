@@ -184,12 +184,18 @@ public class GameBoard {
 
             feedback = getSquare(row, colum).hit();
             if (feedback.equalsIgnoreCase("S")) {
-                antalSänkta++;
                 fleet.remove(getSquare(row, colum).getShip());
                 if (fleet.isEmpty()) {
                     feedback = "GAMEOVER";
                 }
 
+
+            }
+            if(feedback.equalsIgnoreCase("M")){
+                String musicFile = "src/main/resources/Miss.mp3";
+                 Media sound = new Media(new File(musicFile).toURI().toString());
+                MediaPlayer mediaPlayer = new MediaPlayer(sound);
+                 mediaPlayer.play();
 
             }
            String musicFile = "src/main/resources/Miss.mp3";

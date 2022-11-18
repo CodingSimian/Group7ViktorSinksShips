@@ -59,7 +59,7 @@ public class boardViewController implements Initializable { //javaklassen som ko
 
 
 
-    Game1 theGame;
+
 
 //metoder
 
@@ -170,6 +170,7 @@ public class boardViewController implements Initializable { //javaklassen som ko
             window.setMinWidth(320);
 
 
+
             Label popupLabel = new Label();
             popupLabel.setText("Är du säker?");
             Button nejButton = new Button("NEJ");
@@ -177,6 +178,9 @@ public class boardViewController implements Initializable { //javaklassen som ko
 
             Button jaButton = new Button("JA");
             jaButton.setOnAction(e -> {
+                if(gameThread.isAlive()) {
+                    gameThread.game.gameover = true;
+                }
                         try {
                             double someBoardTickValue = boardSlider.getValue();
                             FXMLLoader loader = new FXMLLoader(getClass().getResource("startMenu.fxml"));
@@ -234,6 +238,10 @@ public class boardViewController implements Initializable { //javaklassen som ko
         public void startButtonPressed(ActionEvent event) throws IOException, InterruptedException {
             gameThread.game.server = server;
             gameThread.start();
+
+        }
+
+        public void oponnentDisconect(){
 
         }
 

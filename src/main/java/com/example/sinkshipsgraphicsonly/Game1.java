@@ -32,7 +32,7 @@ public class Game1 {
         System.out.println(player.fleet.size());
         enemy = new GameBoard();
         enemy.buildGameBoard();
-        delay = 0;
+        delay = 1500;
         gameover = false;
         round = 0;
 
@@ -81,6 +81,7 @@ public class Game1 {
                 System.out.println("Outgoing: round " + round + "  " + outGoingMessage);
                 connection.sendMessage(outGoingMessage);
             }
+
 
 
         }
@@ -151,7 +152,6 @@ public class Game1 {
         int colum;
         colum = Character.getNumericValue(coordinate.charAt(0));
         row = player.convertCoordinate(coordinate.charAt(1));
-        System.out.println("LeftBoard: " + feedback + " " + colum + " "  +row);
         Platform.runLater(() -> {
             controller.hitOnCoordinate(false, feedback, colum, row,player);
         });
@@ -165,14 +165,14 @@ public class Game1 {
         String nextCoordinate = "";
         switch (feedback){
 
-            case "M": // kalla på getRandomCoordinate();
+            case "M":
                 if(enemy.logicActive){
                     nextCoordinate = enemy.nextLogicalCoordinate(feedback);
                 }else {
                     nextCoordinate = enemy.getRandomCoordinate();
                 }
                 break;
-            case "H": // kalla på getLogicalCooordinate();
+            case "H":
                 if(enemy.logicActive) {
                     nextCoordinate = enemy.nextLogicalCoordinate(feedback);
                     System.out.println("Nextlogical");
@@ -181,7 +181,7 @@ public class Game1 {
                     System.out.println("startLogical");
                 }
                 break;
-            case "S": // reset logicalCoordinate(); kalla därefter på getRandomCoordinate();
+            case "S":
                 nextCoordinate = enemy.getRandomCoordinate();
                 System.out.println("Reset Logic");
                 enemy.resetLogicalCoordinate();

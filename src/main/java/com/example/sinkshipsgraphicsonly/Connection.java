@@ -1,4 +1,6 @@
 package com.example.sinkshipsgraphicsonly;
+import org.controlsfx.control.tableview2.filter.filtereditor.SouthFilter;
+
 import java.io.*;
 import java.net.ConnectException;
 import java.net.ServerSocket;
@@ -84,6 +86,7 @@ public class Connection { //Klass för att ansluta sig mellan två olika enheter
     }
     // metod för att skicka meddelande till anslutningen
     public void sendMessage(String message) throws IOException {
+
         if(user.isConnected()) {
             bw.write(message);
             bw.newLine();
@@ -94,14 +97,16 @@ public class Connection { //Klass för att ansluta sig mellan två olika enheter
 
     // metod för att ta emot meddelande från anslutnigen
     public String reciveMessage()throws IOException{
-        String message = "";
-
-        try {
-            message = br.readLine();
-        } catch (ConnectException e) {
-            e.printStackTrace();
-            message = "Connection Error";
-            //TODO lägg till kontroll av anslutning om inget meddelande kan tas emot
+        String message = "Client Disconnected";
+        if(user.isConnected()) {
+            try {
+                message = br.readLine();
+            } catch (ConnectException e) {
+                System.out.println("Client disconnected");
+                e.printStackTrace();
+                message = "Connection Error";
+                //TODO lägg till kontroll av anslutning om inget meddelande kan tas emot
+            }
         }
 
         if(message.equalsIgnoreCase("Disconnect")){
@@ -122,6 +127,9 @@ public class Connection { //Klass för att ansluta sig mellan två olika enheter
             in.close();
             out.close();
             bw.close();
+            if(server){
+                serverSocket.close();
+            }
         }catch (IOException e){
             e.printStackTrace();
         }

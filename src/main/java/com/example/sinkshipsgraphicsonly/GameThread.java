@@ -5,14 +5,19 @@ import java.io.IOException;
 public class GameThread extends Thread{
     private boardViewController controller;
     public Game1 game;
+    private boolean active;
 
     @Override
     public void run() {
+        this.active = true;
         try {
             game.play();
         } catch (IOException e) {
+            System.out.println("Anslutningen bruten återvänder till start skärmen inom 5 sekunder.");
             throw new RuntimeException(e);
         } catch (InterruptedException e) {
+
+
             throw new RuntimeException(e);
         }
 
@@ -21,6 +26,10 @@ public class GameThread extends Thread{
          game = new Game1(controller);
 
     }
+    public boolean isActive(){
+        return this.active;
+    }
+
 
     public Game1 getGame(){
         return this.game;
