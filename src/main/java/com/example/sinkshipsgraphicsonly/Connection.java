@@ -125,10 +125,6 @@ public class Connection { //Klass för att ansluta sig mellan två olika enheter
     public void closeConnection() throws IOException{
         try {
             user.close();
-            br.close();
-            in.close();
-            out.close();
-            bw.close();
             if(server){
                 serverSocket.close();
             }

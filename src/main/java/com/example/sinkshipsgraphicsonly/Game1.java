@@ -114,6 +114,7 @@ public class Game1 {
                     });
                 }
             }
+            connection.closeConnection();
 
 
 
@@ -151,7 +152,7 @@ public class Game1 {
               */
     }
     public void uppDateRightBoard(String feedback){
-        if(!feedback.equalsIgnoreCase("I")) {
+        if(!feedback.equalsIgnoreCase("i")) {
             if (enemy.logicActive) {
                 System.out.println(feedback + " " + enemy.getLastLogicalCoordinate());
                 int x = Character.getNumericValue(enemy.getLastLogicalCoordinate().charAt(0));
