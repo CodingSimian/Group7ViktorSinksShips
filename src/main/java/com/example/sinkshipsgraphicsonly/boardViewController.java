@@ -69,15 +69,15 @@ public class boardViewController implements Initializable { //javaklassen som ko
         if (isRightGrid) {
 
             switch (message) {
-                case "H":
-                case "S":
+                case "h":
+                case "s":
                     rightGrid.add(new ImageView("Hit.jpg"), X, Y);
                     outgoingText.setText(outgoingText.getText() + "\n" + message + " " + gameBoard.getSquare(X, Y).getName()); // med scrolling
 //                  outgoingText.setText(message + " " + gameBoard.getSquare(X, Y).getName()); // tar bort scrolling
 
                     break;
 
-                case "M":
+                case "m":
 
                         rightGrid.add(new ImageView("Miss.jpg"), X, Y);
                         outgoingText.setText(outgoingText.getText() + "\n" + message + " " + gameBoard.getSquare(X, Y).getName()); // med scrolling
@@ -90,15 +90,15 @@ public class boardViewController implements Initializable { //javaklassen som ko
             }
         } else {
             switch (message) {
-                case "H":
-                case "S":
+                case "h":
+                case "s":
                     leftGrid.add(new ImageView("Hit.jpg"), X, Y);
                     incomingText.setText(incomingText.getText() + "\n" + message + " " + gameBoard.getSquare(X, Y).getName()); // med scrolling
 //                    incomingText.setText(message + " " + gameBoard.getSquare(X, Y).getName()); // tar bort scrolling
 
                     break;
 
-                case "M":
+                case "m":
                     incomingText.setText(incomingText.getText() + "\n" + message + " " + gameBoard.getSquare(X, Y).getName()); // med scrolling
 //                    incomingText.setText(message + " " + gameBoard.getSquare(X, Y).getName()); // tar bort scrolling
 

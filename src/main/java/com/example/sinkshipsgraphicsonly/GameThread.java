@@ -16,6 +16,8 @@ public class GameThread extends Thread{
             System.out.println("Anslutningen bruten återvänder till start skärmen inom 5 sekunder.");
             throw new RuntimeException(e);
         } catch (InterruptedException e) {
+             // kalla på match avbruten ruta
+            // controller.returnToStart
 
 
             throw new RuntimeException(e);
@@ -24,6 +26,7 @@ public class GameThread extends Thread{
     }
     GameThread(boardViewController controller){
          game = new Game1(controller);
+         controller = controller;
 
     }
     public boolean isActive(){

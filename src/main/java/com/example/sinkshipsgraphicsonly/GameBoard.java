@@ -13,7 +13,7 @@ public class GameBoard {
     //properties
 
     // array som användas för att skapa all squares med rätt namn
-    char[] yAxis = {'A', 'B', 'C', 'D', 'E', 'F', 'G','H','I','J'}; //Bytte namn från xAxis till yAxis, Viktor
+    char[] yAxis = {'a', 'b', 'c', 'd', 'e', 'f', 'g','h','i','j'}; //Bytte namn från xAxis till yAxis, Viktor
 
     // Innehåller alla skepp som skapas.
     ArrayList<Ship> fleet = new ArrayList<>();
@@ -183,25 +183,22 @@ public class GameBoard {
             int colum = Character.getNumericValue(coordinate.charAt(0));
 
             feedback = getSquare(row, colum).hit();
-            if (feedback.equalsIgnoreCase("S")) {
+            if (feedback.equalsIgnoreCase("s")) {
                 fleet.remove(getSquare(row, colum).getShip());
                 if (fleet.isEmpty()) {
-                    feedback = "GAMEOVER";
+                    feedback = "gameover";
                 }
 
 
             }
-            if(feedback.equalsIgnoreCase("M")){
+            if(feedback.equalsIgnoreCase("m")){
                 String musicFile = "src/main/resources/Miss.mp3";
                  Media sound = new Media(new File(musicFile).toURI().toString());
                 MediaPlayer mediaPlayer = new MediaPlayer(sound);
                  mediaPlayer.play();
 
             }
-           String musicFile = "src/main/resources/Miss.mp3";
-            Media sound = new Media(new File(musicFile).toURI().toString());
-            MediaPlayer mediaPlayer = new MediaPlayer(sound);
-            mediaPlayer.play();
+
 
 
 
@@ -316,6 +313,7 @@ public class GameBoard {
 
         boolean valid;
         for(Ship ship:fleet){
+            int tries;
             valid = false;
             int max = 10- ship.getLength();
             while(!valid) {

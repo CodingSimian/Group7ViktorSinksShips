@@ -56,8 +56,7 @@ public class Game1 {
         }else connection.connectToServer();
 
         if (connection.isConnected()) {
-            System.out.println("test");
-            outGoingMessage = "I shoot ";
+            outGoingMessage = "i shot ";
             outGoingMessage += enemy.getRandomCoordinate();
             System.out.println(outGoingMessage);
             connection.sendMessage(outGoingMessage);
@@ -98,13 +97,13 @@ public class Game1 {
         newMessage = scan.next();
         feedbackLeftBoard = player.fire(newMessage);
         uppDateRightBoard(feedback);
-        if(feedbackLeftBoard.equalsIgnoreCase("Gameover")){
-            uppdateLeftBoard("GAMEOVER",newMessage);
+        if(feedbackLeftBoard.equalsIgnoreCase("gameover")){
+            uppdateLeftBoard("gameover",newMessage);
             newMessage = feedbackLeftBoard;
         }else{
             uppdateLeftBoard(feedbackLeftBoard,newMessage);
             newMessage = feedbackLeftBoard;
-            newMessage += " Shoot " ;
+            newMessage += " shot " ;
             newMessage += nextCoordinate(feedback);
         }
 
@@ -165,14 +164,14 @@ public class Game1 {
         String nextCoordinate = "";
         switch (feedback){
 
-            case "M":
+            case "m":
                 if(enemy.logicActive){
                     nextCoordinate = enemy.nextLogicalCoordinate(feedback);
                 }else {
                     nextCoordinate = enemy.getRandomCoordinate();
                 }
                 break;
-            case "H":
+            case "h":
                 if(enemy.logicActive) {
                     nextCoordinate = enemy.nextLogicalCoordinate(feedback);
                     System.out.println("Nextlogical");
@@ -181,12 +180,12 @@ public class Game1 {
                     System.out.println("startLogical");
                 }
                 break;
-            case "S":
+            case "s":
                 nextCoordinate = enemy.getRandomCoordinate();
                 System.out.println("Reset Logic");
                 enemy.resetLogicalCoordinate();
                 break;
-            case "I":
+            case "i":
                 nextCoordinate = enemy.getRandomCoordinate();
                 break;
         }

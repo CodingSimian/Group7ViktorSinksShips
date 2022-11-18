@@ -80,13 +80,13 @@ public class Square {
         String feedback;
        if(ship != null) {
            ship.hit();
-           feedback = "H";
+           feedback = "h";
            if(ship.isSunk()){
-               feedback=  "S";
+               feedback=  "s";
 
            }
 
-       }else feedback = "M";
+       }else feedback = "m";
 
        return feedback;
     }
