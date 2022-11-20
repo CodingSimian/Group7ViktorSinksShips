@@ -111,13 +111,6 @@ public class Connection { //Klass för att ansluta sig mellan två olika enheter
             }
         }
 
-        if(message.equalsIgnoreCase("Disconnect")){
-            closeConnection();
-            System.out.println("Client disconnected");
-            message = "";
-            newServerConnection();
-
-        }
         return message;
     }
 

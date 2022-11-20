@@ -40,6 +40,8 @@ public class Square {
         this.hasShip = true;
 
     }
+    public void removeShip(Ship ship){}
+
     public Ship getShip(){
         return this.ship;
 
@@ -69,13 +71,6 @@ public class Square {
     // om det finns ett skepp på rutan skickar den vidare meddelandet , och skickar sedan feedback tillbaka om det är träff/miss/sänkt skepp
 
     public String hit(){
-
-        String musicFile = "src/main/resources/Hit.mp3";
-        Media sound = new Media(new File(musicFile).toURI().toString());
-         MediaPlayer mediaPlayer = new MediaPlayer(sound);
-        mediaPlayer.play();
-
-
         this.hit = true;
         String feedback;
        if(ship != null) {

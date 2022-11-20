@@ -6,10 +6,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.controlsfx.control.tableview2.filter.filtereditor.SouthFilter;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -23,6 +26,8 @@ public class Game1 {
     private Scanner scan;
     private boardViewController controller;
 
+    protected boolean mute;
+
     Connection connection;
     int round;
     boolean gameover;
@@ -30,6 +35,21 @@ public class Game1 {
     String incomingMesssage;
     boolean server;
     private String name;
+    private final String miss = "src/main/resources/Miss.mp3";
+    private final Media missSound = new Media(new File(miss).toURI().toString());
+
+
+
+    private final String hit = "src/main/resources/Hit.mp3";
+    private final Media hitSound = new Media(new File(hit).toURI().toString());
+
+
+    private final String loser = "src/main/resources/Loser.mp3";
+    private final Media loserSound = new Media(new File(loser).toURI().toString());
+
+
+    private final String winner = "src/main/resources/Winner.mp3";
+    private final Media winnerSound = new Media(new File(winner).toURI().toString());
 
     Game1(boardViewController controller )  {
         player = new GameBoard();
@@ -39,7 +59,6 @@ public class Game1 {
         System.out.println(player.fleet.size());
         enemy = new GameBoard();
         enemy.buildGameBoard();
-        delay = 1500;
         gameover = false;
         round = 0;
 
@@ -57,6 +76,8 @@ public class Game1 {
         }
     }
     public void play() throws IOException, InterruptedException {
+
+
 
         if(server){
             name = "Server";
@@ -79,7 +100,10 @@ public class Game1 {
             if(incomingMesssage.equalsIgnoreCase("GAMEOVER")){ //om incommingMessage är gameover,
                 //Så är den instansen av programmet en vinnare. Och om outGoingMessage är gameoaver så är den
                 //instansen förlorare.
-
+                if(!mute){
+                    MediaPlayer mediaPlayer = new MediaPlayer(winnerSound);
+                    mediaPlayer.play();
+                }
                 uppDateRightBoard("GAMEOVER");
 
                 Platform.runLater( ()-> {
@@ -101,14 +125,17 @@ public class Game1 {
                 connection.sendMessage(outGoingMessage);
 
                 if(outGoingMessage.equalsIgnoreCase("GAMEOVER")){
+                    if (!mute) {
+                        MediaPlayer mediaPlayer = new MediaPlayer(loserSound);
+                        mediaPlayer.play();
+                    }
                     Platform.runLater( ()-> {
                         controller.showLoser(name);
 
                     });
+                    gameover = true;
                 }
             }
-
-
 
 
         }
@@ -126,15 +153,30 @@ public class Game1 {
         newMessage = scan.next();
         feedbackLeftBoard = player.fire(newMessage);
         uppDateRightBoard(feedback);
-        if(feedbackLeftBoard.equalsIgnoreCase("gameover")){
-            uppdateLeftBoard("gameover",newMessage);
-            newMessage = feedbackLeftBoard;
-        }else{
-            uppdateLeftBoard(feedbackLeftBoard,newMessage);
-            newMessage = feedbackLeftBoard;
-            newMessage += " shot " ;
-            newMessage += nextCoordinate(feedback);
-        }
+          if(feedbackLeftBoard.equalsIgnoreCase("gameover")) {
+
+              uppdateLeftBoard("gameover",newMessage);
+              newMessage = feedbackLeftBoard;
+          }else {
+
+              if (!mute) {
+                  switch (feedbackLeftBoard) {
+                      case "h":
+                      case "s":
+                          MediaPlayer mediaPlayer = new MediaPlayer(hitSound);
+                          mediaPlayer.play();
+                          break;
+                      case "m":
+                          MediaPlayer mediaPlayer1 = new MediaPlayer(missSound);
+                          mediaPlayer1.play();
+                          break;
+                  }
+              }
+              uppdateLeftBoard(feedbackLeftBoard, newMessage);
+              newMessage = feedbackLeftBoard;
+              newMessage += " shot ";
+              newMessage += nextCoordinate(feedback);
+          }
 
         return newMessage;
 
