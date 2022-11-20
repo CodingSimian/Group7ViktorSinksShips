@@ -29,7 +29,6 @@ public class Game1 {
     String outGoingMessage;
     String incomingMesssage;
     boolean server;
-
     private String name;
 
     Game1(boardViewController controller )  {
@@ -58,11 +57,6 @@ public class Game1 {
         }
     }
     public void play() throws IOException, InterruptedException {
-        /*if(server){
-            name="Server";
-        }else{
-            name="Client";
-        }*/
 
         if(server){
             name = "Server";
@@ -73,7 +67,7 @@ public class Game1 {
             connection.connectToServer();
         }
 
-        if (connection.isConnected() && !server) { //Skrev om
+        if (connection.isConnected()) { //Skrev om
             outGoingMessage = "i shot ";
             outGoingMessage += enemy.getRandomCoordinate();
             System.out.println(outGoingMessage);
@@ -90,7 +84,6 @@ public class Game1 {
 
                 Platform.runLater( ()-> {
                     controller.showWinner(name);
-
                 });
                 gameover = true;
             }
@@ -98,7 +91,7 @@ public class Game1 {
                 System.out.println("Incoming: " + "  " + incomingMesssage);
                 outGoingMessage = breakDownMessage(incomingMesssage);
 
-                delay = controller.delayValue();
+                delay = controller.delayValue(); //Lägg till mer kommentarer
                 //Literally ba en metod som kallar på boardSlider.getValue()
                 //Inlägd här för att tillgodose att hela spelet sker i en while-loop.
                 Thread.sleep(delay);
@@ -161,7 +154,6 @@ public class Game1 {
                 String  f = feedback;
                 Platform.runLater( ()-> {
                     controller.hitOnCoordinate(true, f,x,y,enemy );
-
                 });
             } else {
                 System.out.println(feedback + " " + enemy.getLastRandomCoordinate());

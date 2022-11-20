@@ -5,7 +5,7 @@
 läggs in genomgående hela projektets java kod.
  */
 
-Label, Slider, Button{
+Label, Slider, Button, RadioButton{
     -fx-background-color: black;
     -fx-text-fill: white;
 }

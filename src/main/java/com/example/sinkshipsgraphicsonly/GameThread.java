@@ -1,11 +1,9 @@
 package com.example.sinkshipsgraphicsonly;
 
-import javafx.application.Platform;
-
 import java.io.IOException;
 
 public class GameThread extends Thread{
-    private boardViewController test;
+    private boardViewController controller;
     public Game1 game;
     private boolean active;
 
@@ -14,25 +12,21 @@ public class GameThread extends Thread{
         this.active = true;
         try {
             game.play();
-        } catch (Exception e) {
+        } catch (IOException e) {
             System.out.println("Anslutningen bruten återvänder till start skärmen inom 5 sekunder.");
-            Platform.runLater( ()-> {
-                try {
-                    test.errorPopup();
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
-                } catch (InterruptedException ex) {
-                    throw new RuntimeException(ex);
-                }
+            throw new RuntimeException(e);
+        } catch (InterruptedException e) {
+             // kalla på match avbruten ruta
+            // controller.returnToStart
 
-            });
 
+            throw new RuntimeException(e);
         }
 
     }
     GameThread(boardViewController controller){
          game = new Game1(controller);
-         test = controller;
+         controller = controller;
 
     }
     public boolean isActive(){
