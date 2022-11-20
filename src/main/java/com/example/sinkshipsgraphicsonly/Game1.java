@@ -107,7 +107,11 @@ public class Game1 {
                 uppDateRightBoard("GAMEOVER");
 
                 Platform.runLater( ()-> {
-                    controller.showWinner(name);
+                    try {
+                        controller.showWinner(name);
+                    } catch (IOException  | InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
                 });
                 gameover = true;
             }
@@ -130,7 +134,11 @@ public class Game1 {
                         mediaPlayer.play();
                     }
                     Platform.runLater( ()-> {
-                        controller.showLoser(name);
+                        try {
+                            controller.showLoser(name);
+                        } catch (IOException | InterruptedException e) {
+                            throw new RuntimeException(e);
+                        }
 
                     });
                     gameover = true;
@@ -139,6 +147,7 @@ public class Game1 {
 
 
         }
+        System.out.println("Hej");
         connection.closeConnection();
     }
     // Plockar isär informationen från motståndaren och tar fram ett nytt meddelande beroende på svar från GameBoard.
@@ -251,9 +260,10 @@ public class Game1 {
                 }
                 break;
             case "s":
+                enemy.resetLogicalCoordinate();
                 nextCoordinate = enemy.getRandomCoordinate();
                 System.out.println("Reset Logic");
-                enemy.resetLogicalCoordinate();
+
                 break;
             case "i":
                 nextCoordinate = enemy.getRandomCoordinate();

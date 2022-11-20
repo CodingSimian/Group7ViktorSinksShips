@@ -23,11 +23,15 @@ public class GameBoard {
 
     // String List som innehåller kordinater som ej är beskjutna.
     List<String> validCoordinates = new ArrayList<>();
+    List<String> logicalHits = new ArrayList<>();
 
     private String lastRandomCoordinate;        // innehåller sista koordinaten retunerad av randomCoordinat;
     private String lastLogicalCoordinate;      // innehåller sista koordinaten retunerade av logicalCoordinate
     String lastCoordinateHit;
-    boolean north, west, east, south;  // boolean som logicalCoordinate använder för att bestämma nästa koordinat
+    private boolean north, west, east, south;  // boolean som logicalCoordinate använder för att bestämma nästa koordinat
+    private boolean vertical;
+    private boolean horizontal;
+
     boolean logicActive;               // boolean som håller reda på om logiken är aktiverad.
     String [] logicalCoordinates = new String[4];  // om logik är true innehåller denna array möjliga riktignar att välja på.
 
@@ -58,23 +62,7 @@ public class GameBoard {
 
     }
 
-    public void squareGridComunnication(){ // ta bort senare
 
-        for(int i = 1; i <SquareGrid.length  ; i++){
-            //System.out.println(SquareGrid[0][i].getName() + " " + i);
-             setNeighboursOcupied(0,i);
-            for(int j = 1; j<10; j++){
-                //System.out.println(SquareGrid[j][i].getName());
-                setNeighboursOcupied(j,i);
-
-            }
-        }
-
-    }
-
-    public void setOcuppied(Square square){
-
-    }
 
     // metod för att hämta en referens från spelplanen
     public Square getSquare(int row, int colum){
@@ -86,26 +74,31 @@ public class GameBoard {
     public void neighbourEast(int row, int colum){
              if(colum < SquareGrid.length-2) {
                  getSquare(row,colum+1).setOccupied();
+                 validCoordinates.remove(getSquare(row,colum +1).getName());
              }
     }
     public String neighbourEast(String coordinate){
         int colum = Character.getNumericValue(coordinate.charAt(0));
         int row = convertCoordinate(coordinate.charAt(1));
-        if(colum < SquareGrid.length-2) {
-            return getSquare(row,colum+1).getName();
+        if(colum < SquareGrid.length-2 && validCoordinates.contains(getSquare(row,colum+1).getName())) {
+                return getSquare(row, colum + 1).getName();
+
         }else return "Null";
+
     }
     public void neighbourWest( int row, int colum){
         if(colum > 0) {
             getSquare(row,colum-1).setOccupied();
+            validCoordinates.remove(getSquare(row,colum-1).getName());
         }
     }
     public String neighbourWest( String coordinate){
         int colum = Character.getNumericValue(coordinate.charAt(0));
         int row = convertCoordinate(coordinate.charAt(1));
-        if(colum > 0) {
-            return getSquare(row,colum-1).getName();
-        }else return "Null";
+        if(colum > 0 && validCoordinates.contains(getSquare(row,colum-1).getName())) {
+                return getSquare(row, colum - 1).getName();
+        }else return "NULL";
+
     }
 
 
@@ -113,12 +106,13 @@ public class GameBoard {
     public void neighbourNorth( int row, int colum){
         if(row > 0) {
             getSquare(row -1, colum).setOccupied();
+            validCoordinates.remove(getSquare(row -1,colum).getName());
         }
     }
     public String neighbourNorth(String coordinate){
         int colum = Character.getNumericValue(coordinate.charAt(0));
         int row = convertCoordinate(coordinate.charAt(1));
-        if(row > 0) {
+        if(row > 0 && validCoordinates.contains(getSquare(row -1,colum).getName())) {
             return getSquare(row -1, colum).getName();
         }else return "Null";
     }
@@ -126,39 +120,40 @@ public class GameBoard {
 
         if(row > 0 && colum < SquareGrid.length-1) {
              getSquare(row-1,colum +1).setOccupied();
+            validCoordinates.remove(getSquare(row -1,colum +1).getName());
         }
     }
     public void neighbourNorthWest( int row, int colum){
         if(row > 0 && colum > 0) {
-            //square.addNeighbour(getSquare(row  - 1, colum - 1));
             getSquare(row-1,colum-1).setOccupied();
+            validCoordinates.remove(getSquare(row -1, colum-1).getName());
         }
     }
     public void neighbourSouth( int row,int colum){
         if(row < SquareGrid.length-1) {
-            //square.addNeighbour(getSquare(row + 1, colum));
             getSquare(row+ 1,colum).setOccupied();
+            validCoordinates.remove(getSquare(row + 1, colum).getName());
         }
     }
     public String neighbourSouth( String coordinate){
         int colum = Character.getNumericValue(coordinate.charAt(0)) ;
         int row = convertCoordinate(coordinate.charAt(1));
-        if(row < SquareGrid.length-1) {
+        if(row < SquareGrid.length-1 && validCoordinates.contains(getSquare(row + 1,colum).getName())) {
            return getSquare(row+ 1,colum).getName();
         }else return "null";
     }
 
     public void neighbourSouthEast( int row , int colum){
         if(row < SquareGrid.length-1 && colum < SquareGrid.length-1) {
-            //square.addNeighbour(getSquare(row + 1, colum + 1));
             getSquare(row+1,colum+1).setOccupied();
+            validCoordinates.remove(getSquare(row +1,colum +1).getName());
         }
 
     }
     public void neighbourSouthWest( int row , int colum){
         if(row < SquareGrid.length-1 && colum > 0) {
-            //square.addNeighbour(getSquare(row + 1, colum - 1));
             getSquare(row+1,colum-1).setOccupied();
+            validCoordinates.remove(getSquare(row+1, colum -1).getName());
         }
     }
 
@@ -370,6 +365,7 @@ public class GameBoard {
 
     public String startLogicalCoordinate(){ // Metod som kallas på ifall man får en träff detta är starten i logik kedjan
         String coordinate = "";
+        logicalHits.add(lastRandomCoordinate);
         if(lastRandomCoordinate.length() == 2 && !logicActive) {
             createLogicalCoordinateList();
 
@@ -419,7 +415,10 @@ public class GameBoard {
 
     public String nextLogicalCoordinate(String feedback){             // kallas på om logik är aktiv och tar fram nästa koordinat baserat på feedbacken från senaste logiska kordinaten.
         String coordinate = "";
+
         if(feedback.equalsIgnoreCase("H")){
+            logicalHits.add(lastLogicalCoordinate);
+            vertical = true;
             if(north){
                 coordinate = neighbourNorth(lastLogicalCoordinate);
                 if(coordinate.equalsIgnoreCase("NULL")){
@@ -429,6 +428,7 @@ public class GameBoard {
 
 
             }else if(west){
+                horizontal = true;
                 coordinate = neighbourWest(lastLogicalCoordinate);
                 if(coordinate.equalsIgnoreCase("NULL")) {
                     coordinate = newLogicDirection(2);
@@ -468,29 +468,38 @@ public class GameBoard {
      */
     private String newLogicDirection(int a){                                 // nextLogicalCoordinat kallar på denna metod ifall den får en miss för att byta riktning,.
         String coordinate = "NULL";
-
-        for(int i = a;i<logicalCoordinates.length; i++ ){
-            if (!logicalCoordinates[i].equalsIgnoreCase("NULL")) {
-                coordinate = logicalCoordinates[i];
-                logicalCoordinates[i] = "NULL";
-                //lastLogicalCoordinate = coordinate;
-                //validCoordinates.remove(coordinate);
-                switch (i) {
-                    case 0:
-                        north = true;
-                        break;
-                    case 1:
-                        west = true;
-                        break;
-                    case 2:
-                        east = true;
-                        break;
-                    case 3:
-                        south = true;
-                        break;
-                }
-                break;
-            }
+              if(a == 1 && vertical && !logicalCoordinates[3].equalsIgnoreCase("NULL")){
+                  coordinate = logicalCoordinates[3];
+                  logicalCoordinates[3] = "NULL";
+                  south = true;
+              }else if(a == 2 && horizontal && !logicalCoordinates[2].equalsIgnoreCase("NULL")){
+                  coordinate = logicalCoordinates[2];
+                  logicalCoordinates[2] = "NULL";
+                  east = true;
+              }else{
+                  for(int i = a;i<logicalCoordinates.length; i++ ){
+                    if (!logicalCoordinates[i].equalsIgnoreCase("NULL")) {
+                       coordinate = logicalCoordinates[i];
+                       logicalCoordinates[i] = "NULL";
+                       //lastLogicalCoordinate = coordinate;
+                       //validCoordinates.remove(coordinate);
+                      switch (i) {
+                          case 0:
+                             north = true;
+                             break;
+                          case 1:
+                             west = true;
+                             break;
+                          case 2:
+                             east = true;
+                             break;
+                          case 3:
+                             south = true;
+                             break;
+                    }
+                      break;
+                  }
+             }
 
         }
         if(coordinate.equalsIgnoreCase("NULL")){
@@ -502,6 +511,14 @@ public class GameBoard {
     public void resetLogicalCoordinate(){                             // Kallas på när moståndaren meddelar att ett skepp sjunkit.
         logicActive = false;                                          // stänger av och återställer logiken.
         north = false; west = false; east = false; south = false;
+        horizontal = false; vertical = false;
+        logicalHits.add(lastLogicalCoordinate);
+        for(String coordinate: logicalHits){
+            int colum = Character.getNumericValue(coordinate.charAt(0));
+            int row = convertCoordinate(coordinate.charAt(1));
+            setNeighboursOcupied(row,colum);
+        }
+        logicalHits.clear();
     }
 
     public String getLastRandomCoordinate(){

@@ -3,6 +3,7 @@ package com.example.sinkshipsgraphicsonly;
 import javafx.application.Platform;
 
 import java.io.IOException;
+import java.net.SocketException;
 
 public class GameThread extends Thread{
     private boardViewController threadController;
@@ -15,16 +16,21 @@ public class GameThread extends Thread{
         try {
             game.play();
         } catch (Exception e) {
-            System.out.println("Anslutningen bruten återvänder till start skärmen inom 5 sekunder.");
-            Platform.runLater( ()-> {
-                try {
-                   threadController.errorPopup();
-                } catch (IOException | InterruptedException ex) {
-                    throw new RuntimeException(ex);
+                if(e instanceof NullPointerException ){
+
+                }else {
+                    System.out.println("Anslutningen bruten återvänder till start skärmen inom 5 sekunder.");
+                    e.printStackTrace();
+                    Platform.runLater(() -> {
+                        try {
+
+                            threadController.errorPopup();
+                        } catch (IOException | InterruptedException ex) {
+                            throw new RuntimeException(ex);
+                        }
+
+                    });
                 }
-
-            });
-
 
         }
 

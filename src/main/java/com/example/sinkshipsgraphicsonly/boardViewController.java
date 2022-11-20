@@ -25,6 +25,8 @@ import javafx.stage.Stage;
 import org.controlsfx.control.tableview2.filter.filtereditor.SouthFilter;
 
 import java.io.IOException;
+import java.net.Socket;
+import java.net.SocketException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -47,6 +49,10 @@ public class boardViewController implements Initializable { //javaklassen som ko
 
     @FXML
     private Text incomingText;
+
+    @FXML
+    private Button startButton;
+
 
 
 
@@ -87,6 +93,7 @@ public class boardViewController implements Initializable { //javaklassen som ko
 
                     break;
                     case "GAMEOVER":
+                        rightGrid.add(new ImageView("Hit.jpg"),X,Y);
                     outgoingText.setText("Game Over" + " \n" + outgoingText.getText());
             }
         } else {
@@ -105,7 +112,8 @@ public class boardViewController implements Initializable { //javaklassen som ko
 
                     leftGrid.add(new ImageView("Miss.jpg"), X, Y);
                     break;
-                case "GAMEOVER":
+                case "gameover":
+                    leftGrid.add(new ImageView("Hit.jpg"),X,Y);
                     incomingText.setText("Game Over" + " \n" + incomingText.getText());
             }
 
@@ -179,10 +187,17 @@ public class boardViewController implements Initializable { //javaklassen som ko
 
             Button jaButton = new Button("JA");
             jaButton.setOnAction(e -> {
-                if(gameThread.isAlive()) {
+
                     gameThread.game.gameover = true;
+                    if(gameThread.isActive()){
+                     try {
+                      gameThread.game.connection.closeConnection();
+                       } catch (IOException ex) {}
+
                 }
-                        try {
+
+
+                try {
                             double someBoardTickValue = boardSlider.getValue();
                             FXMLLoader loader = new FXMLLoader(getClass().getResource("startMenu.fxml"));
                             root = loader.load();
@@ -231,20 +246,19 @@ public class boardViewController implements Initializable { //javaklassen som ko
             this.server = a;
         }
 
-        private boolean getServer(){
-            return this.server;
-        }
+
 
         @FXML
         public void startButtonPressed(ActionEvent event) throws IOException, InterruptedException {
-            gameThread.game.server = server;
-            gameThread.start();
+                gameThread.game.server = server;
+                gameThread.start();
+
+            startButton.setDisable(true);
+            startButton.setOpacity(0.5);
 
         }
 
-        public void oponnentDisconect(){
 
-        }
 
         //@FXML
         public void returnToStart()throws IOException{ //Denna metod skall skicka tillbaka användaren till startmenyn
@@ -274,7 +288,7 @@ public class boardViewController implements Initializable { //javaklassen som ko
             //Rör sig om millisekunder.
         }
 
-        public void showWinner(String theName){
+        public void showWinner(String theName) throws IOException, InterruptedException {
             Stage window = new Stage();
 
             //window.initModality(Modality.APPLICATION_MODAL); Denna rad gör det omöjligt att klicka utanför fönstret
@@ -302,9 +316,10 @@ public class boardViewController implements Initializable { //javaklassen som ko
             window.setScene(scene);
             //window.showAndWait(); denna rad funkar med application_modal
             window.show();
+            returnToStart();
         }
 
-    public void showLoser( String theName){
+    public void showLoser( String theName) throws IOException, InterruptedException {
         Stage window = new Stage();
 
         //window.initModality(Modality.APPLICATION_MODAL); Denna rad gör det omöjligt att klicka utanför fönstret
@@ -336,6 +351,7 @@ public class boardViewController implements Initializable { //javaklassen som ko
 
        window.setScene(scene);
        window.show();
+       returnToStart();
     }
     public void errorPopup()throws IOException,InterruptedException {
         Stage window = new Stage();
