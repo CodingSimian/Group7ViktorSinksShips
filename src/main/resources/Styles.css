@@ -18,3 +18,7 @@ GridPane{
     -fx-background-color: #00008B;
 }
 
+#boardImageView{
+    -fx-image: url("navy-submarine-with-aircraft-carriers-website-header.jpg");
+}
+
