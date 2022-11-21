@@ -120,7 +120,7 @@ public class Game1 {
                 System.out.println("Incoming: " + "  " + incomingMesssage);
                 outGoingMessage = breakDownMessage(incomingMesssage);
 
-                delay = controller.delayValue(); //Lägg till mer kommentarer
+                delay = controller.delayValue();
                 //Literally ba en metod som kallar på boardSlider.getValue()
                 //Inlägd här för att tillgodose att hela spelet sker i en while-loop.
                 Thread.sleep(delay);

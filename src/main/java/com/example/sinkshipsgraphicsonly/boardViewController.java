@@ -27,8 +27,7 @@ import java.net.SocketException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class boardViewController implements Initializable { //javaklassen som kontrollerar xmlfilerna så att saker och ting händer.
-    // Klass för att få ut själva båtarna, initialize ansvarar för att båtarna läggs ut.
+public class boardViewController implements Initializable {
 
     //properties
     @FXML
@@ -70,8 +69,7 @@ public class boardViewController implements Initializable { //javaklassen som ko
 
 //metoder
 
-    public void hitOnCoordinate(Boolean isRightGrid, String message, int X, int Y,GameBoard gameBoard) { //Denna kod är mera som ett grafiskt test, menad att användas när Osman
-        //Och Daniel har skrivit mera backend kod som man kan länka denna mot.
+    public void hitOnCoordinate(Boolean isRightGrid, String message, int X, int Y,GameBoard gameBoard) {
 
         if (isRightGrid) {
 
@@ -126,47 +124,20 @@ public class boardViewController implements Initializable { //javaklassen som ko
         @Override
         public void initialize (URL url, ResourceBundle resourceBundle){
             //initialize är en speciell metod, som anropas så fort ett fxml dokument har laddats in.
-            //intialize metoden anropas när boardview2.fxml laddas in, eftersom controllerklassen som den tillhör har denna metod i sig och
-            //är fäst på boardview2.fxml
-            //intialize är isch som main i vanliga java (eftersom detta är fx), så fort ett fxml dokumment laddas in så anropas intialize
-            //Alltså efter man har klickat på spela-som-klient-knappen.
-
-
-            //GameBoard leftGameBoard = new GameBoard();
-            //leftGameBoard.buildGameBoard(); //använd buildgameboard först, för att kunna applicera de andra metoder som ligger
-            //i GameBoard-klassen //Vi lägger inte till något grafisk utan använder oss av backend-kod på rad 37 och 38, sen vill
-            //vi att det ska ske grafiskt det som händer grafiskt ska kunna visualiseras grafiskt. Det är därför forloopens i rad 43 osv används
-            //för att placera ut skeppen på själva spelplanen.
-            //Victor rekommendererar att vi lägger in kod här som startar själva spelet eftersom initialize startar av sig själv.
-            //Skapa en instans av Game och skriv det här och använda oss av metoderna som vi har gjort i Game.
-
-
-            //leftGameBoard.buildFleet(1, 2, 3, 4);
-            //leftGameBoard.placeFleetAtRandom(); //Dessa två linjer har skapat alla skepp, och placerat dom. Då är själva
-            //logiken för klient-spelaren utlagd. Det är först efter de 2 for loopar under denna kommentar som bilder
-            //på själva rutnätet läggs ut.
-
-
-
 
 
             gameThread = new GameThread(this);
                 gameThread.game.setGameover(false);
-            //leftGameBoard.SquareGrid[row].length
+
             for (int row = 0; row <gameThread.game.player.SquareGrid.length ; row++) {
                 for (int col = 0; col < gameThread.game.player.SquareGrid[row].length; col++) {
                     if (gameThread.game.player.SquareGrid[col][row].isHasShip()) {
 
                         leftGrid.add(new ImageView("Boat1.jpg"), row, col);
+                        //For loop som placerar skepp på vänster rutnät
                     }
                 }
             }
-
-            /*try {
-                returnToStart();
-            } catch (IOException e) {
-                throw new RuntimeException(e); //Hihi Viktor testar
-            }*/
 
 
         }
@@ -202,17 +173,16 @@ public class boardViewController implements Initializable { //javaklassen som ko
                             FXMLLoader loader = new FXMLLoader(getClass().getResource("startMenu.fxml"));
                             root = loader.load();
 
-                            battleShipGraphicsController battleGraphicController = loader.getController(); //Den här koden sparar
-                            //OCKSÅ värdet från den föregående slidern och applicerar det på den nya scenen.
-                            //Copy pastea med andra variabel-namn helt enkelt
+                            battleShipGraphicsController battleGraphicController = loader.getController();
                             battleGraphicController.someSLiderValueSet(someBoardTickValue);
 
-
+//lambda uttryck används med try-catch block för att spara slider värdet och gå tillbaka till huvudmenyn från att
+                    //man trycker på att man vill avsluta
                             Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
                             Scene scene = new Scene(root);
                             scene.getStylesheets().add("Styles.css");
-                            stage.setScene(scene); //Denna kod laddar in startMenu.fxml filen, try & catch används för att
-                            //effektivt använda "throws IOException" med lambda uttrycket.
+                            stage.setScene(scene);
+
                             window.close();
                             stage.show();
                         } catch (IOException ex) {
@@ -227,17 +197,13 @@ public class boardViewController implements Initializable { //javaklassen som ko
             layout.getChildren().addAll(popupLabel, nejButton, jaButton);
             layout.setAlignment(Pos.CENTER);
 
-            //layout.getStyleClass.add("Styles.css"); <-- denna funkar inte som tänkt
-
-            Scene scene = new Scene(layout); //de tre metoder som dyker upp efter denna har jag ej fått att fungera
-            //tills vidare är alertBoxActivated2 metoden som gäller när det kommer till att fråga användaren om hen
-            //verkligen vill stänga ned spelet
+            Scene scene = new Scene(layout);
             scene.getStylesheets().add("Styles.css");
             window.setScene(scene);
             window.showAndWait();
         }
 
-        public void sliderValueSet(double theTickValue){ //Metod som används för att sätta värdet på programmet.
+        public void sliderValueSet(double theTickValue){ //Metod som används för att sätta värdet på slidern i den nuvarande scenen.
             boardSlider.setValue(theTickValue);
 
 
@@ -260,7 +226,7 @@ public class boardViewController implements Initializable { //javaklassen som ko
 
 
 
-        //@FXML
+
         public void returnToStart()throws IOException{ //Denna metod skall skicka tillbaka användaren till startmenyn
             //När ett error framkommer.
             FXMLLoader loader = new FXMLLoader(getClass().getResource("startMenu.fxml"));
@@ -291,8 +257,6 @@ public class boardViewController implements Initializable { //javaklassen som ko
         public void showWinner(String theName) throws IOException, InterruptedException {
             Stage window = new Stage();
 
-            //window.initModality(Modality.APPLICATION_MODAL); Denna rad gör det omöjligt att klicka utanför fönstret
-
             window.setTitle("VINNARE");
             window.setMinHeight(200);
             window.setMinWidth(320);
@@ -318,20 +282,17 @@ public class boardViewController implements Initializable { //javaklassen som ko
             Scene scene = new Scene(layout);
             Stage oldStage = (Stage) leftGrid.getScene().getWindow();
 
-            window.setX(oldStage.getX()); //Rad 295-298 gör så att popup fönstret hamnar innanför programmets fönster.
+            window.setX(oldStage.getX()); //dessa två rader gör att alert-meddelande stannar inom programmet
             window.setY(oldStage.getY());
 
             scene.getStylesheets().add("Styles.css");
             window.setScene(scene);
-            //window.showAndWait(); denna rad funkar med application_modal
             window.show();
 
         }
 
     public void showLoser( String theName) throws IOException, InterruptedException {
         Stage window = new Stage();
-
-        //window.initModality(Modality.APPLICATION_MODAL); Denna rad gör det omöjligt att klicka utanför fönstret
 
         window.setTitle("FÖRLORARE");
         window.setMinHeight(200);
@@ -359,8 +320,6 @@ public class boardViewController implements Initializable { //javaklassen som ko
 
         scene.getStylesheets().add("Styles.css");
 
-        FXMLLoader someSortaLoader = new FXMLLoader(getClass().getResource("boardView2.fxml"));
-        boardViewController someSortaController = someSortaLoader.getController();
         Stage oldStage = (Stage) leftGrid.getScene().getWindow();
 
        window.setX(oldStage.getX());
@@ -386,7 +345,6 @@ public class boardViewController implements Initializable { //javaklassen som ko
 
 
             VBox layout = new VBox(10);
-            //theCloseButton.setAlignment(Pos.CENTER);
             layout.getChildren().addAll(popupLabel,theCloseButton);
             layout.setAlignment(Pos.CENTER);
 

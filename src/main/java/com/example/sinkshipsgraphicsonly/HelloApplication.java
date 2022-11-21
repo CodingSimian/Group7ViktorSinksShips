@@ -20,7 +20,7 @@ public class HelloApplication extends Application {
         Scene scene = new Scene(fxmlLoader.load(), 1000, 800);
         scene.getStylesheets().add("Styles.css");
 
-        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+        stage.setOnCloseRequest(new EventHandler<WindowEvent>() { //Gör så att det inte går att kryssa ner programmet
             @Override
             public void handle(WindowEvent event) {
                 event.consume();
