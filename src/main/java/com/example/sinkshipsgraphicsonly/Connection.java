@@ -24,6 +24,7 @@ public class Connection { //Klass för att ansluta sig mellan två olika enheter
     private int connectionAttempts;
     private int readMessageAttempts;
 
+
     protected boolean stopConnection;
 
 
@@ -127,13 +128,8 @@ public class Connection { //Klass för att ansluta sig mellan två olika enheter
     // metod för att ta emot meddelande från anslutnigen
     public String reciveMessage()throws IOException{
         String message = "Client Disconnected";
-            try {
-
                 message = br.readLine(); // lägg till så den avbryter efter en viss tid.
 
-            } catch (SocketException e) {
-
-                }
         return message;
     }
 
@@ -141,13 +137,15 @@ public class Connection { //Klass för att ansluta sig mellan två olika enheter
     public void closeConnection() throws IOException{
         try {
             if (server) {
-                user.close();
+                System.out.println("Kommer hit");
                 serverSocket.close();
+                user.close();
             } else {
                 user.close();
             }
 
         }catch (IOException  | NullPointerException e ){
+            System.out.println("Nu hit");
             Socket a = new Socket("localhost", 49152);
             closeConnection();
         }

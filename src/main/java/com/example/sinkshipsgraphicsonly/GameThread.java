@@ -21,15 +21,17 @@ public class GameThread extends Thread{
                 }else {
 
                     //e.printStackTrace();
-                    Platform.runLater(() -> {
-                        try {
+                    if(!game.gameover) {
+                        Platform.runLater(() -> {
+                            try {
 
-                            threadController.errorPopup();
-                        } catch (IOException | InterruptedException ex) {
-                            throw new RuntimeException(ex);
-                        }
+                                threadController.errorPopup();
+                            } catch (IOException | InterruptedException ex) {
+                                throw new RuntimeException(ex);
+                            }
 
-                    });
+                        });
+                    }
                 }
 
         }

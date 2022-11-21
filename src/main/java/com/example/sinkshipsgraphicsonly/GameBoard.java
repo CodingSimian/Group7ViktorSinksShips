@@ -1,9 +1,4 @@
 package com.example.sinkshipsgraphicsonly;
-
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
-
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -23,26 +18,25 @@ public class GameBoard {
 
     // String List som innehåller kordinater som ej är beskjutna.
     List<String> validCoordinates = new ArrayList<>();
+    // String list som logiken sparar träffar i , töms när skeppet är sänkt
     List<String> logicalHits = new ArrayList<>();
 
     private String lastRandomCoordinate;        // innehåller sista koordinaten retunerad av randomCoordinat;
     private String lastLogicalCoordinate;      // innehåller sista koordinaten retunerade av logicalCoordinate
-    String lastCoordinateHit;
+
     private boolean north, west, east, south;  // boolean som logicalCoordinate använder för att bestämma nästa koordinat
-    private boolean vertical;
-    private boolean horizontal;
+    private boolean vertical;                   //  används för att bestäma riktning
+    private boolean horizontal;                 //  används för att bestäma riktning
 
     boolean logicActive;               // boolean som håller reda på om logiken är aktiverad.
     String [] logicalCoordinates = new String[4];  // om logik är true innehåller denna array möjliga riktignar att välja på.
 
 
     Random random = new Random();
-    int antalSänkta;
+
 
 
     GameBoard() {
-
-
     }
 
     // populerar spelplanen med Squares
@@ -51,11 +45,9 @@ public class GameBoard {
         for(int i = 0; i< yAxis.length; i++){
             SquareGrid[i][0] = new Square("0"+ yAxis[i]);
             validCoordinates.add(getSquare(i,0).getName());
-            //System.out.println(getSquare(i,0).getName()); // ta bort senare
             for(int j = 1; j<10; j++){
                 SquareGrid[i][j] = new Square(""+ j + yAxis[i]);
                 validCoordinates.add(getSquare(i,j).getName());
-                //System.out.println(SquareGrid[i][j].getName()+ "i = " + i + " j= " + j); // ta bort senare
             }
 
         }
@@ -100,8 +92,6 @@ public class GameBoard {
         }else return "NULL";
 
     }
-
-
 
     public void neighbourNorth( int row, int colum){
         if(row > 0) {
@@ -172,7 +162,7 @@ public class GameBoard {
     // metod för som tar emot en string i formatet siffra för colum och bokstav för row tex, "6A" , skjuter därefter på motsvarande Square på planen.
     public String fire(String coordinate){
         String feedback;
-        boolean gameover = false;
+
         if(coordinate.length() == 2) {
             int row = convertCoordinate(coordinate.charAt(1));
             int colum = Character.getNumericValue(coordinate.charAt(0));
@@ -183,20 +173,11 @@ public class GameBoard {
                 if (fleet.isEmpty()) {
                     feedback = "gameover";
                 }
-
-
             }
-
-
-
-
         }else feedback = "Felaktigt koordinat";
 
       return feedback;
     }
-
-
-
     // metod för att placera ett skepp vertikalt på spelplanen
     // den anropar sedan setNeighboursOccupied för att ta närliggande rutor ur spel.
     public boolean placeShipVerticaly(int row , int colum, Ship ship){
@@ -205,26 +186,21 @@ public class GameBoard {
             for (int i = 0; i < ship.getLength(); i++) {
                 if (getSquare(row + i, colum).isOccupied()) {
                     valid = false;
-                    //System.out.println("Invalid placement");
                     break;
                 }
             }
         }else{
             valid = false;
-            //System.out.println("Ship to long");
-
         }
 
          if(valid){
              for(int i = 0; i<ship.getLength(); i ++){
                  getSquare(row+i,colum).addShip(ship);
-                 System.out.println("Ship placed at" + getSquare(row+i,colum).getName());
              }
              for(int i = 0; i<ship.getLength(); i++){
                  setNeighboursOcupied(row+i,colum);
              }
          }
-        System.out.println();
          return valid;
     }
 
@@ -234,25 +210,21 @@ public class GameBoard {
             for (int i = 0; i < ship.getLength(); i++) {
                 if (getSquare(row , colum + i).isOccupied()) {
                     valid = false;
-                    System.out.println("Invalid placement");
                     break;
                 }
             }
         }else{
             valid = false;
-            System.out.println("Ship to long");
 
         }
-
         if(valid){
             for(int i = 0; i<ship.getLength(); i ++){
                 getSquare(row,colum + i).addShip(ship);
-                System.out.println("Ship placed at" + getSquare(row,colum + i).getName());
+
             }
             for(int i = 0; i<ship.getLength(); i++){
                 setNeighboursOcupied(row,colum + i);
             }
-            System.out.println();
 
         }
         return valid;
@@ -298,49 +270,40 @@ public class GameBoard {
     }
 
     public void placeFleetAtRandom(){
-
+        boolean reset = false;
         boolean valid;
+        int tries = 0;
         for(Ship ship:fleet){
-            int tries;
+            if(reset){
+                System.out.println("Reseted");
+                break;
+            }
             valid = false;
             int max = 10- ship.getLength();
             while(!valid) {
+
+                if(tries > 200){
+                    System.out.println("Hängt sig start om");
+                    reset = true;
+                    validCoordinates.clear();
+                    buildGameBoard();
+                    placeFleetAtRandom();
+                    break;
+                }
+
                 if (random.nextInt(2) == 1) {
                     valid = placeShipVerticaly(random.nextInt(max), random.nextInt(10), ship);
                 } else {
                     valid = placeShipHorizontally(random.nextInt(10), random.nextInt(max), ship);
                 }
+                tries++;
             }
 
 
         }
+        System.out.println("Reset");
     }
 
-
-    // test metod , ta bort senare
-    public void printFleet(){
-       for(Ship ship: fleet){
-           System.out.println(ship.getType() + " " + ship.length);
-       }
-    }
-
-    // test metod , ta bort senare
-    public void printBoard(){
-        for(int i = 0; i<SquareGrid.length; i++){
-
-            System.out.print(getSquare(i,0).getName() + "  ");
-
-            for(int j = 1; j< SquareGrid.length; j++){
-                System.out.print(getSquare(i,j).getName() + "  ");
-            }
-            System.out.println();
-            System.out.println("---------------------------------------------");
-        }
-    }
-
-    public char getCoordinate(int coordinate){
-        return yAxis[coordinate];
-    }
     // tar emot och char som representerar en koordinat och retunera motsvarande int värde i spelplanen
     public int convertCoordinate(char coordinate){
         for(int i = 0; i< yAxis.length; i++){
@@ -394,16 +357,11 @@ public class GameBoard {
                     break;
                 }
             }
-            return coordinate;
-        }else coordinate = getRandomCoordinate();
-
-
-
-
+        }else {
+            coordinate = getRandomCoordinate();
+        }
 
         return coordinate;
-
-
     }
 
     public void createLogicalCoordinateList(){                                  // skapar listan med möjliga riktningar för logik kedjan.
@@ -463,9 +421,9 @@ public class GameBoard {
         return coordinate;
 
     }
-    /*
-       Metod som används av nextLogicalCoordinate metod för att byta rikting på skotten ifall den fått en miss.
-     */
+
+      // Metod som används av nextLogicalCoordinate metod för att byta rikting på skotten ifall den fått en miss.
+
     private String newLogicDirection(int a){                                 // nextLogicalCoordinat kallar på denna metod ifall den får en miss för att byta riktning,.
         String coordinate = "NULL";
               if(a == 1 && vertical && !logicalCoordinates[3].equalsIgnoreCase("NULL")){
@@ -481,8 +439,6 @@ public class GameBoard {
                     if (!logicalCoordinates[i].equalsIgnoreCase("NULL")) {
                        coordinate = logicalCoordinates[i];
                        logicalCoordinates[i] = "NULL";
-                       //lastLogicalCoordinate = coordinate;
-                       //validCoordinates.remove(coordinate);
                       switch (i) {
                           case 0:
                              north = true;
@@ -528,15 +484,5 @@ public class GameBoard {
     public String getLastLogicalCoordinate(){
         return lastLogicalCoordinate;
     }
-
-
-
-
-
-
-
-
-
-
 
 }

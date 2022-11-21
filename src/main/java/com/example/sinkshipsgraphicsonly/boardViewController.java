@@ -160,10 +160,9 @@ public class boardViewController implements Initializable {
             jaButton.setOnAction(e -> {
 
                     gameThread.game.gameover = true;
-                    if(gameThread.isActive()){
-                     try {
-                      gameThread.game.connection.closeConnection();
-                       } catch (IOException ex) {}
+                try {
+                    gameThread.game.connection.closeConnection();
+                } catch (IOException ex) {
 
                 }
 

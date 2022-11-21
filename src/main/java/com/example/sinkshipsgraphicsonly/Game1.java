@@ -149,7 +149,7 @@ public class Game1 {
 
 
         }
-        System.out.println("Hej");
+
         connection.closeConnection();
     }
     // Plockar isär informationen från motståndaren och tar fram ett nytt meddelande beroende på svar från GameBoard.
