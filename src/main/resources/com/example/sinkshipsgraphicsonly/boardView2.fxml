@@ -172,7 +172,7 @@
                                 <Insets bottom="10.0" />
                             </VBox.margin>
                         </Button>
-                        <Button mnemonicParsing="false" onAction="#alertBoxActivated2" text="Avsluta match">
+                        <Button fx:id="avslutaMatchButton" mnemonicParsing="false" onAction="#alertBoxActivated2" text="Avsluta match">
                             <VBox.margin>
                                 <Insets bottom="10.0" />
                             </VBox.margin>

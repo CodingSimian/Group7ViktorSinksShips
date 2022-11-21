@@ -22,6 +22,7 @@ public class Connection { //Klass för att ansluta sig mellan två olika enheter
 
     private BufferedWriter bw;
     private int connectionAttempts;
+    private int readMessageAttempts;
 
     protected boolean stopConnection;
 
@@ -77,7 +78,7 @@ public class Connection { //Klass för att ansluta sig mellan två olika enheter
     // ansluter till en host.
     //  koppplar reader och printer för kommunikation genom socket.
     public void connectToServer() throws IOException, InterruptedException {
-         int i = 0;
+
         if(!server) {//Används när det finns en risk när det kastas exceptions, så fångas det, d.vs om något går fel så vill
             //vill vi kasta det istället. Om det inte fångas så fånga felet.
             //Om det som står så i try inte funkar, så kör catch med, så fångas den typen av exeception. Vi vill inte att det ska krascha
@@ -126,17 +127,13 @@ public class Connection { //Klass för att ansluta sig mellan två olika enheter
     // metod för att ta emot meddelande från anslutnigen
     public String reciveMessage()throws IOException{
         String message = "Client Disconnected";
-        if(user.isConnected()) {
             try {
+
                 message = br.readLine(); // lägg till så den avbryter efter en viss tid.
+
             } catch (SocketException e) {
-                System.out.println("Client disconnected");
 
-
-                //TODO lägg till kontroll av anslutning om inget meddelande kan tas emot
-            }
-        }
-
+                }
         return message;
     }
 
@@ -144,6 +141,7 @@ public class Connection { //Klass för att ansluta sig mellan två olika enheter
     public void closeConnection() throws IOException{
         try {
             if (server) {
+                user.close();
                 serverSocket.close();
             } else {
                 user.close();

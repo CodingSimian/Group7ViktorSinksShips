@@ -114,6 +114,7 @@ public class Game1 {
                     }
                 });
                 gameover = true;
+
             }
             if(!gameover) {
                 System.out.println("Incoming: " + "  " + incomingMesssage);
@@ -142,6 +143,7 @@ public class Game1 {
 
                     });
                     gameover = true;
+
                 }
             }
 

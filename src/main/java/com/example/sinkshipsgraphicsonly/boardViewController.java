@@ -49,6 +49,9 @@ public class boardViewController implements Initializable { //javaklassen som ko
 
     @FXML
     private Button startButton;
+    @FXML
+    private Button avslutaMatchButton;
+
 
 
 
@@ -293,14 +296,23 @@ public class boardViewController implements Initializable { //javaklassen som ko
             window.setTitle("VINNARE");
             window.setMinHeight(200);
             window.setMinWidth(320);
-
+            avslutaMatchButton.setDisable(true);
 
 
             Label popupLabel = new Label();
             popupLabel.setText("Du har nu vunnit, grattis " + theName + "!");
+            Button button = new Button("OK");
+            button.setOnAction(e->{
+                try {
+                    returnToStart();
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+                window.close();
+            });
 
             VBox layout = new VBox(10);
-            layout.getChildren().addAll(popupLabel);
+            layout.getChildren().addAll(popupLabel, button);
             layout.setAlignment(Pos.CENTER);
 
             Scene scene = new Scene(layout);
@@ -313,7 +325,7 @@ public class boardViewController implements Initializable { //javaklassen som ko
             window.setScene(scene);
             //window.showAndWait(); denna rad funkar med application_modal
             window.show();
-            returnToStart();
+
         }
 
     public void showLoser( String theName) throws IOException, InterruptedException {
@@ -324,14 +336,23 @@ public class boardViewController implements Initializable { //javaklassen som ko
         window.setTitle("FÖRLORARE");
         window.setMinHeight(200);
         window.setMinWidth(320);
-
+        avslutaMatchButton.setDisable(true);
 
 
         Label popupLabel = new Label();
         popupLabel.setText("Du har nu förlorat, bättre lycka nästa gång " + theName +"!");
+        Button button = new Button("OK");
+        button.setOnAction(e->{
+            try {
+                returnToStart();
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+            window.close();
+        });
 
         VBox layout = new VBox(10);
-        layout.getChildren().addAll(popupLabel);
+        layout.getChildren().addAll(popupLabel,button);
         layout.setAlignment(Pos.CENTER);
 
         Scene scene = new Scene(layout);
@@ -348,7 +369,7 @@ public class boardViewController implements Initializable { //javaklassen som ko
 
        window.setScene(scene);
        window.show();
-       returnToStart();
+
     }
     public void errorPopup()throws IOException,InterruptedException {
             Stage window = new Stage();

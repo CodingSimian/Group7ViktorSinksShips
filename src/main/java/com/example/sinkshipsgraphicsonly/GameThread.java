@@ -19,8 +19,8 @@ public class GameThread extends Thread{
                 if(e instanceof NullPointerException ){
 
                 }else {
-                    System.out.println("Anslutningen bruten återvänder till start skärmen inom 5 sekunder.");
-                    e.printStackTrace();
+
+                    //e.printStackTrace();
                     Platform.runLater(() -> {
                         try {
 
