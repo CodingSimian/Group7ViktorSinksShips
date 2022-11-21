@@ -13,10 +13,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundImage;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
@@ -354,29 +351,37 @@ public class boardViewController implements Initializable { //javaklassen som ko
        returnToStart();
     }
     public void errorPopup()throws IOException,InterruptedException {
-        Stage window = new Stage();
-        window.setTitle("Ingen anslutning");
-        window.setMinHeight(200);
-        window.setMinWidth(320);
+            Stage window = new Stage();
+            window.setTitle("Ingen anslutning");
+            window.setMinHeight(200);
+            window.setMinWidth(320);
 
-        Label popupLabel = new Label();
+            Label popupLabel = new Label();
+            Button theCloseButton = new Button("Tryck här för att stänga ned och gå tillbaka till huvudmenyn");
+            theCloseButton.setOnAction(e -> {
+                window.close();
+            });
+        popupLabel.setText("Din anslutning blev bruten");
 
-        popupLabel.setText("Anslutningen bruten återvänder till start skärmen inom 5 sekunder.");
-        VBox layout = new VBox(10);
-        layout.getChildren().addAll(popupLabel);
-        layout.setAlignment(Pos.CENTER);
+
+            VBox layout = new VBox(10);
+            //theCloseButton.setAlignment(Pos.CENTER);
+            layout.getChildren().addAll(popupLabel,theCloseButton);
+            layout.setAlignment(Pos.CENTER);
+
+
         Scene scene = new Scene(layout);
-        scene.getStylesheets().add("Styles.css");
-        FXMLLoader someSortaLoader = new FXMLLoader(getClass().getResource("boardView2.fxml"));
-        boardViewController someSortaController = someSortaLoader.getController();
-        Stage oldStage = (Stage) leftGrid.getScene().getWindow();
-        // window.setX(oldStage.getX());
-        // window.setY(oldStage.getY());
-        window.setScene(scene);
-        window.show();
-        Thread.sleep(5000); //KLicka på avsluta-match för att generera error
-        window.close();
-        returnToStart();
+            scene.getStylesheets().add("Styles.css");
+            FXMLLoader someSortaLoader = new FXMLLoader(getClass().getResource("boardView2.fxml"));
+
+            window.setScene(scene);
+            window.showAndWait();
+
+            //Thread.sleep(5000); //KLicka på avsluta-match för att generera error
+            returnToStart();
+            //window.close();
+
+
     }
     @FXML
     public void muteButtonToggled(ActionEvent actionEvent) throws IOException{

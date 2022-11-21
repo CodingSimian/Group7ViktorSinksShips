@@ -15,6 +15,11 @@ public class HelloApplication extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
+
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("startMenu.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 1000, 800);
+        scene.getStylesheets().add("Styles.css");
+
         stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent event) {
@@ -22,9 +27,6 @@ public class HelloApplication extends Application {
             }
         });
 
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("startMenu.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 1000, 800);
-        scene.getStylesheets().add("Styles.css");
         stage.setTitle("BattleShips");
         stage.setScene(scene);
         stage.show();
