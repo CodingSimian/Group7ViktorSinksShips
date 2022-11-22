@@ -113,7 +113,7 @@ public class boardViewController implements Initializable {
 
 
         }
-    };
+    }
 
 
 
@@ -358,7 +358,6 @@ public class boardViewController implements Initializable {
     public void muteButtonToggled(ActionEvent actionEvent) throws IOException{
             //Denna metod kallas varje gång man trycker på knappen, så när du sätter på knappen räknas det som
         //att man har tryckt, och när man stänger av räknas det som att man har tryckt.
-        Thread.currentThread().getStackTrace()[1].getClassName();
         if(gameThread.game.mute){
             gameThread.game.mute = false;
         }else {

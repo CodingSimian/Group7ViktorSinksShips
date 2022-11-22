@@ -6,7 +6,7 @@ import java.net.ConnectException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
-import java.util.Timer;
+
 
 
 
@@ -22,7 +22,7 @@ public class Connection { //Klass för att ansluta sig mellan två olika enheter
 
     private BufferedWriter bw;
     private int connectionAttempts;
-    private int readMessageAttempts;
+
 
 
     protected boolean stopConnection;
@@ -41,7 +41,6 @@ public class Connection { //Klass för att ansluta sig mellan två olika enheter
     // öppnar ny serverSocket och väntar på att ta emot on anslutning
     // skapar reader och printer för kommunikation genom socketen.
     public void newServer() throws IOException {
-        Timer timer = new Timer();
         if(!connected) {
             try {
                 serverSocket = new ServerSocket(49152);
@@ -65,16 +64,6 @@ public class Connection { //Klass för att ansluta sig mellan två olika enheter
 
         }
     }
-    // upprättar en anslutning till ny användare utan att skapa ny serverSocket.
-
-    public void newServerConnection()throws IOException{
-        user = serverSocket.accept();
-        in = new InputStreamReader(user.getInputStream());
-        br = new BufferedReader(in);
-        bw = new BufferedWriter( new PrintWriter(user.getOutputStream()));
-        System.out.println("Client Connected" + user.getLocalAddress() +"\n" + user.getInetAddress());
-    }
-
 
     // ansluter till en host.
     //  koppplar reader och printer för kommunikation genom socket.
@@ -88,8 +77,9 @@ public class Connection { //Klass för att ansluta sig mellan två olika enheter
                 connectionAttempts ++;
                 if(connectionAttempts == 0) {
                     System.out.println("Trying to connect to server");
-                }else
+                }else {
                     System.out.println("Trying to connect to server attempt: " + connectionAttempts);
+                }
 
                     user = new Socket("localhost", 49152);
                     in = new InputStreamReader(user.getInputStream());
@@ -125,17 +115,13 @@ public class Connection { //Klass för att ansluta sig mellan två olika enheter
 
     // metod för att ta emot meddelande från anslutnigen
     public String reciveMessage()throws IOException{
-        String message = "Client Disconnected";
-                message = br.readLine(); // lägg till så den avbryter efter en viss tid.
-
-        return message;
+        return br.readLine();
     }
 
     // metod för att stänga anslutningen
     public void closeConnection() throws IOException{
         try {
             if (server) {
-                System.out.println("Kommer hit");
                 serverSocket.close();
                 user.close();
             } else {
@@ -143,21 +129,14 @@ public class Connection { //Klass för att ansluta sig mellan två olika enheter
             }
 
         }catch (IOException  | NullPointerException e ){
-            System.out.println("Nu hit");
             Socket a = new Socket("localhost", 49152);
             closeConnection();
         }
-
-
-
-
     }
 
     public boolean isConnected(){
         return this.connected;
     }
-    public boolean isServer(){
-        return this.server;
-    }
+
 
 }

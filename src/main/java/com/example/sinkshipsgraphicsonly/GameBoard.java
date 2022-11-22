@@ -269,13 +269,16 @@ public class GameBoard {
 
     }
 
+
+    // Metod som placerar ut flottan randomly
+    // Rullar först för om det ska placeras verticaly or horizontaly därefter rullar för kordinater
+    // och kallar på antigen placeShipVerticaly eller placeShipHorizontally.
     public void placeFleetAtRandom(){
         boolean reset = false;
         boolean valid;
         int tries = 0;
         for(Ship ship:fleet){
             if(reset){
-                System.out.println("Reseted");
                 break;
             }
             valid = false;
@@ -283,7 +286,6 @@ public class GameBoard {
             while(!valid) {
 
                 if(tries > 200){
-                    System.out.println("Hängt sig start om");
                     reset = true;
                     validCoordinates.clear();
                     buildGameBoard();
@@ -301,7 +303,7 @@ public class GameBoard {
 
 
         }
-        System.out.println("Reset");
+
     }
 
     // tar emot och char som representerar en koordinat och retunera motsvarande int värde i spelplanen
@@ -466,8 +468,8 @@ public class GameBoard {
 
     public void resetLogicalCoordinate(){                             // Kallas på när moståndaren meddelar att ett skepp sjunkit.
         logicActive = false;                                          // stänger av och återställer logiken.
-        north = false; west = false; east = false; south = false;
-        horizontal = false; vertical = false;
+        north = false; west = false; east = false; south = false;     // Tar även bort närliggande rutor från det sänkta skeppen som man nu vet att det inte kan ligga några
+        horizontal = false; vertical = false;                         // skepp på , den använder setNeighboursOcupied för detta.
         logicalHits.add(lastLogicalCoordinate);
         for(String coordinate: logicalHits){
             int colum = Character.getNumericValue(coordinate.charAt(0));

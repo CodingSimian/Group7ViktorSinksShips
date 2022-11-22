@@ -24,11 +24,6 @@ public abstract class Ship {
       }
 
   }
-
-    public String getType() {
-        return type;
-    }
-
     public boolean isSunk() {
         return sunk;
     }

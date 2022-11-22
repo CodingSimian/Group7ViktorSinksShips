@@ -50,7 +50,6 @@ public class Game1 {
         player.buildGameBoard();
         player.buildFleet(1, 2, 3, 4);
         player.placeFleetAtRandom();
-        System.out.println(player.fleet.size());
         enemy = new GameBoard();
         enemy.buildGameBoard();
         gameover = false;
@@ -62,13 +61,7 @@ public class Game1 {
 
     }
 
-    public void waitForPlayer() throws IOException, InterruptedException {
-        while(true) {
-            if (connection.isConnected() || connection.isServer()) {
-                play();
-            }
-        }
-    }
+
     public void play() throws IOException, InterruptedException {
 
 
@@ -85,7 +78,6 @@ public class Game1 {
         if (connection.isConnected()) { //Skrev om
             outGoingMessage = "i shot ";
             outGoingMessage += enemy.getRandomCoordinate();
-            System.out.println(outGoingMessage);
             connection.sendMessage(outGoingMessage);
         }
         while (!gameover) {
@@ -111,16 +103,13 @@ public class Game1 {
 
             }
             if(!gameover) {
-                System.out.println("Incoming: " + "  " + incomingMesssage);
                 outGoingMessage = breakDownMessage(incomingMesssage);
-
                 delay = controller.delayValue();
                 //delayValue är en metod som kallar på Slider.getValue() för den slidern som är i boardView2.fxml
                 //Inlägd här för att tillgodose att hela spelet sker i en while-loop.
                 Thread.sleep(delay);
 
                 round++;
-                System.out.println("Outgoing: round " + round + "  " + outGoingMessage);
                 connection.sendMessage(outGoingMessage);
 
                 if(outGoingMessage.equalsIgnoreCase("GAMEOVER")){
@@ -150,7 +139,6 @@ public class Game1 {
     // Samt kallar på metoder för att uppdatera grafiska spelplanerna;
     public String breakDownMessage(String message){
         scan = new Scanner(message);
-        boolean gameover;
         String newMessage;
         String feedbackLeftBoard;
         String feedback = scan.next();
@@ -159,22 +147,20 @@ public class Game1 {
         feedbackLeftBoard = player.fire(newMessage);
         uppDateRightBoard(feedback);
           if(feedbackLeftBoard.equalsIgnoreCase("gameover")) {
-
               uppdateLeftBoard("gameover",newMessage);
               newMessage = feedbackLeftBoard;
           }else {
 
               if (!mute) {
                   switch (feedbackLeftBoard) {
-                      case "h":
-                      case "s":
+                      case "h", "s" -> {
                           MediaPlayer mediaPlayer = new MediaPlayer(hitSound);
                           mediaPlayer.play();
-                          break;
-                      case "m":
+                      }
+                      case "m" -> {
                           MediaPlayer mediaPlayer1 = new MediaPlayer(missSound);
                           mediaPlayer1.play();
-                          break;
+                      }
                   }
               }
               uppdateLeftBoard(feedbackLeftBoard, newMessage);
@@ -195,7 +181,6 @@ public class Game1 {
     public void uppDateRightBoard(String feedback){
         if(!feedback.equalsIgnoreCase("i")) {
             if (enemy.logicActive) {
-                System.out.println(feedback + " " + enemy.getLastLogicalCoordinate());
                 int x = Character.getNumericValue(enemy.getLastLogicalCoordinate().charAt(0));
                 int y = enemy.convertCoordinate(enemy.getLastLogicalCoordinate().charAt(1));
                 String  f = feedback;
@@ -203,7 +188,6 @@ public class Game1 {
                     controller.hitOnCoordinate(true, f,x,y,enemy );
                 });
             } else {
-                System.out.println(feedback + " " + enemy.getLastRandomCoordinate());
                 int x = Character.getNumericValue(enemy.getLastRandomCoordinate().charAt(0));
                 int y = enemy.convertCoordinate(enemy.getLastRandomCoordinate().charAt(1));
                 String f = feedback;
@@ -249,16 +233,13 @@ public class Game1 {
             case "h":
                 if(enemy.logicActive) {
                     nextCoordinate = enemy.nextLogicalCoordinate(feedback);
-                    System.out.println("Nextlogical");
                 } else {
                     nextCoordinate  = enemy.startLogicalCoordinate();
-                    System.out.println("startLogical");
                 }
                 break;
             case "s":
                 enemy.resetLogicalCoordinate();
                 nextCoordinate = enemy.getRandomCoordinate();
-                System.out.println("Reset Logic");
 
                 break;
             case "i":
@@ -272,7 +253,5 @@ public class Game1 {
         this.gameover = gameover;
     }
 
-    public void setDelay(int daDelay){
-    this.delay = daDelay;
-    }
+
 }

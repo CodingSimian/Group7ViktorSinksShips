@@ -8,11 +8,10 @@ import java.io.IOException;
 public class GameThread extends Thread{
     private boardViewController threadController;
     public Game1 game;
-    private boolean active;
+
 
     @Override
     public void run() {
-        this.active = true;
         try {
             game.play();
         } catch (Exception e) {
@@ -42,14 +41,7 @@ public class GameThread extends Thread{
          threadController = controller;
 
     }
-    public boolean isActive(){
-        return this.active;
-    }
 
-
-    public Game1 getGame(){
-        return this.game;
-    }
 
 
 }
