@@ -1,8 +1,7 @@
 package com.example.sinkshipsgraphicsonly;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 
-import java.io.File;
+
+
 import java.util.ArrayList;
 
 public class Square {
@@ -40,29 +39,12 @@ public class Square {
         this.hasShip = true;
 
     }
-    public void removeShip(Ship ship){}
 
     public Ship getShip(){
         return this.ship;
 
     }
 
-    // ta bort senare
-    public void addNeighbour(Square square){
-        neighbours.add(square);
-    }
-    // ta bort senare
-    public void setNeighboursOccupied(){
-        for(Square square: neighbours){
-            square.setOccupied();
-        }
-    }
-    // ta bort senare
-    public void printNeighbours(){
-        for(Square square: neighbours){
-            System.out.println(square.getName());
-        }
-    }
 
     public void setOccupied(){
         this.occupied = true;

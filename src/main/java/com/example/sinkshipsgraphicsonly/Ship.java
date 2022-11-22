@@ -2,7 +2,7 @@ package com.example.sinkshipsgraphicsonly;
 
 public abstract class Ship {
 
-    // properties för abstrakta klassen så att alla klasser av typen ship har dessa properties
+    //properties
   protected String type;
   protected int length;
   protected int hits;
@@ -14,7 +14,7 @@ public abstract class Ship {
 
   }
 
-  //metod som square objekten som skeppet ligger på anropar ifall den kordinaten blir träffad blir träffad
+  //metod som square objekten som skeppet ligger på anropar ifall den kordinaten blir träffad
     // ifall den blivit träffad för många gånger så blir den sänkt.
   public void hit(){
       this.hits ++;

@@ -3,7 +3,7 @@ package com.example.sinkshipsgraphicsonly;
 import javafx.application.Platform;
 
 import java.io.IOException;
-import java.net.SocketException;
+
 
 public class GameThread extends Thread{
     private boardViewController threadController;

@@ -1,6 +1,5 @@
 package com.example.sinkshipsgraphicsonly;
 
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,16 +13,13 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-import javafx.scene.media.MediaPlayer;
-import javafx.scene.paint.Color;
+
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import org.controlsfx.control.tableview2.filter.filtereditor.SouthFilter;
 
 import java.io.IOException;
-import java.net.Socket;
-import java.net.SocketException;
+
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -232,19 +228,18 @@ public class boardViewController implements Initializable {
 
             Parent myRoot = loader.load();
 
-            Stage coolerStage = new Stage(); //Denna rad måste ändras till det nuvarande staget.
+            Stage startStage = new Stage();
 
             Scene scene = new Scene(myRoot, 1000, 800);
             scene.getStylesheets().add("Styles.css");
 
-            coolerStage.setScene(scene);
-            coolerStage.show();
+            startStage.setScene(scene);
+            startStage.show();
 
-            FXMLLoader someSortaLoader = new FXMLLoader(getClass().getResource("boardView2.fxml"));
-            //boardViewController someSortaController = someSortaLoader.getController();
-            Stage stage = (Stage) leftGrid.getScene().getWindow();
-            stage.close(); //Rad 234-237 kommer endast att fungera som tänkt, om man använder den medans boardView2.fxml visas.
-            //Om startMenu.fxml visas så stängs ju endast boardview2.fxml's stage, det stage som visar "startMenu.fxml" stängs ju aldrig.
+
+            Stage boardStage = (Stage) leftGrid.getScene().getWindow();
+            boardStage.close(); //Rad 245-246 kommer endast att fungera som tänkt, om man använder den medans boardView2.fxml visas.
+            //Om startMenu.fxml visas så stängs endast boardview2.fxml's stage. Det stage som visar "startMenu.fxml" stängs ju aldrig.
 
 
         }
@@ -348,24 +343,21 @@ public class boardViewController implements Initializable {
             layout.setAlignment(Pos.CENTER);
 
 
-        Scene scene = new Scene(layout);
+            Scene scene = new Scene(layout);
             scene.getStylesheets().add("Styles.css");
-            FXMLLoader someSortaLoader = new FXMLLoader(getClass().getResource("boardView2.fxml"));
 
             window.setScene(scene);
             window.showAndWait();
 
-            //Thread.sleep(5000); //KLicka på avsluta-match för att generera error
             returnToStart();
-            //window.close();
+
 
 
     }
     @FXML
     public void muteButtonToggled(ActionEvent actionEvent) throws IOException{
             //Denna metod kallas varje gång man trycker på knappen, så när du sätter på knappen räknas det som
-        //att man har tryckt, och när man stänger av räknas det som att man har tryckt. Ha en if-sats som kollar
-        //Om en media player är mutad, om den är det händer inget, om den inte är så mutas den.
+        //att man har tryckt, och när man stänger av räknas det som att man har tryckt.
         Thread.currentThread().getStackTrace()[1].getClassName();
         if(gameThread.game.mute){
             gameThread.game.mute = false;

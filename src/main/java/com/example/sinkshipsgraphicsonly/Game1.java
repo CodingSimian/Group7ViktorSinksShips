@@ -1,16 +1,10 @@
 package com.example.sinkshipsgraphicsonly;
 
 import javafx.application.Platform;
-import javafx.geometry.Pos;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.layout.VBox;
+
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
-import org.controlsfx.control.tableview2.filter.filtereditor.SouthFilter;
+
 
 import java.io.File;
 import java.io.IOException;
@@ -97,8 +91,8 @@ public class Game1 {
         while (!gameover) {
 
             incomingMesssage = connection.reciveMessage();
-            if(incomingMesssage.equalsIgnoreCase("GAMEOVER")){ //om incommingMessage är gameover,
-                //Så är den instansen av programmet en vinnare. Och om outGoingMessage är gameoaver så är den
+            if(incomingMesssage.equalsIgnoreCase("GAMEOVER")){ //om incommingMessage är "GAMEOVER",
+                //Så är den instansen av programmet en vinnare. Och om outGoingMessage är "GAMEOVER" så är den
                 //instansen förlorare.
                 if(!mute){
                     MediaPlayer mediaPlayer = new MediaPlayer(winnerSound);
@@ -121,7 +115,7 @@ public class Game1 {
                 outGoingMessage = breakDownMessage(incomingMesssage);
 
                 delay = controller.delayValue();
-                //Literally ba en metod som kallar på boardSlider.getValue()
+                //delayValue är en metod som kallar på Slider.getValue() för den slidern som är i boardView2.fxml
                 //Inlägd här för att tillgodose att hela spelet sker i en while-loop.
                 Thread.sleep(delay);
 

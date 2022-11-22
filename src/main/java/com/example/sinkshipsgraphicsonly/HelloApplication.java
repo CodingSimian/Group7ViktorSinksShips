@@ -11,7 +11,7 @@ import javafx.stage.WindowEvent;
 import java.io.IOException;
 
 public class HelloApplication extends Application {
-    public boolean server;
+
 
     @Override
     public void start(Stage stage) throws IOException {

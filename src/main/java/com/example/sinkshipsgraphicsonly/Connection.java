@@ -1,5 +1,5 @@
 package com.example.sinkshipsgraphicsonly;
-import org.controlsfx.control.tableview2.filter.filtereditor.SouthFilter;
+
 
 import java.io.*;
 import java.net.ConnectException;
@@ -7,7 +7,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
 import java.util.Timer;
-import java.util.TimerTask;
+
 
 
 public class Connection { //Klass för att ansluta sig mellan två olika enheter.
@@ -80,10 +80,8 @@ public class Connection { //Klass för att ansluta sig mellan två olika enheter
     //  koppplar reader och printer för kommunikation genom socket.
     public void connectToServer() throws IOException, InterruptedException {
 
-        if(!server) {//Används när det finns en risk när det kastas exceptions, så fångas det, d.vs om något går fel så vill
-            //vill vi kasta det istället. Om det inte fångas så fånga felet.
-            //Om det som står så i try inte funkar, så kör catch med, så fångas den typen av exeception. Vi vill inte att det ska krascha
-            //utan att vi vill fånga det istället.
+        if(!server) {
+
             try { //Om man får ett error i try som man skickar, så kan man catcha det och sedan skrivs koden ut i det catchblocket.
                 //Ungefär som en if sats, skillnaden är att här testas/körs bägge (om try inte funkar).
 
